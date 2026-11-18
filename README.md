@@ -2,11 +2,11 @@
 
 **Autora:** Taís Ramos Nascoski
 
-O **CarCare** é uma aplicação web responsiva desenvolvida para auxiliar no controle e na organização de veículos e suas manutenções.
+O **CarCare** é uma aplicação web responsiva desenvolvida para auxiliar no controle e na organização de veículos e informações relacionadas às suas manutenções.
 
-A aplicação tem como objetivo permitir o gerenciamento de **veículos e registros de manutenção**, facilitando o acompanhamento do histórico e dos gastos relacionados aos veículos.
+A aplicação permite o cadastro de veículos, a consulta de suas informações e o registro de observações e valores relacionados às manutenções realizadas.
 
-O projeto será desenvolvido progressivamente ao longo da disciplina, utilizando as tecnologias e conceitos apresentados durante as aulas.
+O projeto é desenvolvido progressivamente ao longo da disciplina, utilizando as tecnologias e conceitos apresentados durante as aulas.
 
 ---
 
@@ -14,19 +14,19 @@ O projeto será desenvolvido progressivamente ao longo da disciplina, utilizando
 
 Para acompanhar o desenvolvimento do projeto e suas decisões, estão disponíveis os seguintes documentos:
 
-- 📄 [**Documento de Requisitos**](https://github.com/taisramosn/manutencao-de-veiculos/blob/main/docs/prd.md) — Escopo, funcionalidades e regras da aplicação.
+- 📄 **[Documento de Requisitos](https://github.com/taisramosn/manutencao-de-veiculos/blob/main/docs/prd.md)** — Escopo, funcionalidades e regras da aplicação.
 
-- 🏗️ [**Especificação Técnica**](https://github.com/taisramosn/manutencao-de-veiculos/blob/main/docs/architecture.md) — Arquitetura, modelo de dados e estrutura técnica do sistema.
+- 🏗️ **[Especificação Técnica](https://github.com/taisramosn/manutencao-de-veiculos/blob/main/docs/architecture.md)** — Arquitetura, modelo de dados e estrutura técnica do sistema.
 
-- 🎨 [**Design System**](https://github.com/taisramosn/manutencao-de-veiculos/blob/main/docs/design-system.md) — Identidade visual, cores, tipografia e componentes utilizados na aplicação.
+- 🎨 **[Design System](https://github.com/taisramosn/manutencao-de-veiculos/blob/main/docs/design-system.md)** — Identidade visual, cores, tipografia e componentes utilizados na aplicação.
 
-- 🖼️ [**Protótipo no Stitch**](https://stitch.withgoogle.com/projects/2247964266907741447) — Protótipo das telas e fluxo de navegação.
+- 🖼️ **[Protótipo no Stitch](https://stitch.withgoogle.com/projects/2247964266907741447)** — Protótipo das telas e fluxo de navegação.
 
 ---
 
 ## 🎨 Design
 
-A interface do CarCare foi desenvolvida a partir do protótipo feito no **Stitch**.
+A interface do CarCare foi desenvolvida a partir do protótipo criado no **Stitch**.
 
 O projeto utiliza o **Materialize CSS 1.0.0**, complementado por estilos CSS próprios para adaptar a identidade visual do CarCare.
 
@@ -120,19 +120,23 @@ O projeto utiliza componentes do Materialize CSS para construção da interface,
 
 ## 🌐 API Pública
 
-Para enriquecer o cadastro dos veículos com dados reais, o projeto utiliza a **API FIPE**.
+Para auxiliar no cadastro dos veículos, o projeto utiliza uma **API pública relacionada à Tabela FIPE**.
 
-A API fornece dados relacionados à Tabela FIPE por meio de requisições REST, permitindo consultar informações de veículos como **marca, modelo, ano, combustível, código FIPE e preço de referência**.
+A API é utilizada para consultar informações de veículos, como:
+
+- Marca
+- Modelo
+- Ano
+- Combustível
+- Código FIPE
+- Preço de referência
 
 ### 🔗 API FIPE
 
-**API FIPE:**
+A integração utilizada pelo projeto é:
 
-https://fipe.api.br/
-
-### Utilização no CarCare
-
-A API será utilizada principalmente durante o **cadastro de veículos**, auxiliando na seleção das informações do veículo.
+```text
+https://fipe.parallelum.com.br/api/v2
 
 O fluxo previsto é:
 
@@ -177,7 +181,6 @@ manutencao-de-veiculos/
 ├── db.json
 ├── detalhes.html
 ├── index.html
-├── login.html
 ├── manutencoes.html
 ├── novo-veiculo.html
 ├── veiculos.html
@@ -190,15 +193,14 @@ manutencao-de-veiculos/
 
 ## 🖥️ Interface
 
-O CarCare possui uma interface responsiva organizada em três áreas principais:
+O CarCare possui uma interface responsiva organizada nas seguintes áreas principais:
 
-- 📊 **Dashboard** — Visão geral da frota e dos registros de manutenção.
+- 📊 **Dashboard** — Apresenta uma visão geral dos veículos e das informações de manutenção.
+- 🚗 **Veículos** — Permite cadastrar e consultar os veículos.
+- 📄 **Detalhes do Veículo** — Apresenta as informações de um veículo específico e seus registros relacionados.
+- 🔧 **Manutenções** — Permite registrar e consultar informações simples sobre as manutenções realizadas.
 
-- 🚗 **Veículos** — Cadastro, consulta e gerenciamento dos veículos.
-
-- 🔧 **Manutenções** — Registro e acompanhamento do histórico de manutenções realizadas.
-
-As informações de **gastos** são relacionadas diretamente aos registros de manutenção, não sendo necessário criar telas separadas para essas informações.
+As informações de **gastos** são relacionadas diretamente aos registros de manutenção, não sendo necessário criar uma tela exclusiva para gastos.
 
 ---
 
@@ -206,18 +208,16 @@ As informações de **gastos** são relacionadas diretamente aos registros de ma
 
 ### 📊 Dashboard
 
-Apresenta uma visão geral das informações da frota, incluindo:
+Apresenta um resumo das informações cadastradas no sistema, incluindo:
 
-- Quantidade de veículos
-- Manutenções registradas
-- Status dos veículos
-- Veículos em manutenção
-- Veículos prontos
-- Resumo dos gastos com manutenção
+- Quantidade de veículos;
+- Informações resumidas dos veículos;
+- Manutenções registradas;
+- Valores relacionados às manutenções.
 
 ### 🚗 Veículos
 
-Permite cadastrar, consultar e gerenciar os veículos.
+Permite cadastrar e consultar os veículos.
 
 As informações do veículo incluem:
 
@@ -227,25 +227,29 @@ As informações do veículo incluem:
 - Placa
 - Quilometragem
 - Combustível
-- Status do veículo
 
-Durante o cadastro, a aplicação utiliza a **API FIPE** para auxiliar na seleção das informações de marca, modelo e ano.
+Durante o cadastro, a aplicação utiliza a API pública para auxiliar na seleção das informações de marca, modelo e ano.
 
-Também será possível acessar as informações relacionadas às manutenções de cada veículo.
+Também é possível acessar os detalhes de cada veículo.
+
+### 📄 Detalhes do Veículo
+
+Apresenta as principais informações do veículo selecionado.
+
+Também permite consultar as informações relacionadas às manutenções registradas.
 
 ### 🔧 Manutenções
 
-Permite registrar e acompanhar o histórico de manutenções realizadas nos veículos.
+Permite registrar informações simples sobre as manutenções realizadas.
 
-Cada registro de manutenção pode conter:
+Cada registro pode conter:
 
-- Tipo de manutenção
-- Data
-- Quilometragem
-- Serviço realizado
-- Valor gasto
-- Observações
-- Status da manutenção
+- Observação sobre o serviço realizado;
+- Valor gasto.
+
+As informações ficam relacionadas ao veículo correspondente.
+
+Também é possível registrar uma observação sobre um serviço que precisa ser realizado, sem utilizar um sistema de agendamento ou cálculo de futuras revisões.
 
 ---
 

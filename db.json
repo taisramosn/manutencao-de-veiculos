@@ -9,6 +9,16 @@
       "combustivel": "Gasolina",
       "id": "Y1NgRMOFWb0",
       "status": "manutencao"
+    },
+    {
+      "marca": "Agrale",
+      "modelo": "MARRUÁ 2.8 12V 132cv TDI Diesel",
+      "ano": "2007 Diesel",
+      "placa": "ADE-456",
+      "quilometragem": 250,
+      "combustivel": "Diesel",
+      "status": "operacional",
+      "id": "RHPiPM8CJFw"
     }
   ],
   "manutencoes": [

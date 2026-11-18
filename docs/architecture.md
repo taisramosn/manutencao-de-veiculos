@@ -1,10 +1,12 @@
 # 🛠️ Especificação Técnica (Tech Spec) - CarCare
 
-Este documento detalha a arquitetura técnica, o modelo de dados, a estrutura de armazenamento e a API utilizada pelo sistema CarCare.
+Este documento detalha a arquitetura técnica, o modelo de dados, a estrutura de armazenamento e as tecnologias utilizadas pelo sistema CarCare.
 
-O CarCare é uma aplicação web desenvolvida para auxiliar o proprietário no cadastro e acompanhamento das informações de seus veículos e respectivas manutenções.
+O CarCare é uma aplicação web desenvolvida para auxiliar o proprietário no cadastro e acompanhamento das informações de seus veículos e dos registros relacionados às suas manutenções.
 
-A aplicação utiliza uma API local simulada pelo **JSON Server**, utilizada principalmente para o cadastro e consulta dos veículos.
+A aplicação utiliza uma API local simulada pelo **JSON Server**, responsável pela persistência e consulta dos dados dos veículos.
+
+---
 
 ## 1. Arquitetura da Aplicação
 
@@ -13,7 +15,7 @@ O CarCare utiliza uma arquitetura simples composta por uma aplicação web no la
 ```text
 ┌─────────────────────────────────────────────┐
 │                  CarCare                    │
-│              Aplicação Web                  │
+│              Aplicação Web                 │
 ├─────────────────────────────────────────────┤
 │                                             │
 │  HTML + CSS + JavaScript                    │
@@ -30,7 +32,7 @@ O CarCare utiliza uma arquitetura simples composta por uma aplicação web no la
                        ▼
 ┌─────────────────────────────────────────────┐
 │              JSON Server                    │
-│                API Fake                     │
+│                API REST                     │
 ├─────────────────────────────────────────────┤
 │                                             │
 │  /veiculos                                  │
@@ -38,9 +40,9 @@ O CarCare utiliza uma arquitetura simples composta por uma aplicação web no la
 └──────────────────────┬──────────────────────┘
                        │
                        ▼
-                  ┌──────────┐
-                  │ db.json  │
-                  └──────────┘
+                ┌──────────┐
+                │ db.json   │
+                └──────────┘
 ```
 
 ### Responsabilidades do Front-end
@@ -53,11 +55,11 @@ O front-end é responsável por:
 - Permitir a visualização dos detalhes de um veículo.
 - Apresentar informações relacionadas às manutenções.
 - Apresentar o histórico de manutenção.
-- Apresentar informações de próxima revisão.
 - Apresentar informações resumidas no Dashboard.
 - Realizar requisições para a API.
 - Validar dados antes do envio.
 - Apresentar mensagens de sucesso ou erro.
+- Utilizar a API pública para auxiliar na consulta dos dados dos veículos.
 
 ### Responsabilidades do JSON Server
 
@@ -68,8 +70,6 @@ O JSON Server é utilizado para:
 - Armazenar os veículos no arquivo `db.json`.
 - Permitir consultas aos veículos cadastrados.
 - Permitir cadastro de novos veículos.
-- Permitir atualização de veículos.
-- Permitir exclusão de veículos.
 
 ### Responsabilidade do `db.json`
 
@@ -81,9 +81,9 @@ O modelo de dados principal do CarCare é baseado na entidade:
 
 - **Veículos**
 
-As informações relacionadas à próxima revisão são armazenadas dentro do próprio veículo.
+Os registros de manutenção estão relacionados aos veículos cadastrados.
 
-As informações de manutenção fazem parte da aplicação e do acompanhamento do veículo, mas não possuem uma API independente neste projeto.
+As informações de manutenção são simples e têm como objetivo registrar uma observação sobre o serviço realizado e o valor gasto.
 
 ### 2.1 Veículos
 
@@ -98,80 +98,77 @@ Cada veículo pode possuir informações como:
 - Placa.
 - Quilometragem.
 - Combustível.
-- Próxima revisão, quando houver.
+- Informações relacionadas às manutenções, quando houver.
 
-### 2.2 Próxima revisão
+### 2.2 Manutenções
 
-A próxima revisão não possui uma entidade independente.
+As informações de manutenção estão relacionadas ao veículo correspondente.
 
-Ela é armazenada como uma informação relacionada ao próprio veículo.
+Um registro de manutenção pode conter:
 
-Pode conter:
+- Observação
+- Valor
 
-- Data prevista.
-- Quilometragem prevista.
+A manutenção não possui uma estrutura complexa de acompanhamento.
 
-Exemplo:
+O sistema não utiliza, nesta versão:
 
-```json
-"proximaRevisao": {
-  "data": "2026-11-10",
-  "quilometragem": 95000
-}
-```
+- Data de próxima revisão.
+- Quilometragem de próxima revisão.
+- Status de manutenção.
 
-O sistema não precisa realizar cálculos complexos para determinar a próxima revisão.
+Uma observação também pode ser utilizada para registrar uma informação sobre algo que precisa ser realizado no veículo, sem criar um registro de manutenção futura.
 
 ## 3. Dicionário de Dados
 
 ### 3.1 Entidade `veiculos`
 
-| Campo | Tipo | Descrição |
-|---|---|---|
-| `id` | string | Identificador único do veículo |
-| `marca` | string | Marca do veículo |
-| `modelo` | string | Modelo do veículo |
-| `ano` | number | Ano de fabricação do veículo |
-| `placa` | string | Placa do veículo |
+| Campo           | Tipo   | Descrição                      |
+| --------------- | ------ | ------------------------------ |
+| `id`            | string | Identificador único do veículo |
+| `marca`         | string | Marca do veículo               |
+| `modelo`        | string | Modelo do veículo              |
+| `ano`           | number | Ano do veículo                 |
+| `placa`         | string | Placa do veículo               |
 | `quilometragem` | number | Quilometragem atual do veículo |
-| `combustivel` | string | Tipo de combustível utilizado |
-| `proximaRevisao` | object | Informações da próxima revisão, quando houver |
-| `proximaRevisao.data` | string | Data prevista para a próxima revisão |
-| `proximaRevisao.quilometragem` | number | Quilometragem prevista para a próxima revisão |
+| `combustivel`   | string | Tipo de combustível utilizado  |
+
+### 3.2 Informações de manutenção
+
+| Campo        | Tipo   | Descrição                                  |
+| ------------ | ------ | ------------------------------------------ |
+| `observacao` | string | Descrição ou observação sobre a manutenção |
+| `valor`      | number | Valor gasto na manutenção                  |
+
 
 ## 4. Estrutura das Informações de Manutenção
 
-As informações de manutenção fazem parte da experiência do sistema, sendo utilizadas para apresentar o histórico e os serviços relacionados aos veículos.
+As informações de manutenção fazem parte da experiência do sistema e são utilizadas para apresentar os serviços relacionados aos veículos.
 
-Entre as informações apresentadas podem estar:
+Nesta versão do projeto, o registro de manutenção é simplificado.
 
-- Tipo de manutenção.
-- Data.
-- Quilometragem.
-- Serviço realizado.
-- Peças utilizadas.
-- Oficina.
-- Valor.
-- Status.
-- Observações.
+Cada registro possui principalmente:
 
-Essas informações podem ser utilizadas nas telas de:
+- Observação sobre o serviço realizado.
+- Valor gasto.
 
-- Dashboard.
+As informações podem ser apresentadas nas seguintes áreas:
+
+Dashboard.
 - Detalhes do veículo.
-- Histórico de manutenções.
 - Área de Manutenções.
 
-Neste projeto, as manutenções **não possuem endpoints próprios na API JSON Server**.
+O objetivo é permitir que o proprietário consulte o que foi realizado no veículo e o valor relacionado ao serviço.
 
-Portanto, não existem rotas como:
+Não fazem parte desta versão informações como:
 
-```text
-/manutencoes
-/proximasManutencoes
-```
-
-A API do projeto fica concentrada no cadastro e gerenciamento dos veículos.
+- Tipo de manutenção.
+- Data da manutenção.
+- Quilometragem da manutenção.
+- Peças utilizadas.
+- Oficina.
+- Status.
+- Agendamento de manutenção futura.
 
 ## 5. Rotas da API
 
@@ -210,37 +207,6 @@ Exemplo:
 ```http
 GET /veiculos/1
 ```
-
-### 5.3 Cadastrar veículo
-
-```http
-POST /veiculos
-```
-
-Cria um novo veículo.
-
-### 5.4 Atualizar veículo
-
-```http
-PUT /veiculos/:id
-```
-
-Atualiza os dados de um veículo existente.
-
-Exemplo:
-
-```http
-PUT /veiculos/1
-```
-
-### 5.5 Excluir veículo
-
-```http
-DELETE /veiculos/:id
-```
-
-Remove um veículo cadastrado.
-
 ## 6. Estrutura do Banco de Dados
 
 O armazenamento utilizado pelo JSON Server é representado pelo arquivo:
@@ -269,11 +235,7 @@ A estrutura principal será:
       "ano": 2015,
       "placa": "ABC1D23",
       "quilometragem": 87420,
-      "combustivel": "Flex",
-      "proximaRevisao": {
-        "data": "2026-11-10",
-        "quilometragem": 95000
-      }
+      "combustivel": "Flex"
     }
   ]
 }
@@ -292,35 +254,12 @@ Exemplo de dados enviados para a API:
   "ano": 2015,
   "placa": "ABC1D23",
   "quilometragem": 87420,
-  "combustivel": "Flex",
-  "proximaRevisao": {
-    "data": "2026-11-10",
-    "quilometragem": 95000
-  }
+  "combustivel": "Flex"
 }
 ```
 
 O `id` do veículo será utilizado para identificar o registro posteriormente.
 
-### 7.2 Atualização de veículo
-
-A atualização utiliza os mesmos campos do cadastro.
-
-Exemplo:
-
-```json
-{
-  "marca": "Chevrolet",
-  "modelo": "Onix",
-  "ano": 2015,
-  "placa": "ABC1D23",
-  "quilometragem": 90000,
-  "combustivel": "Flex",
-  "proximaRevisao": {
-    "data": "2027-02-10",
-    "quilometragem": 100000
-  }
-}
 ```
 
 ## 8. Fluxo de Dados
@@ -359,11 +298,12 @@ O fluxo básico da aplicação ocorre da seguinte forma:
 1. O proprietário acessa o formulário de cadastro.
 2. O proprietário preenche os dados do veículo.
 3. O JavaScript valida os dados.
-4. O front-end envia uma requisição `POST /veiculos`.
-5. O JSON Server recebe a requisição.
-6. O veículo é armazenado no `db.json`.
-7. A aplicação atualiza a interface.
-8. O proprietário recebe o retorno da operação.
+4. O front-end consulta a API pública quando necessário.
+5. O front-end envia uma requisição `POST /veiculos`. 
+6. O JSON Server recebe a requisição.
+7. O veículo é armazenado no `db.json`.
+8. A aplicação atualiza a interface.
+9. O proprietário recebe o retorno da operação.
 
 ### Exemplo: consulta de veículos
 
@@ -399,15 +339,16 @@ Devem ser verificadas informações como:
 - Quilometragem maior ou igual a zero.
 - Combustível informado.
 
-### Próxima revisão
+### Manutenção
 
-Quando informada, deve possuir:
+Quando uma manutenção for registrada, devem ser verificadas:
 
-- Data válida, quando preenchida.
-- Quilometragem válida, quando preenchida.
-- Valor de quilometragem maior ou igual a zero.
+- Veículo relacionado informado.
+- Observação preenchida.
+- Valor válido, quando informado.
+- Valor maior ou igual a zero.
 
-A validação deve ocorrer no front-end antes da realização da requisição.
+A validação deve ocorrer no front-end antes da realização da requisição ou do armazenamento dos dados.
 
 ## 10. Tratamento de Erros
 

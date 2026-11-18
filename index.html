@@ -1,68 +1,111 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>CarCare - Dashboard</title>
 
+    <!-- MATERIALIZE -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     >
 
+    <!-- MATERIAL ICONS -->
     <link
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet"
     >
 
-    <link rel="stylesheet" href="css/style.css">
+    <!-- CSS DO PROJETO -->
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
 </head>
+
 
 <body>
 
+
     <!-- MENU LATERAL -->
-    <aside class="sidebar">
+
+    <aside class="sidebar" id="sidebar">
 
         <div class="logo">
 
             <div class="logo-icon">
-                <i class="material-icons">directions_car</i>
+
+                <i class="material-icons">
+                    directions_car
+                </i>
+
             </div>
 
             <div>
-                <strong>CarCare</strong>
-                <small>GESTÃO DE FROTA</small>
+
+                <strong>
+                    CarCare
+                </strong>
+
             </div>
 
         </div>
 
 
-       <button
-    class="btn blue-btn new-maintenance"
-    onclick="irPara('nova-manutencao.html')"
->
-            <i class="material-icons left">add</i>
+        <button
+            class="btn blue-btn new-maintenance"
+            onclick="irPara('nova-manutencao.html')"
+        >
+
+            <i class="material-icons left">
+                add
+            </i>
+
             Nova Manutenção
+
         </button>
 
 
         <nav class="menu">
 
             <a class="active">
-                <i class="material-icons">dashboard</i>
+
+                <i class="material-icons">
+                    dashboard
+                </i>
+
                 Dashboard
+
             </a>
+
 
             <a onclick="irPara('veiculos.html')">
-                <i class="material-icons">directions_car</i>
-                Meus Veículos
+
+                <i class="material-icons">
+                    directions_car
+                </i>
+
+                Veículos
+
             </a>
 
+
             <a onclick="irPara('manutencoes.html')">
-                <i class="material-icons">build</i>
+
+                <i class="material-icons">
+                    build
+                </i>
+
                 Manutenções
+
             </a>
 
         </nav>
@@ -71,34 +114,83 @@
         <div class="menu-bottom">
 
             <a>
-                <i class="material-icons">settings</i>
+
+                <i class="material-icons">
+                    settings
+                </i>
+
                 Configurações
+
             </a>
+
 
             <a>
-                <i class="material-icons">help_outline</i>
+
+                <i class="material-icons">
+                    help_outline
+                </i>
+
                 Suporte
+
             </a>
 
-            <a class="logout" onclick="sair()">
-    <i class="material-icons">logout</i>
-    Sair
-</a>
+
+            <a
+                class="logout"
+                onclick="sair()"
+            >
+
+                <i class="material-icons">
+                    logout
+                </i>
+
+                Sair
+
+            </a>
 
         </div>
 
     </aside>
 
 
+    <!-- FUNDO ESCURO DO MENU MOBILE -->
+
+    <div
+        class="mobile-menu-overlay"
+        id="mobileMenuOverlay"
+    ></div>
+
+
     <!-- ÁREA PRINCIPAL -->
+
     <main>
 
+
         <!-- TOPO -->
+
         <header class="topbar">
+
+            <button
+                type="button"
+                class="mobile-menu-toggle"
+                id="mobileMenuToggle"
+                aria-label="Abrir menu"
+                aria-expanded="false"
+                aria-controls="sidebar"
+            >
+
+                <i class="material-icons">
+                    more_vert
+                </i>
+
+            </button>
+
 
             <div class="search">
 
-                <i class="material-icons">search</i>
+                <i class="material-icons">
+                    search
+                </i>
 
                 <input
                     type="text"
@@ -114,11 +206,18 @@
                     notifications_none
                 </i>
 
-                <span class="avatar">AD</span>
+
+                <span class="avatar">
+                    AD
+                </span>
+
 
                 <div>
-                    <strong>Administrador</strong>
-                    <small>Gestor de Frota</small>
+
+                    <strong>
+                        Administrador
+                    </strong>
+
                 </div>
 
             </div>
@@ -127,7 +226,11 @@
 
 
         <!-- CONTEÚDO -->
+
         <section class="content">
+
+
+            <!-- CABEÇALHO -->
 
             <div class="page-header">
 
@@ -137,7 +240,9 @@
                         PAINEL GERAL • ATUALIZADO EM TEMPO REAL
                     </span>
 
-                    <h1>Visão Geral da Frota</h1>
+                    <h1>
+                        Visão Geral
+                    </h1>
 
                 </div>
 
@@ -145,9 +250,13 @@
 
 
             <!-- INDICADORES -->
+
             <div class="row stats">
 
-                <div class="col s12 m6">
+
+                <!-- TOTAL DE VEÍCULOS -->
+
+                <div class="col s12 m4">
 
                     <div class="card stat-card">
 
@@ -157,19 +266,30 @@
                                 Total de Veículos
                             </span>
 
-                            <strong class="stat-number">
-                                24
+
+                            <strong
+                                class="stat-number"
+                                id="dashboard-total-veiculos"
+                            >
+                                0
                             </strong>
 
+
                             <span class="stat-icon">
+
                                 <i class="material-icons">
                                     directions_car
                                 </i>
+
                             </span>
 
+
                             <div class="stat-footer">
-                                <b>+2 no mês</b>
-                                • 21 Operacionais
+
+                                <span id="dashboard-operacionais">
+                                    0 operacionais
+                                </span>
+
                             </div>
 
                         </div>
@@ -179,28 +299,40 @@
                 </div>
 
 
-                <div class="col s12 m6">
+                <!-- VEÍCULOS EM MANUTENÇÃO -->
+
+                <div class="col s12 m4">
 
                     <div class="card stat-card">
 
                         <div class="card-content">
 
                             <span class="stat-title">
-                                Manutenções Ativas
+                                Em Manutenção
                             </span>
 
-                            <strong class="stat-number">
-                                5
+
+                            <strong
+                                class="stat-number"
+                                id="dashboard-total-manutencoes"
+                            >
+                                0
                             </strong>
 
+
                             <span class="stat-icon maintenance-icon">
+
                                 <i class="material-icons">
                                     build
                                 </i>
+
                             </span>
 
+
                             <div class="stat-footer warning">
-                                2 corretivas urgentes
+
+                                Veículos em manutenção
+
                             </div>
 
                         </div>
@@ -209,226 +341,184 @@
 
                 </div>
 
+
+                <!-- VEÍCULOS OPERACIONAIS -->
+
+                <div class="col s12 m4">
+
+                    <div class="card stat-card">
+
+                        <div class="card-content">
+
+                            <span class="stat-title">
+                                Operacionais
+                            </span>
+
+
+                            <strong
+                                class="stat-number"
+                                id="dashboard-total-operacionais"
+                            >
+                                0
+                            </strong>
+
+
+                            <span class="stat-icon">
+
+                                <i class="material-icons">
+                                    check_circle
+                                </i>
+
+                            </span>
+
+
+                            <div class="stat-footer">
+
+                                Veículos disponíveis
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
             </div>
 
 
-            <!-- VEÍCULOS -->
+            <!-- RESUMO -->
+
             <section class="fleet card">
+
 
                 <div class="fleet-header">
 
                     <div>
 
                         <span class="subtitle">
-                            DESTAQUES DA FROTA
+                            RESUMO DO SISTEMA
                         </span>
 
-                        <h2>Veículos Monitorados</h2>
+                        <h2>
+                            Acompanhe seus veículos
+                        </h2>
 
                     </div>
 
 
-                    <div class="filters">
+                    <a
+                        onclick="irPara('veiculos.html')"
+                        class="filters-link"
+                    >
+                        Ver meus veículos →
+                    </a>
 
-                        <button class="filter active">
-                            Todos (2)
-                        </button>
+                </div>
 
-                        <button class="filter">
-                            Em Andamento (1)
-                        </button>
 
-                        <button class="filter">
-                            Prontos (1)
-                        </button>
 
-                        <a onclick="irPara('veiculos.html')">
-                            Ver todos (24) →
-                        </a>
+                <div class="dashboard-summary">
+
+
+                    <div class="summary-item">
+
+
+                        <div class="summary-icon">
+
+                            <i class="material-icons">
+                                directions_car
+                            </i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Veículos cadastrados
+                            </strong>
+
+                            <p>
+                                Consulte todos os veículos na área
+                                <strong>Meus Veículos</strong>.
+                            </p>
+
+                        </div>
+
 
                     </div>
 
+
+
+                    <div class="summary-item">
+
+
+                        <div class="summary-icon">
+
+                            <i class="material-icons">
+                                build
+                            </i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Controle de manutenções
+                            </strong>
+
+                            <p>
+                                Registre e acompanhe as manutenções
+                                realizadas nos veículos.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
                 </div>
 
 
-                <div class="vehicles">
-
-                    <!-- COROLLA -->
-                    <article class="vehicle-card">
-
-                        <div class="vehicle-image corolla">
-
-                            <span class="status ready">
-                                Pronto
-                            </span>
-
-                            <span class="plate">
-                                BRA2E19
-                            </span>
-
-                        </div>
-
-
-                        <div class="vehicle-content">
-
-                            <div class="vehicle-name">
-
-                                <strong>
-                                    Toyota Corolla Altis
-                                </strong>
-
-                                <span>2022</span>
-
-                            </div>
-
-                            <p class="vehicle-info">
-                                48.500 km • Flex
-                            </p>
-
-
-                            <div class="service success">
-
-                                <strong>
-                                    <i class="material-icons">
-                                        check_circle
-                                    </i>
-
-                                    SERVIÇO CONCLUÍDO
-                                </strong>
-
-                                <p>
-                                    O que foi feito: Troca de óleo 5W30,
-                                    filtros (ar, óleo e cabine) e pastilhas
-                                    de freio dianteiras.
-                                </p>
-
-                                <span class="price">
-                                    R$ 850,00
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="vehicle-footer">
-
-                            <span class="green-text">
-                                Liberado para rodagem
-                            </span>
-
-                            <button
-                                class="btn blue-btn details"
-                                onclick="verDetalhes('corolla')"
-                            >
-                                Detalhes
-
-                                <i class="material-icons right">
-                                    chevron_right
-                                </i>
-
-                            </button>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- HILUX -->
-                    <article class="vehicle-card">
-
-                        <div class="vehicle-image hilux">
-
-                            <span class="status in-maintenance">
-                                Em Manutenção
-                            </span>
-
-                            <span class="plate">
-                                HIL9A44
-                            </span>
-
-                        </div>
-
-
-                        <div class="vehicle-content">
-
-                            <div class="vehicle-name">
-
-                                <strong>
-                                    Toyota Hilux SRX
-                                </strong>
-
-                                <span>2021</span>
-
-                            </div>
-
-                            <p class="vehicle-info">
-                                82.100 km • Diesel
-                            </p>
-
-
-                            <div class="service danger">
-
-                                <strong>
-                                    <i class="material-icons">
-                                        error
-                                    </i>
-
-                                    MANUTENÇÃO EM ANDAMENTO
-                                </strong>
-
-                                <p>
-                                    O que está sendo feito: Retífica de
-                                    discos de freio, substituição do jogo
-                                    de pastilhas dianteiras e sangria do
-                                    sistema hidráulico.
-                                </p>
-
-                                <span class="price">
-                                    Previsão: R$ 1.450,00
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="vehicle-footer">
-
-                            <span class="red-text">
-                                OS #2024-089 Em Execução
-                            </span>
-
-                            <button
-                                class="btn blue-btn details"
-                                onclick="verDetalhes('hilux')"
-                            >
-                                Detalhes
-
-                                <i class="material-icons right">
-                                    chevron_right
-                                </i>
-
-                            </button>
-
-                        </div>
-
-                    </article>
-
+                <div
+                    id="dashboard-vehicles-container"
+                    style="display: none;"
+                >
                 </div>
+
 
             </section>
 
+
         </section>
+
 
     </main>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- JQUERY -->
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    ></script>
+
+
+    <!-- MATERIALIZE -->
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
+    ></script>
+
+
+    <!-- APP -->
 
     <script src="js/app.js"></script>
+
 
 </body>
 

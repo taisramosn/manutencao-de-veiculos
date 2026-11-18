@@ -1936,7 +1936,6 @@ async function excluirManutencao(
     }
 }
 
-
 /* =====================================================
    DASHBOARD
 ===================================================== */
@@ -1944,42 +1943,11 @@ async function excluirManutencao(
 let veiculosDashboard = [];
 
 
-function obterContainerDashboard() {
-
-    let container =
-        document.getElementById(
-            "dashboard-vehicles-container"
-        );
-
-
-    /*
-       Compatibilidade com a versão do HTML
-       que usa .fleet .vehicles.
-    */
-
-    if (!container) {
-
-        container =
-            document.querySelector(
-                ".fleet .vehicles"
-            );
-    }
-
-
-    return container;
-}
-
+/* =====================================================
+   CARREGAR DASHBOARD
+===================================================== */
 
 async function carregarDashboard() {
-
-    const container =
-        obterContainerDashboard();
-
-
-    if (!container) {
-        return;
-    }
-
 
     try {
 
@@ -1989,12 +1957,6 @@ async function carregarDashboard() {
 
         atualizarResumoDashboard();
 
-
-        renderizarDashboardVeiculos(
-            "todos"
-        );
-
-
     } catch (erro) {
 
         console.error(
@@ -2002,15 +1964,14 @@ async function carregarDashboard() {
             erro
         );
 
-
-        container.innerHTML = `
-            <p style="padding: 30px;">
-                Não foi possível carregar os veículos.
-            </p>
-        `;
     }
+
 }
 
+
+/* =====================================================
+   ATUALIZAR RESUMO
+===================================================== */
 
 function atualizarResumoDashboard() {
 
@@ -2026,6 +1987,7 @@ function atualizarResumoDashboard() {
                     veiculo.status !==
                     "manutencao"
                 );
+
             }
         ).length;
 
@@ -2038,9 +2000,14 @@ function atualizarResumoDashboard() {
                     veiculo.status ===
                     "manutencao"
                 );
+
             }
         ).length;
 
+
+    /* =============================================
+       TOTAL DE VEÍCULOS
+    ============================================= */
 
     const totalElement =
         document.getElementById(
@@ -2048,11 +2015,49 @@ function atualizarResumoDashboard() {
         );
 
 
+    if (totalElement) {
+
+        totalElement.textContent =
+            total;
+
+    }
+
+
+    /* =============================================
+       VEÍCULOS OPERACIONAIS
+    ============================================= */
+
     const operacionaisElement =
         document.getElementById(
             "dashboard-operacionais"
         );
 
+
+    if (operacionaisElement) {
+
+        operacionaisElement.textContent =
+            `${operacionais} operacionais`;
+
+    }
+
+
+    const totalOperacionaisElement =
+        document.getElementById(
+            "dashboard-total-operacionais"
+        );
+
+
+    if (totalOperacionaisElement) {
+
+        totalOperacionaisElement.textContent =
+            operacionais;
+
+    }
+
+
+    /* =============================================
+       VEÍCULOS EM MANUTENÇÃO
+    ============================================= */
 
     const manutencoesElement =
         document.getElementById(
@@ -2060,464 +2065,138 @@ function atualizarResumoDashboard() {
         );
 
 
-    const todosCount =
-        document.getElementById(
-            "dashboard-todos-count"
-        );
-
-
-    const manutencaoCount =
-        document.getElementById(
-            "dashboard-manutencao-count"
-        );
-
-
-    const operacionalCount =
-        document.getElementById(
-            "dashboard-operacional-count"
-        );
-
-
-    const verTodos =
-        document.getElementById(
-            "dashboard-ver-todos"
-        );
-
-
-    if (totalElement) {
-
-        totalElement.textContent =
-            total;
-    }
-
-
-    if (operacionaisElement) {
-
-        operacionaisElement.textContent =
-            `${operacionais} operacionais`;
-    }
-
-
     if (manutencoesElement) {
 
         manutencoesElement.textContent =
             emManutencao;
+
     }
 
-
-    if (todosCount) {
-
-        todosCount.textContent =
-            total;
-    }
-
-
-    if (manutencaoCount) {
-
-        manutencaoCount.textContent =
-            emManutencao;
-    }
-
-
-    if (operacionalCount) {
-
-        operacionalCount.textContent =
-            operacionais;
-    }
-
-
-    if (verTodos) {
-
-        verTodos.textContent =
-            total;
-    }
 }
-
-
-function renderizarDashboardVeiculos(
-    filtro = "todos"
-) {
-
-    const container =
-        obterContainerDashboard();
-
-
-    if (!container) {
-        return;
-    }
-
-
-    let lista =
-        [...veiculosDashboard];
-
-
-    if (
-        filtro === "manutencao"
-    ) {
-
-        lista =
-            lista.filter(
-                function (veiculo) {
-
-                    return (
-                        veiculo.status ===
-                        "manutencao"
-                    );
-                }
-            );
-    }
-
-
-    if (
-        filtro === "operacional"
-    ) {
-
-        lista =
-            lista.filter(
-                function (veiculo) {
-
-                    return (
-                        veiculo.status !==
-                        "manutencao"
-                    );
-                }
-            );
-    }
-
-
-    if (!lista.length) {
-
-        container.innerHTML = `
-            <p style="padding: 30px;">
-                Nenhum veículo encontrado.
-            </p>
-        `;
-
-        return;
-    }
-
-
-    container.innerHTML =
-        lista
-            .map(
-                function (veiculo) {
-
-                    const emManutencao =
-                        veiculo.status ===
-                        "manutencao";
-
-
-                    const statusClasse =
-                        emManutencao
-                            ? "in-maintenance"
-                            : "ready";
-
-
-                    const statusTexto =
-                        emManutencao
-                            ? "Em Manutenção"
-                            : "Pronto";
-
-
-                    const nome =
-                        `${veiculo.marca || ""} ${veiculo.modelo || ""}`
-                            .trim();
-
-
-                    const ano =
-                        veiculo.ano || "-";
-
-
-                    const placa =
-                        veiculo.placa || "-";
-
-
-                    const km =
-                        Number(
-                            veiculo.quilometragem || 0
-                        ).toLocaleString(
-                            "pt-BR"
-                        );
-
-
-                    const combustivel =
-                        veiculo.combustivel || "-";
-
-
-                    return `
-                        <article class="vehicle-card">
-
-                            <div class="vehicle-image">
-
-                                <span
-                                    class="status ${statusClasse}"
-                                >
-                                    ${statusTexto}
-                                </span>
-
-                                <span class="plate">
-                                    ${placa}
-                                </span>
-
-                            </div>
-
-
-                            <div class="vehicle-content">
-
-                                <div class="vehicle-name">
-
-                                    <strong>
-                                        ${nome}
-                                    </strong>
-
-                                    <span>
-                                        ${ano}
-                                    </span>
-
-                                </div>
-
-
-                                <p class="vehicle-info">
-                                    ${km} km • ${combustivel}
-                                </p>
-
-
-                                <div
-                                    class="service ${
-                                        emManutencao
-                                            ? "danger"
-                                            : "success"
-                                    }"
-                                >
-
-                                    <strong>
-
-                                        <i class="material-icons">
-                                            ${
-                                                emManutencao
-                                                    ? "error"
-                                                    : "check_circle"
-                                            }
-                                        </i>
-
-                                        ${
-                                            emManutencao
-                                                ? "MANUTENÇÃO EM ANDAMENTO"
-                                                : "VEÍCULO OPERACIONAL"
-                                        }
-
-                                    </strong>
-
-
-                                    <p>
-                                        ${
-                                            emManutencao
-                                                ? "Este veículo possui uma manutenção em andamento."
-                                                : "Veículo disponível para utilização."
-                                        }
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="vehicle-footer">
-
-                                <button
-                                    class="btn blue-btn"
-                                    onclick="verDetalhes('${veiculo.id}')"
-                                >
-                                    Detalhes
-                                </button>
-
-                            </div>
-
-                        </article>
-                    `;
-                }
-            )
-            .join("");
-}
-
 
 /* =====================================================
-   FILTROS DO DASHBOARD
+   MENU MOBILE
 ===================================================== */
 
-function iniciarFiltrosDashboard() {
+function iniciarMenuMobile() {
 
-    const botoes =
-        document.querySelectorAll(
-            ".fleet .filter"
-        );
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const toggle =
+        document.getElementById("mobileMenuToggle");
+
+    const overlay =
+        document.getElementById("mobileMenuOverlay");
 
 
-    if (!botoes.length) {
+    // Se os elementos não existirem na página, não faz nada.
+    if (!sidebar || !toggle || !overlay) {
         return;
     }
 
 
-    botoes.forEach(
-        function (botao) {
+    function abrirMenu() {
 
-            botao.addEventListener(
-                "click",
-                function () {
+        sidebar.classList.add("mobile-menu-open");
 
-                    botoes.forEach(
-                        function (item) {
+        overlay.classList.add("active");
 
-                            item.classList.remove(
-                                "active"
-                            );
-                        }
-                    );
-
-
-                    botao.classList.add(
-                        "active"
-                    );
-
-
-                    let filtro =
-                        botao.getAttribute(
-                            "data-filter"
-                        );
-
-
-                    if (!filtro) {
-
-                        const texto =
-                            botao.textContent
-                                .trim()
-                                .toLowerCase();
-
-
-                        if (
-                            texto.includes(
-                                "manuten"
-                            )
-                        ) {
-
-                            filtro =
-                                "manutencao";
-
-                        } else if (
-                            texto.includes(
-                                "operacional"
-                            ) ||
-                            texto.includes(
-                                "pronto"
-                            )
-                        ) {
-
-                            filtro =
-                                "operacional";
-
-                        } else {
-
-                            filtro =
-                                "todos";
-                        }
-                    }
-
-
-                    renderizarDashboardVeiculos(
-                        filtro
-                    );
-                }
-            );
-        }
-    );
-}
-
-
-/* =====================================================
-   FILTROS DE MANUTENÇÕES
-===================================================== */
-
-function iniciarFiltrosManutencoes() {
-
-    const botoes =
-        document.querySelectorAll(
-            ".maintenance-filters .filter"
+        toggle.setAttribute(
+            "aria-expanded",
+            "true"
         );
 
-
-    if (!botoes.length) {
-        return;
+        toggle.setAttribute(
+            "aria-label",
+            "Fechar menu"
+        );
     }
 
 
-    botoes.forEach(
-        function (botao) {
+    function fecharMenu() {
 
-            botao.addEventListener(
-                "click",
-                function () {
+        sidebar.classList.remove("mobile-menu-open");
 
-                    botoes.forEach(
-                        function (item) {
+        overlay.classList.remove("active");
 
-                            item.classList.remove(
-                                "active"
-                            );
-                        }
-                    );
+        toggle.setAttribute(
+            "aria-expanded",
+            "false"
+        );
 
-
-                    botao.classList.add(
-                        "active"
-                    );
+        toggle.setAttribute(
+            "aria-label",
+            "Abrir menu"
+        );
+    }
 
 
-                    const texto =
-                        botao.textContent
-                            .trim()
-                            .toLowerCase();
+    toggle.addEventListener(
+        "click",
+        function () {
 
+            if (
+                sidebar.classList.contains("mobile-menu-open")
+            ) {
 
-                    let filtro =
-                        "todas";
+                fecharMenu();
 
+            } else {
 
-                    if (
-                        texto.includes(
-                            "andamento"
-                        )
-                    ) {
+                abrirMenu();
 
-                        filtro =
-                            "andamento";
-                    }
+            }
 
-
-                    if (
-                        texto.includes(
-                            "conclu"
-                        )
-                    ) {
-
-                        filtro =
-                            "concluidas";
-                    }
-
-
-                    /*
-                       "Aguardando" não é mais
-                       tratado como manutenção futura.
-                       Por isso cai em "todas".
-                    */
-
-
-                    carregarListaManutencoes(
-                        filtro
-                    );
-                }
-            );
         }
     );
+
+
+    // Fecha ao clicar no fundo escuro.
+    overlay.addEventListener(
+        "click",
+        fecharMenu
+    );
+
+
+    // Fecha ao clicar em um link do menu.
+    sidebar.querySelectorAll("a").forEach(
+        function (link) {
+
+            link.addEventListener(
+                "click",
+                fecharMenu
+            );
+
+        }
+    );
+
+
+    // Fecha ao pressionar Escape.
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (event.key === "Escape") {
+                fecharMenu();
+            }
+
+        }
+    );
+
+
+    // Fecha se a tela voltar ao tamanho desktop.
+    window.addEventListener(
+        "resize",
+        function () {
+
+            if (window.innerWidth > 900) {
+                fecharMenu();
+            }
+
+        }
+    );
+
 }
 
 /* =====================================================
@@ -2538,8 +2217,183 @@ document.addEventListener(
         ) {
 
             M.AutoInit();
+
         }
 
+        iniciarMenuMobile();
+
+        /* =============================================
+           LOGIN
+        ============================================= */
+
+        iniciarLogin();
+
+
+        /* =============================================
+           NOVO VEÍCULO
+        ============================================= */
+
+        const vehicleForm =
+            document.getElementById(
+                "vehicleForm"
+            );
+
+
+        if (vehicleForm) {
+
+            iniciarCadastroVeiculo();
+
+
+            vehicleForm.addEventListener(
+                "submit",
+                salvarVeiculo
+            );
+
+        }
+
+
+        /* =============================================
+           MEUS VEÍCULOS
+        ============================================= */
+
+        const vehiclesContainer =
+            document.getElementById(
+                "vehicles-cards-container"
+            );
+
+
+        if (vehiclesContainer) {
+
+            carregarListaVeiculos();
+
+        }
+
+
+        /* =============================================
+           DETALHES
+        ============================================= */
+
+        const detailsPage =
+            document.getElementById(
+                "vehicle-details"
+            );
+
+
+        if (detailsPage) {
+
+            carregarDetalhes();
+
+        }
+
+
+        if (
+            window.location.pathname.includes(
+                "detalhes.html"
+            )
+        ) {
+
+            carregarDetalhes();
+
+        }
+
+
+        /* =============================================
+           NOVA MANUTENÇÃO
+        ============================================= */
+
+        const maintenanceForm =
+            document.getElementById(
+                "maintenanceForm"
+            );
+
+
+        if (maintenanceForm) {
+
+            if (
+                typeof M !== "undefined"
+            ) {
+
+                M.FormSelect.init(
+                    document.querySelectorAll(
+                        "select"
+                    )
+                );
+
+            }
+
+
+            carregarVeiculosManutencao();
+
+
+            maintenanceForm.addEventListener(
+                "submit",
+                function (event) {
+
+                    event.preventDefault();
+
+                    salvarManutencao();
+
+                }
+            );
+
+        }
+
+
+        /* =============================================
+           LISTA DE MANUTENÇÕES
+        ============================================= */
+
+        const maintenanceList =
+            document.querySelector(
+                ".maintenance-list"
+            );
+
+
+        if (maintenanceList) {
+
+            carregarListaManutencoes();
+
+            iniciarFiltrosManutencoes();
+
+        }
+
+
+        /* =============================================
+           DASHBOARD
+        ============================================= */
+
+        if (
+            document.getElementById(
+                "dashboard-total-veiculos"
+            )
+        ) {
+
+            carregarDashboard();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   FUNÇÕES USADAS PELO HTML
+===================================================== */
+
+window.irPara =
+    irPara;
+
+window.novaManutencao =
+    novaManutencao;
+
+window.verDetalhes =
+    verDetalhes;
+
+window.excluirManutencao =
+    excluirManutencao;
+
+window.sair =
+    sair;
 
         /* =============================================
            LOGIN
@@ -2674,40 +2528,17 @@ document.addEventListener(
         }
 
 
-        /* =============================================
-           DASHBOARD
-        ============================================= */
+/* =============================================
+   DASHBOARD
+============================================= */
 
-        const dashboardContainer =
-            obterContainerDashboard();
+if (
+    document.getElementById(
+        "dashboard-total-veiculos"
+    )
+) {
 
+    carregarDashboard();
 
-        if (dashboardContainer) {
+}
 
-            carregarDashboard();
-
-            iniciarFiltrosDashboard();
-        }
-
-    }
-);
-
-
-/* =====================================================
-   FUNÇÕES USADAS PELO HTML
-===================================================== */
-
-window.irPara =
-    irPara;
-
-window.novaManutencao =
-    novaManutencao;
-
-window.verDetalhes =
-    verDetalhes;
-
-window.excluirManutencao =
-    excluirManutencao;
-
-window.sair =
-    sair;

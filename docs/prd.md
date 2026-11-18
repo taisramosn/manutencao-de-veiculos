@@ -2,278 +2,235 @@
 
 ## 1. Visão Geral e Objetivo
 
-O **CarCare** é um aplicativo web didático desenvolvido para auxiliar proprietários de veículos no controle e organização das informações relacionadas aos seus carros e suas manutenções.
+O **CarCare** é um aplicativo web didático desenvolvido para auxiliar proprietários de veículos no controle e organização das informações relacionadas aos seus carros e às manutenções realizadas.
 
-A aplicação permitirá o cadastro de veículos, o registro e acompanhamento de manutenções, o controle da quilometragem, a visualização dos valores gastos e o acompanhamento das próximas revisões.
+A aplicação permitirá o cadastro de veículos, a visualização de seus dados e o registro de informações simples sobre manutenções realizadas, incluindo observações e valores gastos.
 
-**O grande diferencial (Regra de Negócio Principal):** o CarCare centraliza as informações do veículo e seu histórico de manutenções, permitindo ao proprietário acompanhar os serviços realizados, os valores gastos, a quilometragem e as próximas revisões.
+O objetivo do sistema é centralizar as informações básicas dos veículos e seus registros de manutenção em um único lugar, facilitando a consulta das informações pelo proprietário.
 
-O objetivo do sistema é facilitar o acompanhamento da manutenção dos veículos, permitindo que o proprietário tenha em um único lugar informações sobre serviços realizados, peças utilizadas, valores gastos, quilometragem e próximas revisões.
+**Regra de Negócio Principal:** cada registro de manutenção deve estar relacionado a um veículo cadastrado no sistema.
 
 ---
 
 ## 2. Atores do Sistema
 
-- **Proprietário:** responsável pelo cadastro dos veículos e pelo registro, consulta e acompanhamento das informações de manutenção.
+- **Proprietário:** responsável pelo cadastro dos veículos e pelo registro e consulta das informações relacionadas às manutenções.
 
-> **Observação:** o sistema não possui cadastro de usuários, autenticação, contas ou gerenciamento de usuários. O próprio proprietário realiza o cadastro e o acompanhamento de seus veículos.
+> **Observação:** o sistema não possui cadastro de usuários, contas ou gerenciamento de usuários.
 
 ---
 
 ## 3. Histórias de Usuário e Escopo
 
-Abaixo estão as funcionalidades principais do MVP (Produto Mínimo Viável), escritas sob a perspectiva do proprietário do veículo.
+As histórias de usuário do CarCare estão organizadas de acordo com as principais funcionalidades do sistema.
 
-### 🚗 Épico 1: Cadastro e Gerenciamento de Veículos
+Para a entrega atual do projeto, o escopo está concentrado nas histórias **US01 a US06**, priorizando o cadastro e a consulta dos veículos e o registro de informações simples sobre suas manutenções.
+
+Funcionalidades adicionais poderão ser desenvolvidas posteriormente caso sejam necessárias para a evolução do sistema.
+
+---
+
+### 🚗 Épico 1: Cadastro e Visualização de Veículos
 
 #### US01 - Cadastro de Veículo
 
-**Como um Proprietário**, quero preencher um formulário com os dados do meu veículo (marca, modelo, ano, placa, quilometragem e combustível) para cadastrar meu veículo no sistema.
+**Como um Proprietário**, quero cadastrar meu veículo informando seus principais dados para que eu possa consultá-los posteriormente no sistema.
 
 **Critérios de Aceitação:**
-- Todos os campos obrigatórios devem ser preenchidos.
-- A placa deve possuir formato válido.
-- O ano deve ser válido.
-- A quilometragem deve ser um valor numérico maior ou igual a zero.
-- Os dados devem ser armazenados após o cadastro.
-- O armazenamento do veículo deverá ser realizado através do JSON Server.
+
+- O proprietário deverá informar a marca do veículo.
+- O proprietário deverá informar o modelo do veículo.
+- O proprietário deverá informar o ano do veículo.
+- O proprietário deverá informar a placa do veículo.
+- O proprietário deverá informar a quilometragem atual.
+- O proprietário deverá informar o tipo de combustível.
+- Os campos obrigatórios deverão ser preenchidos antes do cadastro.
+- A placa deverá possuir formato válido.
+- A quilometragem deverá ser um valor numérico maior ou igual a zero.
+- Os dados deverão ser armazenados após o cadastro.
+- O armazenamento deverá utilizar o JSON Server.
+
+---
 
 #### US02 - Visualização dos Veículos
 
 **Como um Proprietário**, quero visualizar os veículos cadastrados para consultar suas principais informações.
 
 **Critérios de Aceitação:**
+
 - O sistema deverá apresentar os veículos cadastrados.
-- Cada veículo deverá apresentar suas principais informações, como marca, modelo, ano, placa, quilometragem e combustível.
+- Cada veículo deverá apresentar informações como marca, modelo, ano, placa, quilometragem e combustível.
+- Os veículos deverão ser carregados a partir dos dados armazenados.
 - O proprietário deverá poder acessar os detalhes de um veículo.
-- Os veículos cadastrados deverão ser consultados através da API.
+
+---
 
 #### US03 - Visualização dos Detalhes do Veículo
 
-**Como um Proprietário**, quero visualizar os detalhes de um veículo para acompanhar sua situação e seu histórico de manutenção.
+**Como um Proprietário**, quero visualizar os detalhes de um veículo para consultar suas informações e os registros relacionados à manutenção.
 
 **Critérios de Aceitação:**
-- O sistema deverá apresentar a quilometragem atual do veículo.
-- O sistema deverá apresentar o combustível.
-- O sistema deverá apresentar o total investido em manutenções, quando houver informação disponível.
-- O sistema deverá apresentar a situação atual da manutenção, quando houver.
-- O sistema deverá apresentar a próxima revisão prevista, quando houver.
-- O sistema deverá apresentar o histórico de manutenções relacionadas ao veículo.
 
-#### US04 - Edição do Veículo
-
-**Como um Proprietário**, quero alterar os dados do meu veículo para manter as informações atualizadas.
-
-**Critérios de Aceitação:**
-- O sistema deve permitir a alteração dos dados cadastrados.
-- Os dados devem ser validados antes de serem salvos.
-- As alterações devem ser armazenadas após a confirmação.
-- A atualização do veículo deverá ser realizada através da API.
-
-#### US05 - Exclusão do Veículo
-
-**Como um Proprietário**, quero excluir um veículo cadastrado para remover informações que não utilizo mais.
-
-**Critérios de Aceitação:**
-- O sistema deve solicitar confirmação antes da exclusão do veículo.
-- O veículo deve ser removido após a confirmação.
-- A exclusão do veículo deverá ser realizada através da API.
-
-#### US06 - Acompanhamento da Próxima Revisão
-
-**Como um Proprietário**, quero visualizar a próxima revisão prevista do meu veículo para saber quando o próximo serviço deverá ser realizado.
-
-**Critérios de Aceitação:**
-- O sistema deverá apresentar a próxima revisão prevista, quando houver.
-- A revisão poderá possuir uma data prevista e/ou uma quilometragem prevista.
-- As informações da próxima revisão deverão ser apresentadas junto aos dados do veículo.
-- O sistema não precisa realizar cálculos complexos para determinar a próxima revisão.
+- O sistema deverá apresentar os dados principais do veículo.
+- O sistema deverá apresentar a quilometragem atual.
+- O sistema deverá apresentar o tipo de combustível.
+- O sistema deverá apresentar as observações relacionadas à manutenção, quando houver.
+- O sistema deverá apresentar o valor registrado para a manutenção, quando houver.
+- As informações apresentadas deverão estar relacionadas ao veículo selecionado.
 
 ---
 
-### 🔧 Épico 2: Registro e Acompanhamento de Manutenções
+### 🔧 Épico 2: Registro de Manutenção
 
-#### US07 - Registrar Manutenção
+#### US04 - Registrar Manutenção
 
-**Como um Proprietário**, quero registrar uma manutenção realizada no meu veículo para manter um histórico dos serviços realizados.
-
-**Critérios de Aceitação:**
-- O proprietário deve informar o veículo.
-- Deve ser informado o tipo de manutenção.
-- Deve ser informada a data da manutenção.
-- Deve ser informada a quilometragem do veículo.
-- Deve ser informado o serviço realizado.
-- Deve ser informado o valor da manutenção.
-- Os campos obrigatórios devem ser validados antes do cadastro.
-- As informações devem ser apresentadas no sistema após o registro.
-
-> **Observação:** nesta versão do projeto, as manutenções não possuem uma API própria no JSON Server.
-
-#### US08 - Visualizar Histórico de Manutenções
-
-**Como um Proprietário**, quero visualizar o histórico de manutenções do meu veículo para saber quais serviços já foram realizados.
+**Como um Proprietário**, quero registrar uma informação sobre a manutenção do meu veículo para manter um histórico simples dos serviços realizados.
 
 **Critérios de Aceitação:**
-- A lista deverá apresentar a data da manutenção.
-- Deverá apresentar o tipo de manutenção.
-- Deverá apresentar a quilometragem.
-- Deverá apresentar o serviço realizado.
-- Deverá apresentar o valor gasto.
-- As manutenções deverão estar relacionadas ao veículo correspondente.
 
-#### US09 - Editar Manutenção
-
-**Como um Proprietário**, quero editar uma manutenção cadastrada para corrigir ou atualizar suas informações.
-
-**Critérios de Aceitação:**
-- O sistema deve permitir a alteração dos dados da manutenção.
-- Os dados devem ser validados antes de serem salvos.
-- As alterações devem ser apresentadas no sistema após a confirmação.
-
-#### US10 - Excluir Manutenção
-
-**Como um Proprietário**, quero excluir uma manutenção registrada para remover informações cadastradas incorretamente.
-
-**Critérios de Aceitação:**
-- O sistema deve solicitar confirmação antes de excluir a manutenção.
-- A manutenção deve ser removida após a confirmação.
+- O proprietário deverá selecionar o veículo relacionado à manutenção.
+- O proprietário deverá informar uma observação sobre o serviço realizado.
+- O proprietário deverá informar o valor gasto, quando houver.
+- Os dados deverão ser validados antes do registro.
+- A informação deverá ser apresentada no sistema após o cadastro.
+- O registro deverá estar relacionado ao veículo correspondente.
 
 ---
 
-### 📊 Épico 3: Dashboard e Acompanhamento
+#### US05 - Visualizar Informações de Manutenção
 
-#### US11 - Visualização do Dashboard
-
-**Como um Proprietário**, quero visualizar um resumo das informações dos meus veículos e manutenções para acompanhar sua situação de forma rápida.
+**Como um Proprietário**, quero visualizar as informações de manutenção relacionadas ao meu veículo para consultar o que foi realizado e o valor gasto.
 
 **Critérios de Aceitação:**
-- O painel deverá apresentar informações resumidas dos veículos cadastrados.
-- O painel deverá apresentar informações relacionadas às manutenções.
-- O sistema deverá apresentar indicadores de situação dos veículos e/ou manutenções.
-- O proprietário deverá poder acessar os detalhes dos veículos a partir do painel.
 
-#### US12 - Visualizar Status das Manutenções
-
-**Como um Proprietário**, quero visualizar o status das manutenções para identificar serviços concluídos, em andamento ou que exigem atenção.
-
-**Critérios de Aceitação:**
-- O sistema deverá apresentar visualmente o status das manutenções.
-- As manutenções concluídas deverão ser identificadas como concluídas.
-- As manutenções em andamento deverão ser identificadas como em andamento.
-- Quando aplicável, o sistema deverá destacar situações que exigem atenção.
+- O sistema deverá apresentar a observação registrada.
+- O sistema deverá apresentar o valor da manutenção, quando houver.
+- As informações deverão estar relacionadas ao veículo correspondente.
+- O proprietário deverá conseguir consultar essas informações na área de detalhes do veículo.
 
 ---
 
-### 🌐 Épico 4: Integração e Persistência de Dados
+#### US06 - Registrar Observação de Manutenção
 
-#### US13 - Persistência de Dados dos Veículos
-
-**Como um Proprietário**, quero que os dados dos meus veículos sejam armazenados para que eu possa consultá-los posteriormente.
+**Como um Proprietário**, quero registrar uma observação sobre o que precisa ser realizado no meu veículo para ter essa informação disponível durante a consulta.
 
 **Critérios de Aceitação:**
-- Os dados dos veículos deverão ser armazenados.
-- O armazenamento deverá ser realizado através de uma API falsa utilizando JSON Server.
-- O sistema deverá permitir cadastrar, consultar, atualizar e excluir veículos através da API.
-- Os dados deverão ser armazenados no arquivo `db.json`.
 
-#### US14 - Consulta de Dados dos Veículos
-
-**Como um Proprietário**, quero que os dados dos veículos sejam carregados automaticamente ao acessar as páginas do sistema.
-
-**Critérios de Aceitação:**
-- O sistema deverá realizar requisições assíncronas à API.
-- Os dados dos veículos deverão ser consultados e exibidos.
-- O sistema deverá permitir consultar um veículo específico.
-- O sistema deverá tratar possíveis erros nas requisições.
-
-#### US15 - Consulta à API Pública
-
-**Como um Proprietário**, quero utilizar uma funcionalidade integrada a uma API pública para obter informações de forma automática.
-
-**Critérios de Aceitação:**
-- O sistema deverá realizar uma requisição para uma API pública real.
-- Os dados retornados pela API deverão ser apresentados ao proprietário.
-- O sistema deverá tratar possíveis erros na requisição.
+- O sistema deverá permitir informar uma observação relacionada ao veículo.
+- A observação poderá informar um serviço que precisa ser realizado.
+- A observação deverá ser apresentada junto às informações do veículo.
+- O sistema não precisa realizar cálculos para determinar datas ou quilometragens de futuras revisões.
 
 ---
 
 ## 4. Escopo do MVP
 
-O MVP do CarCare contempla:
+Para a entrega atual, o MVP do CarCare contempla:
 
 - Cadastro de veículos.
 - Visualização dos veículos cadastrados.
 - Visualização dos detalhes dos veículos.
+- Registro de informações de manutenção.
+- Registro de observações relacionadas ao veículo.
+- Registro do valor gasto na manutenção.
+- Consulta das informações de manutenção relacionadas ao veículo.
+- Persistência dos dados utilizando JSON Server.
+
+### Funcionalidades que não fazem parte do escopo atual
+
+Nesta etapa, o sistema não contempla:
+
 - Edição de veículos.
 - Exclusão de veículos.
-- Registro de manutenções.
-- Visualização do histórico de manutenções.
-- Edição de manutenções.
 - Exclusão de manutenções.
-- Visualização dos valores gastos nas manutenções.
-- Visualização do total investido no veículo.
-- Acompanhamento da próxima revisão.
-- Visualização do Dashboard.
-- Visualização dos status das manutenções.
-- Persistência dos dados dos veículos utilizando JSON Server.
-- Consulta dos veículos através de requisições assíncronas.
-- Integração com uma API pública.
-
-O sistema **não contempla**:
-
+- Edição de manutenções.
 - Cadastro de usuários.
 - Login ou autenticação.
 - Gerenciamento de contas.
-- Uma aba exclusiva para gastos.
-- Uma aba exclusiva para próximas manutenções.
-- API independente para manutenções.
-- API independente para próximas manutenções.
+- Sistema complexo de acompanhamento de revisões.
+- Cálculo automático de próxima revisão.
+- Cadastro de datas ou quilometragens para futuras revisões.
+- Aba exclusiva para gastos.
+- API independente para próximas revisões.
 
-Os gastos são apresentados como informações relacionadas às manutenções e aos veículos, enquanto as próximas revisões são apresentadas no acompanhamento dos veículos.
+As informações de manutenção são apresentadas de forma simples, por meio de observações e valores relacionados aos veículos cadastrados.
 
 ---
 
 ## 5. Estrutura Principal da Aplicação
 
-A aplicação será organizada nas seguintes áreas principais:
-
-### Dashboard
-
-Apresenta um resumo dos veículos e das manutenções, permitindo ao proprietário acompanhar rapidamente a situação dos seus veículos.
+A aplicação será organizada principalmente nas seguintes áreas:
 
 ### Veículos
 
 Apresenta os veículos cadastrados e permite acessar seus detalhes.
 
-Nos detalhes de cada veículo poderão ser apresentadas informações como:
+Cada veículo poderá apresentar:
 
-- Dados do veículo.
+- Marca.
+- Modelo.
+- Ano.
+- Placa.
 - Quilometragem.
 - Combustível.
-- Total investido.
-- Situação da manutenção.
-- Próxima revisão.
-- Histórico de manutenções.
+- Observações de manutenção.
+- Valores relacionados às manutenções registradas.
 
-### Manutenções
+### Cadastro de Veículo
 
-Apresenta o histórico de manutenções e permite consultar os serviços realizados, seus valores, quilometragens, status e demais informações relacionadas.
+Área destinada ao cadastro de novos veículos.
 
-As informações de manutenção fazem parte da experiência da aplicação, mas não possuem uma API independente nesta versão do projeto.
+O formulário deverá permitir informar os principais dados do veículo e armazená-los no JSON Server.
+
+### Detalhes do Veículo
+
+Área destinada à consulta das informações de um veículo específico.
+
+Nessa área serão apresentados os dados do veículo e as informações relacionadas às suas manutenções.
+
+### Manutenção
+
+A manutenção será registrada de forma simplificada, contendo principalmente:
+
+- Veículo relacionado.
+- Observação.
+- Valor gasto.
+
+A finalidade é permitir que o proprietário registre o que foi realizado no veículo e o valor correspondente, sem a necessidade de um sistema complexo de gerenciamento de manutenção.
 
 ---
 
 ## 6. Regras Gerais do Sistema
 
-- O próprio proprietário é responsável pelo cadastro dos veículos.
+- Cada veículo deverá possuir um identificador único.
+- O proprietário deverá informar os dados obrigatórios antes de cadastrar um veículo.
+- Cada registro de manutenção deverá estar relacionado a um veículo cadastrado.
+- Uma manutenção poderá possuir uma observação sobre o serviço realizado.
+- Uma manutenção poderá possuir um valor gasto.
+- As informações de manutenção deverão estar relacionadas ao veículo correspondente.
+- Os dados dos veículos deverão ser persistidos utilizando JSON Server.
+- O sistema deverá utilizar requisições HTTP para cadastrar e consultar os dados.
 - O sistema não possui cadastro ou autenticação de usuários.
-- Cada manutenção deve estar relacionada a um veículo cadastrado.
-- O valor gasto deve estar associado à manutenção correspondente.
-- Os valores das manutenções podem ser utilizados para apresentar o total investido no veículo.
-- As informações de próxima revisão devem estar relacionadas ao veículo.
-- A próxima revisão não depende de cálculos complexos realizados pelo sistema.
-- Os dados dos veículos devem ser persistidos utilizando JSON Server.
-- O JSON Server disponibiliza a coleção `/veiculos`.
-- O sistema deverá utilizar requisições HTTP para consultar, cadastrar, atualizar e excluir veículos.
-- As informações de manutenção não possuem endpoints próprios nesta versão do projeto.
-- As informações apresentadas ao proprietário devem ser organizadas de acordo com as funcionalidades disponíveis na aplicação.
+- O sistema não realiza cálculos automáticos para determinar futuras revisões.
+- Informações sobre serviços que precisam ser realizados poderão ser registradas como observações.
+- O valor informado na manutenção deverá ser utilizado para apresentar o gasto relacionado ao registro.
+
+---
+
+## 7. Persistência de Dados
+
+O CarCare utilizará o **JSON Server** como uma API REST simulada para persistência dos dados durante o desenvolvimento.
+
+Os dados serão armazenados no arquivo:
+
+```text
+db.json
+```
+
+---
+
+## 8. Considerações Finais
+
+O escopo atual do CarCare prioriza uma solução simples para cadastro e consulta de veículos e para registro de informações básicas sobre suas manutenções.
+
+O projeto poderá receber novas funcionalidades futuramente, como edição e exclusão de registros, acompanhamento mais detalhado de manutenções, Dashboard e outros recursos de gerenciamento, caso sejam solicitados ou definidos como evolução do sistema.
