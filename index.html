@@ -3,171 +3,92 @@
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>CarCare - Dashboard</title>
 
-    <!-- MATERIALIZE -->
+    <!-- Materialize CSS -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     >
 
-    <!-- MATERIAL ICONS -->
+    <!-- Material Icons -->
     <link
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet"
     >
 
-    <!-- CSS DO PROJETO -->
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
-
+    <!-- Estilos do projeto -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 
 <body>
 
-
     <!-- MENU LATERAL -->
-
     <aside class="sidebar" id="sidebar">
 
         <div class="logo">
-
             <div class="logo-icon">
-
-                <i class="material-icons">
-                    directions_car
-                </i>
-
+                <i class="material-icons">directions_car</i>
             </div>
 
             <div>
-
-                <strong>
-                    CarCare
-                </strong>
-
+                <strong>CarCare</strong>
+                <small>GESTÃO DE FROTA</small>
             </div>
-
         </div>
 
-
+        <!-- NOVA MANUTENÇÃO -->
         <button
+            type="button"
             class="btn blue-btn new-maintenance"
-            onclick="irPara('nova-manutencao.html')"
+            onclick="novaManutencao()"
         >
-
-            <i class="material-icons left">
-                add
-            </i>
-
+            <i class="material-icons left">add</i>
             Nova Manutenção
-
         </button>
 
-
+        <!-- NAVEGAÇÃO -->
         <nav class="menu">
 
-            <a class="active">
-
-                <i class="material-icons">
-                    dashboard
-                </i>
-
+            <a href="index.html" class="active">
+                <i class="material-icons">dashboard</i>
                 Dashboard
-
             </a>
 
-
-            <a onclick="irPara('veiculos.html')">
-
-                <i class="material-icons">
-                    directions_car
-                </i>
-
-                Veículos
-
-            </a>
-
-
-            <a onclick="irPara('manutencoes.html')">
-
-                <i class="material-icons">
-                    build
-                </i>
-
-                Manutenções
-
+            <a href="veiculos.html">
+                <i class="material-icons">directions_car</i>
+                Meus Veículos
             </a>
 
         </nav>
 
-
+        <!-- MENU INFERIOR -->
         <div class="menu-bottom">
 
-            <a>
-
-                <i class="material-icons">
-                    settings
-                </i>
-
+            <a href="#">
+                <i class="material-icons">settings</i>
                 Configurações
-
             </a>
 
-
-            <a>
-
-                <i class="material-icons">
-                    help_outline
-                </i>
-
+            <a href="#">
+                <i class="material-icons">help_outline</i>
                 Suporte
-
-            </a>
-
-
-            <a
-                class="logout"
-                onclick="sair()"
-            >
-
-                <i class="material-icons">
-                    logout
-                </i>
-
-                Sair
-
             </a>
 
         </div>
 
     </aside>
 
-
-    <!-- FUNDO ESCURO DO MENU MOBILE -->
-
-    <div
-        class="mobile-menu-overlay"
-        id="mobileMenuOverlay"
-    ></div>
-
+    <!-- SOBREPOSIÇÃO DO MENU MOBILE -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
     <!-- ÁREA PRINCIPAL -->
+    <main class="main-content">
 
-    <main>
-
-
-        <!-- TOPO -->
-
+        <!-- BARRA SUPERIOR -->
         <header class="topbar">
 
             <button
@@ -178,27 +99,18 @@
                 aria-expanded="false"
                 aria-controls="sidebar"
             >
-
-                <i class="material-icons">
-                    more_vert
-                </i>
-
+                <i class="material-icons">menu</i>
             </button>
 
-
             <div class="search">
-
-                <i class="material-icons">
-                    search
-                </i>
+                <i class="material-icons">search</i>
 
                 <input
                     type="text"
-                    placeholder="Buscar por placa, modelo ou OS..."
+                    placeholder="Buscar..."
+                    aria-label="Buscar"
                 >
-
             </div>
-
 
             <div class="user">
 
@@ -206,320 +118,191 @@
                     notifications_none
                 </i>
 
-
-                <span class="avatar">
-                    AD
-                </span>
-
+                <span class="avatar">AD</span>
 
                 <div>
-
-                    <strong>
-                        Administrador
-                    </strong>
-
+                    <strong>Administrador</strong>
+                    <small>Gestor de Frota</small>
                 </div>
 
             </div>
 
         </header>
 
-
         <!-- CONTEÚDO -->
-
         <section class="content">
-
-
-            <!-- CABEÇALHO -->
 
             <div class="page-header">
 
                 <div>
+                    <span class="subtitle">GESTÃO DA FROTA</span>
 
-                    <span class="subtitle">
-                        PAINEL GERAL • ATUALIZADO EM TEMPO REAL
-                    </span>
+                    <h1>Dashboard</h1>
 
-                    <h1>
-                        Visão Geral
-                    </h1>
-
+                    <p>
+                        Acompanhe as informações gerais da sua frota.
+                    </p>
                 </div>
 
             </div>
 
-
             <!-- INDICADORES -->
-
             <div class="row stats">
 
-
-                <!-- TOTAL DE VEÍCULOS -->
-
-                <div class="col s12 m4">
-
+                <div class="col s12 m6 l4">
                     <div class="card stat-card">
-
                         <div class="card-content">
 
                             <span class="stat-title">
-                                Total de Veículos
+                                Total de veículos
                             </span>
 
-
-                            <strong
-                                class="stat-number"
+                            <div
+                                class="stat-value"
                                 id="dashboard-total-veiculos"
                             >
                                 0
-                            </strong>
-
-
-                            <span class="stat-icon">
-
-                                <i class="material-icons">
-                                    directions_car
-                                </i>
-
-                            </span>
-
-
-                            <div class="stat-footer">
-
-                                <span id="dashboard-operacionais">
-                                    0 operacionais
-                                </span>
-
                             </div>
 
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- VEÍCULOS EM MANUTENÇÃO -->
-
-                <div class="col s12 m4">
-
-                    <div class="card stat-card">
-
-                        <div class="card-content">
-
-                            <span class="stat-title">
-                                Em Manutenção
-                            </span>
-
-
-                            <strong
-                                class="stat-number"
-                                id="dashboard-total-manutencoes"
-                            >
-                                0
-                            </strong>
-
-
-                            <span class="stat-icon maintenance-icon">
-
-                                <i class="material-icons">
-                                    build
-                                </i>
-
-                            </span>
-
-
-                            <div class="stat-footer warning">
-
-                                Veículos em manutenção
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- VEÍCULOS OPERACIONAIS -->
-
-                <div class="col s12 m4">
-
-                    <div class="card stat-card">
-
-                        <div class="card-content">
-
-                            <span class="stat-title">
-                                Operacionais
-                            </span>
-
-
-                            <strong
-                                class="stat-number"
-                                id="dashboard-total-operacionais"
-                            >
-                                0
-                            </strong>
-
-
-                            <span class="stat-icon">
-
-                                <i class="material-icons">
-                                    check_circle
-                                </i>
-
-                            </span>
-
-
-                            <div class="stat-footer">
-
-                                Veículos disponíveis
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-
-            <!-- RESUMO -->
-
-            <section class="fleet card">
-
-
-                <div class="fleet-header">
-
-                    <div>
-
-                        <span class="subtitle">
-                            RESUMO DO SISTEMA
-                        </span>
-
-                        <h2>
-                            Acompanhe seus veículos
-                        </h2>
-
-                    </div>
-
-
-                    <a
-                        onclick="irPara('veiculos.html')"
-                        class="filters-link"
-                    >
-                        Ver meus veículos →
-                    </a>
-
-                </div>
-
-
-
-                <div class="dashboard-summary">
-
-
-                    <div class="summary-item">
-
-
-                        <div class="summary-icon">
-
-                            <i class="material-icons">
+                            <i class="material-icons stat-icon">
                                 directions_car
                             </i>
 
                         </div>
+                    </div>
+                </div>
 
+                <div class="col s12 m6 l4">
+                    <div class="card stat-card">
+                        <div class="card-content">
 
-                        <div>
+                            <span class="stat-title">
+                                Veículos operacionais
+                            </span>
 
-                            <strong>
-                                Veículos cadastrados
-                            </strong>
+                            <div
+                                class="stat-value"
+                                id="dashboard-operacionais"
+                            >
+                                0
+                            </div>
 
-                            <p>
-                                Consulte todos os veículos na área
-                                <strong>Meus Veículos</strong>.
-                            </p>
+                            <i class="material-icons stat-icon">
+                                check_circle
+                            </i>
 
                         </div>
-
-
                     </div>
+                </div>
 
+                <div class="col s12 m6 l4">
+                    <div class="card stat-card">
+                        <div class="card-content">
 
+                            <span class="stat-title">
+                                Manutenções registradas
+                            </span>
 
-                    <div class="summary-item">
+                            <div
+                                class="stat-value"
+                                id="dashboard-total-manutencoes"
+                            >
+                                0
+                            </div>
 
-
-                        <div class="summary-icon">
-
-                            <i class="material-icons">
+                            <i class="material-icons stat-icon">
                                 build
                             </i>
 
                         </div>
+                    </div>
+                </div>
 
+            </div>
 
+            <!-- SITUAÇÃO DA FROTA -->
+            <section class="fleet card">
+
+                <div class="card-content">
+
+                    <div class="section-header">
                         <div>
-
-                            <strong>
-                                Controle de manutenções
-                            </strong>
+                            <h2>Situação da frota</h2>
 
                             <p>
-                                Registre e acompanhe as manutenções
-                                realizadas nos veículos.
+                                Acompanhe o estado atual dos veículos.
                             </p>
-
                         </div>
+                    </div>
 
+                    <div class="fleet-summary">
+
+                        <span>Veículos operacionais</span>
+
+                        <strong id="dashboard-total-operacionais">
+                            0
+                        </strong>
 
                     </div>
 
+                    <div
+                        id="dashboard-vehicles-container"
+                        class="dashboard-vehicles-container"
+                        style="display: none;"
+                    ></div>
 
                 </div>
-
-
-                <div
-                    id="dashboard-vehicles-container"
-                    style="display: none;"
-                >
-                </div>
-
 
             </section>
 
+            <!-- ACESSO RÁPIDO -->
+            <section class="quick-access">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>Acesso rápido</h2>
+
+                        <p>
+                            Acesse a lista dos seus veículos.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="quick-access-list">
+
+                    <a
+                        href="veiculos.html"
+                        class="quick-access-card"
+                    >
+                        <i class="material-icons">directions_car</i>
+
+                        <div>
+                            <strong>Meus veículos</strong>
+
+                            <span>
+                                Consultar e gerenciar veículos
+                            </span>
+                        </div>
+
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+
+                </div>
+
+            </section>
 
         </section>
 
-
     </main>
 
+    <!-- SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-
-    <!-- JQUERY -->
-
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-    ></script>
-
-
-    <!-- MATERIALIZE -->
-
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
-    ></script>
-
-
-    <!-- APP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <script src="js/app.js"></script>
 
-
 </body>
-
 </html>

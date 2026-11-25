@@ -2,3 +2,10 @@ node_modules/
 .env
 .vscode/
 config.local.js
+
+# Backups e arquivos temporários
+css/style-backup.css
+css/style.zip
+
+# Dependências
+node_modules/

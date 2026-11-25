@@ -1,33 +1,33 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>CarCare - Detalhes do Veículo</title>
 
+    <!-- Materialize CSS -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     >
 
+    <!-- Material Icons -->
     <link
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet"
     >
 
+    <!-- Estilos do projeto -->
     <link rel="stylesheet" href="css/style.css">
-
 </head>
 
 <body>
 
-
     <!-- MENU LATERAL -->
-
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
 
         <div class="logo">
 
@@ -42,8 +42,9 @@
 
         </div>
 
-
+        <!-- NOVA MANUTENÇÃO -->
         <button
+            type="button"
             class="btn blue-btn new-maintenance"
             onclick="novaManutencao()"
         >
@@ -51,73 +52,72 @@
             Nova Manutenção
         </button>
 
-
+        <!-- NAVEGAÇÃO -->
         <nav class="menu">
 
-            <a onclick="irPara('index.html')">
+            <a href="index.html">
                 <i class="material-icons">dashboard</i>
                 Dashboard
             </a>
 
-
-            <a class="active">
+            <a href="veiculos.html" class="active">
                 <i class="material-icons">directions_car</i>
                 Meus Veículos
             </a>
 
-
-            <a onclick="irPara('manutencoes.html')">
-                <i class="material-icons">build</i>
-                Manutenções
-            </a>
-
         </nav>
 
-
+        <!-- MENU INFERIOR -->
         <div class="menu-bottom">
 
-            <a>
+            <a href="#">
                 <i class="material-icons">settings</i>
                 Configurações
             </a>
 
-            <a>
+            <a href="#">
                 <i class="material-icons">help_outline</i>
                 Suporte
-            </a>
-
-            <a class="logout">
-                <i class="material-icons">logout</i>
-                Sair
             </a>
 
         </div>
 
     </aside>
 
+    <!-- SOBREPOSIÇÃO DO MENU MOBILE -->
+    <div
+        class="mobile-menu-overlay"
+        id="mobileMenuOverlay"
+    ></div>
 
     <!-- ÁREA PRINCIPAL -->
+    <main class="main-content">
 
-    <main>
-
-
-        <!-- TOPO -->
-
+        <!-- BARRA SUPERIOR -->
         <header class="topbar">
+
+            <button
+                type="button"
+                class="mobile-menu-toggle"
+                id="mobileMenuToggle"
+                aria-label="Abrir menu"
+                aria-expanded="false"
+                aria-controls="sidebar"
+            >
+                <i class="material-icons">menu</i>
+            </button>
 
             <div class="search">
 
-                <i class="material-icons">
-                    search
-                </i>
+                <i class="material-icons">search</i>
 
                 <input
                     type="text"
-                    placeholder="Buscar por placa, modelo ou OS..."
+                    placeholder="Buscar..."
+                    aria-label="Buscar"
                 >
 
             </div>
-
 
             <div class="user">
 
@@ -125,253 +125,165 @@
                     notifications_none
                 </i>
 
-                <span class="avatar">
-                    AD
-                </span>
+                <span class="avatar">AD</span>
 
                 <div>
-
-                    <strong>
-                        Administrador
-                    </strong>
-
-                    <small>
-                        Gestor de Frota
-                    </small>
-
+                    <strong>Administrador</strong>
+                    <small>Gestor de Frota</small>
                 </div>
 
             </div>
 
         </header>
 
-
         <!-- CONTEÚDO -->
-
         <section class="content">
 
-
             <!-- VOLTAR -->
+            <div class="page-actions">
 
-            <button
-                class="back-button"
-                onclick="irPara('veiculos.html')"
-            >
+                <button
+                    type="button"
+                    class="back-button"
+                    onclick="irPara('veiculos.html')"
+                >
+                    <i class="material-icons">arrow_back</i>
+                    Voltar para veículos
+                </button>
 
-                <i class="material-icons">
-                    arrow_back
-                </i>
+            </div>
 
-                Voltar para Meus Veículos
-
-            </button>
-
-
-            <!-- CABEÇALHO DO VEÍCULO -->
-
-            <div class="vehicle-detail-header">
+            <!-- CABEÇALHO -->
+            <div class="page-header">
 
                 <div>
 
-                    <span class="subtitle">
-                        DETALHES DO VEÍCULO
-                    </span>
-
                     <h1 id="vehicleName">
-                        Veículo
+                        Detalhes do veículo
                     </h1>
 
-                    <p id="vehicleInfo">
-                        Informações do veículo
+                    <p id="vehicleInfo" class="subtitle">
+                        Informações e histórico do veículo.
                     </p>
 
                 </div>
 
-
-                <span
-                    id="vehicleStatus"
-                    class="status ready detail-status"
-                >
-                    Pronto
+                <span id="vehicleStatus" class="status-badge">
+                    -
                 </span>
 
             </div>
 
+            <!-- DADOS DO VEÍCULO -->
+            <section class="detail-section">
 
-            <!-- INFORMAÇÕES -->
+                <div class="section-header">
+                    <h2>Dados do veículo</h2>
+                </div>
 
-            <div class="detail-grid">
+                <div class="detail-grid">
 
+                    <!-- IMAGEM RESPONSIVA E OTIMIZADA -->
+                    <div class="detail-card vehicle-image-card">
 
-                <!-- FOTO -->
+                        <picture>
 
-                <div class="card detail-image-card">
+                            <source
+                                id="vehicleImageWebp"
+                                srcset="imagens/corolla.webp"
+                                type="image/webp"
+                            >
 
-                    <div
-                        id="vehicleImage"
-                        class="vehicle-detail-image"
+                            <img
+                                id="vehicleImage"
+                                class="responsive-img"
+                                src="imagens/corolla.png"
+                                alt="Imagem ilustrativa do veículo"
+                                loading="lazy"
+                                decoding="async"
+                            >
+
+                        </picture>
+
+                    </div>
+
+                    <!-- INFORMAÇÕES DO VEÍCULO -->
+                    <div class="detail-card">
+
+                        <div class="detail-item">
+                            <span>Modelo</span>
+                            <strong id="vehicleModel">-</strong>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Ano</span>
+                            <strong id="vehicleYear">-</strong>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Placa</span>
+                            <strong id="vehiclePlate">-</strong>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Quilometragem</span>
+                            <strong id="vehicleKm">-</strong>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Combustível</span>
+                            <strong id="vehicleFuel">-</strong>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Status</span>
+                            <strong id="vehicleStatusText">-</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- HISTÓRICO DE MANUTENÇÕES -->
+            <section class="detail-section">
+
+                <div class="section-header">
+
+                    <h2>Histórico de manutenções</h2>
+
+                    <button
+                        type="button"
+                        class="btn blue-btn"
+                        onclick="novaManutencao()"
                     >
-                    </div>
+                        <i class="material-icons left">add</i>
+                        Nova manutenção
+                    </button>
 
                 </div>
 
+                <div class="detail-card">
 
-                <!-- DADOS -->
+                    <div id="vehicle-maintenance-history">
 
-                <div class="card detail-card">
-
-                    <div class="card-content">
-
-                        <span class="subtitle">
-                            INFORMAÇÕES
-                        </span>
-
-                        <h2>
-                            Dados do veículo
-                        </h2>
-
-
-                        <div class="info-grid">
-
-
-                            <div>
-
-                                <small>
-                                    Modelo
-                                </small>
-
-                                <strong id="vehicleModel">
-                                    -
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <small>
-                                    Ano
-                                </small>
-
-                                <strong id="vehicleYear">
-                                    -
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <small>
-                                    Placa
-                                </small>
-
-                                <strong id="vehiclePlate">
-                                    -
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <small>
-                                    Quilometragem
-                                </small>
-
-                                <strong id="vehicleKm">
-                                    -
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <small>
-                                    Combustível
-                                </small>
-
-                                <strong id="vehicleFuel">
-                                    -
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <small>
-                                    Status
-                                </small>
-
-                                <strong id="vehicleStatusText">
-                                    -
-                                </strong>
-
-                            </div>
-
-
-                        </div>
+                        <p>
+                            O histórico de manutenções será exibido aqui.
+                        </p>
 
                     </div>
 
                 </div>
 
-
-            </div>
-
-
-            <!-- MANUTENÇÃO -->
-
-            <div class="card detail-card maintenance-detail">
-
-                <div class="card-content">
-
-                    <span class="subtitle">
-                        MANUTENÇÃO
-                    </span>
-
-                    <h2>
-                        Última manutenção
-                    </h2>
-
-
-                    <div class="maintenance-box">
-
-                        <div>
-
-                            <strong id="maintenanceTitle">
-                                -
-                            </strong>
-
-                            <p id="maintenanceDescription">
-                                -
-                            </p>
-
-                        </div>
-
-
-                        <strong
-                            id="maintenancePrice"
-                            class="maintenance-price"
-                        >
-                            -
-                        </strong>
-
-                    </div>
-
-                </div>
-
-            </div>
-
+            </section>
 
         </section>
 
     </main>
 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 

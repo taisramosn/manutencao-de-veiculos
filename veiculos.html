@@ -1,14 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CarCare - Meus Veículos</title>
+    <title>CarCare - Veículos</title>
 
-    <!-- Materialize -->
+    <!-- Materialize CSS -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
@@ -20,171 +20,97 @@
         rel="stylesheet"
     >
 
-    <!-- CSS do projeto -->
+    <!-- Estilos do projeto -->
     <link rel="stylesheet" href="css/style.css">
-
 </head>
-
 
 <body>
 
-
-    <!-- =====================================================
-         MENU LATERAL
-    ====================================================== -->
-
-    <aside class="sidebar">
-
-        <!-- LOGO -->
+    <!-- MENU LATERAL -->
+    <aside class="sidebar" id="sidebar">
 
         <div class="logo">
-
             <div class="logo-icon">
-
-                <i class="material-icons">
-                    directions_car
-                </i>
-
+                <i class="material-icons">directions_car</i>
             </div>
-
 
             <div>
-
-                <strong>
-                    CarCare
-                </strong>
-
+                <strong>CarCare</strong>
+                <small>GESTÃO DE FROTA</small>
             </div>
-
         </div>
 
-
         <!-- NOVA MANUTENÇÃO -->
-
         <button
+            type="button"
             class="btn blue-btn new-maintenance"
             onclick="novaManutencao()"
         >
-
-            <i class="material-icons left">
-                add
-            </i>
-
+            <i class="material-icons left">add</i>
             Nova Manutenção
-
         </button>
 
-
-        <!-- MENU -->
-
+        <!-- NAVEGAÇÃO -->
         <nav class="menu">
 
-            <!-- DASHBOARD -->
-
-            <a onclick="irPara('index.html')">
-
-                <i class="material-icons">
-                    dashboard
-                </i>
-
+            <a href="index.html">
+                <i class="material-icons">dashboard</i>
                 Dashboard
-
             </a>
 
-
-            <!-- MEUS VEÍCULOS -->
-
-            <a
-                class="active"
-                onclick="irPara('veiculos.html')"
-            >
-
-                <i class="material-icons">
-                    directions_car
-                </i>
-
-                Veículos
-
-            </a>
-
-
-            <!-- MANUTENÇÕES -->
-
-            <a onclick="irPara('manutencoes.html')">
-
-                <i class="material-icons">
-                    build
-                </i>
-
-                Manutenções
-
+            <a href="veiculos.html" class="active">
+                <i class="material-icons">directions_car</i>
+                Meus Veículos
             </a>
 
         </nav>
 
-        
-
         <!-- MENU INFERIOR -->
-
-        
-
         <div class="menu-bottom">
 
-            <!-- SAIR -->
+            <a href="#">
+                <i class="material-icons">settings</i>
+                Configurações
+            </a>
 
-            <a
-                class="logout"
-                onclick="sair()"
-            >
-
-                <i class="material-icons">
-                    logout
-                </i>
-
-                Sair
-
+            <a href="#">
+                <i class="material-icons">help_outline</i>
+                Suporte
             </a>
 
         </div>
 
     </aside>
 
+    <!-- SOBREPOSIÇÃO DO MENU MOBILE -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
+    <!-- ÁREA PRINCIPAL -->
+    <main class="main-content">
 
-    <!-- =====================================================
-         ÁREA PRINCIPAL
-    ====================================================== -->
-
-    <main>
-
-
-        <!-- =================================================
-             TOPO
-        ================================================== -->
-
+        <!-- BARRA SUPERIOR -->
         <header class="topbar">
 
-
-            <!-- BUSCA -->
+            <button
+                type="button"
+                class="mobile-menu-toggle"
+                id="mobileMenuToggle"
+                aria-label="Abrir menu"
+                aria-expanded="false"
+                aria-controls="sidebar"
+            >
+                <i class="material-icons">menu</i>
+            </button>
 
             <div class="search">
-
-                <i class="material-icons">
-                    search
-                </i>
-
+                <i class="material-icons">search</i>
 
                 <input
                     type="text"
-                    id="vehicle-filter-input"
-                    placeholder="Buscar por placa, modelo ou OS..."
-                    oninput="filterVehiclesList()"
+                    placeholder="Buscar..."
+                    aria-label="Buscar"
                 >
-
             </div>
-
-
-            <!-- USUÁRIO -->
 
             <div class="user">
 
@@ -192,179 +118,77 @@
                     notifications_none
                 </i>
 
-
-                <span class="avatar">
-                    AD
-                </span>
-
+                <span class="avatar">AD</span>
 
                 <div>
-
-                    <strong>
-                        Administrador
-                    </strong>
-
+                    <strong>Administrador</strong>
+                    <small>Gestor de Frota</small>
                 </div>
 
             </div>
 
         </header>
 
-
-
-        <!-- =================================================
-             CONTEÚDO
-        ================================================== -->
-
+        <!-- CONTEÚDO -->
         <section class="content">
-
-
-            <!-- CABEÇALHO -->
 
             <div class="page-header">
 
                 <div>
+                    <span class="subtitle">GERENCIAMENTO DA FROTA</span>
 
+                    <h1>Meus veículos</h1>
 
+                    <p>
+                        Consulte e gerencie os veículos cadastrados.
+                    </p>
+                </div>
+                <a href="novo-veiculo.html" class="btn blue-btn">
+                    <i class="material-icons left">add</i>
+                            Novo veículo
+                        </a>
 
+            </div>
 
-                    <h1>
-                        Veículos
-                    </h1>
+            <!-- FILTROS -->
+            <section class="vehicle-filters">
+
+                <div class="vehicle-search">
+
+                    <i class="material-icons">search</i>
+
+                    <input
+                        type="search"
+                        id="vehicle-filter-input"
+                        placeholder="Buscar por modelo ou placa..."
+                        oninput="filterVehiclesList()"
+                        aria-label="Buscar veículos por modelo ou placa"
+                    >
 
                 </div>
 
+            </section>
 
-                <!-- NOVO VEÍCULO -->
-
-                <button
-                    class="btn blue-btn"
-                    onclick="irPara('novo-veiculo.html')"
-                >
-
-                    <i class="material-icons left">
-                        add
-                    </i>
-
-                    Novo veículo
-
-                </button>
-
-            </div>
-
-
-
-            <!-- =================================================
-                 FILTROS
-            ================================================== -->
-
-            <div class="vehicle-filters">
-
-
-                <!-- TODOS -->
-
-                <button
-                    class="filter active"
-                    onclick="filterVehiclesByStatus('todos', this)"
-                >
-
-                    Todos
-
-                </button>
-
-
-                <!-- OPERACIONAIS -->
-
-                <button
-                    class="filter"
-                    onclick="filterVehiclesByStatus('operacional', this)"
-                >
-
-                    Operacionais
-
-                </button>
-
-
-                <!-- EM MANUTENÇÃO -->
-
-                <button
-                    class="filter"
-                    onclick="filterVehiclesByStatus('manutencao', this)"
-                >
-
-                    Em Manutenção
-
-                </button>
-
-
-            </div>
-
-
-
-            <!-- =================================================
-                 LISTA DE VEÍCULOS
-
-                 O app.js vai buscar os veículos
-                 diretamente do JSON Server.
-            ================================================== -->
-
-            <div
+            <!-- LISTA DE VEÍCULOS -->
+            <section
                 class="vehicle-list"
                 id="vehicles-cards-container"
             >
 
-                <!--
-                    Os veículos serão carregados
-                    automaticamente pelo app.js.
-                -->
+                <!-- Os veículos serão carregados pelo app.js -->
 
-                <div class="loading-message">
-
-                    <p>
-                        Carregando veículos...
-                    </p>
-
-                </div>
-
-            </div>
-
+            </section>
 
         </section>
 
     </main>
 
+    <!-- SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-
-    <!-- =====================================================
-         JQUERY
-    ====================================================== -->
-
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js">
-    </script>
-
-
-
-    <!-- =====================================================
-         MATERIALIZE
-    ====================================================== -->
-
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js">
-    </script>
-
-
-
-    <!-- =====================================================
-         JAVASCRIPT DO PROJETO
-
-         IMPORTANTE:
-         carregar apenas UMA vez.
-    ====================================================== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <script src="js/app.js"></script>
 
-
 </body>
-
 </html>

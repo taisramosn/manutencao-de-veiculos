@@ -1,11 +1,10 @@
-// ============================================================
-// CARCARE — STYLE.SCSS
-// ============================================================
 
+@use "sass:math";
 
-// ============================================================
-// VARIÁVEIS
-// ============================================================
+@function px-to-rem($value, $base: 16) {
+    @return math.div($value, $base) * 1rem;
+}
+
 
 $primary: #2867e8;
 $primary-dark: #1f56c7;
@@ -48,26 +47,24 @@ $maintenance-purple-soft: #f0efff;
 
 $detail-bg: #f5f8fc;
 
-$sidebar-width: 243px;
-$mobile-sidebar-width: 70px;
 
-$card-radius: 13px;
-$small-radius: 8px;
+$sidebar-width: px-to-rem(243);
+$mobile-sidebar-width: px-to-rem(70);
 
-$button-shadow: 0 2px 5px #c1cce0;
-$login-shadow: 0 5px 20px rgba(16, 33, 61, 0.08);
+$card-radius: px-to-rem(13);
+$small-radius: px-to-rem(8);
 
+$button-shadow: 0 0.125rem 0.3125rem #c1cce0;
+$login-shadow: 0 0.3125rem 1.25rem rgba(16, 33, 61, 0.08);
 
-// ============================================================
-// MIXINS
-// ============================================================
 
 @mixin card-base {
     background: $white;
-    border: 1px solid $border;
+    border: 0.0625rem solid $border; // 1px
     border-radius: $card-radius;
     box-shadow: none;
 }
+
 
 
 // ============================================================
@@ -77,6 +74,7 @@ $login-shadow: 0 5px 20px rgba(16, 33, 61, 0.08);
 * {
     box-sizing: border-box;
 }
+
 
 
 // ============================================================
@@ -118,23 +116,23 @@ body {
 // ============================================================
 
 .logo {
-    height: 82px;
-    padding: 20px 18px;
+    height: 5.125rem; // 82px
+    padding: 1.25rem 1.125rem; // 20px 18px
 
     display: flex;
     align-items: center;
 
-    gap: 10px;
+    gap: 0.625rem; // 10px
 
-    border-bottom: 1px solid $sidebar-border;
+    border-bottom: 0.0625rem solid $sidebar-border;
 
     .logo-icon {
-        width: 36px;
-        height: 36px;
+        width: 2.25rem; // 36px
+        height: 2.25rem; // 36px
 
         background: $primary;
 
-        border-radius: 10px;
+        border-radius: 0.625rem; // 10px
 
         display: grid;
         place-items: center;
@@ -147,7 +145,7 @@ body {
 
         color: $white;
 
-        font-size: 18px;
+        font-size: 1.125rem; // 18px
     }
 
     small {
@@ -155,10 +153,10 @@ body {
 
         color: #69a1ff;
 
-        font-size: 10px;
+        font-size: 0.625rem; // 10px
         font-weight: bold;
 
-        margin-top: 3px;
+        margin-top: 0.1875rem; // 3px
     }
 }
 
@@ -184,9 +182,9 @@ body {
 }
 
 .new-maintenance {
-    margin: 13px 12px 10px;
+    margin: 0.8125rem 0.75rem 0.625rem; // 13px 12px 10px
 
-    width: calc(100% - 24px);
+    width: calc(100% - 1.5rem); // 24px
 }
 
 
@@ -214,11 +212,11 @@ body {
     a {
         display: block;
 
-        margin: 3px 12px;
+        margin: 0.1875rem 0.75rem; // 3px 12px
 
-        padding: 10px 13px;
+        padding: 0.625rem 0.8125rem; // 10px 13px
 
-        border-radius: 9px;
+        border-radius: 0.5625rem; // 9px
 
         color: $sidebar-text;
 
@@ -233,11 +231,11 @@ body {
             color 0.2s ease;
 
         i {
-            font-size: 18px;
+            font-size: 1.125rem; // 18px
 
             vertical-align: middle;
 
-            margin-right: 10px;
+            margin-right: 0.625rem; // 10px
         }
 
         &:hover {
@@ -258,9 +256,9 @@ body {
 .menu-bottom {
     margin-top: auto;
 
-    padding: 12px 0;
+    padding: 0.75rem 0; // 12px
 
-    border-top: 1px solid $sidebar-border;
+    border-top: 0.0625rem solid $sidebar-border;
 }
 
 .logout {
@@ -268,20 +266,21 @@ body {
 }
 
 
+
 // ============================================================
 // TOPO
 // ============================================================
 
 .topbar {
-    height: 58px;
+    height: 3.625rem; // 58px
 
     margin-left: $sidebar-width;
 
-    padding: 8px 24px;
+    padding: 0.5rem 1.5rem; // 8px 24px
 
     background: $white;
 
-    border-bottom: 1px solid $border;
+    border-bottom: 0.0625rem solid $border; // 1px
 
     display: flex;
 
@@ -296,11 +295,11 @@ body {
 // ============================================================
 
 .search {
-    width: 395px;
+    width: 24.6875rem; // 395px
 
-    height: 35px;
+    height: 2.1875rem; // 35px
 
-    padding: 0 12px;
+    padding: 0 0.75rem; // 12px
 
     display: flex;
 
@@ -308,22 +307,22 @@ body {
 
     background: $input-bg;
 
-    border-radius: 9px;
+    border-radius: 0.5625rem; // 9px
 
     i {
         color: #60738e;
 
-        margin-right: 8px;
+        margin-right: 0.5rem; // 8px
     }
 
     input {
-        height: 35px !important;
+        height: 2.1875rem !important; // 35px
 
         margin: 0 !important;
 
         border: 0 !important;
 
-        font-size: 12px !important;
+        font-size: 0.75rem !important; // 12px
 
         &:focus {
             box-shadow: none !important;
@@ -341,17 +340,17 @@ body {
 
     align-items: center;
 
-    gap: 9px;
+    gap: 0.5625rem; // 9px
 
     .notification {
         color: $text-secondary;
 
-        margin-right: 10px;
+        margin-right: 0.625rem; // 10px
     }
 
     .avatar {
-        width: 35px;
-        height: 35px;
+        width: 2.1875rem; // 35px
+        height: 2.1875rem; // 35px
 
         border-radius: 50%;
 
@@ -368,7 +367,7 @@ body {
     strong {
         display: block;
 
-        font-size: 12px;
+        font-size: 0.75rem; // 12px
     }
 
     small {
@@ -376,7 +375,7 @@ body {
 
         color: $text-light;
 
-        font-size: 10px;
+        font-size: 0.625rem; // 10px
     }
 }
 
@@ -388,11 +387,11 @@ body {
 .content {
     margin-left: $sidebar-width;
 
-    padding: 30px;
+    padding: 1.875rem; // 30px
 }
 
 .page-header {
-    margin-bottom: 22px;
+    margin-bottom: 1.375rem; // 22px
 
     display: flex;
 
@@ -404,22 +403,24 @@ body {
 .subtitle {
     color: $primary;
 
-    font-size: 10px;
+    font-size: 0.625rem; // 10px
 
     font-weight: bold;
 
-    letter-spacing: 0.3px;
+    letter-spacing: 0.01875rem; // 0.3px
 
     text-transform: uppercase;
 }
 
 .page-header h1 {
-    margin: 5px 0 0;
+    margin: 0.3125rem 0 0; // 5px
 
-    font-size: 26px;
+    font-size: 1.625rem; // 26px
 
     color: $text-dark;
 }
+
+
 
 
 // ============================================================
@@ -427,13 +428,13 @@ body {
 // ============================================================
 
 .stats {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem; // 20px
 }
 
 .stat-card {
     @include card-base;
 
-    min-height: 150px;
+    min-height: 9.375rem; // 150px
 
     margin: 0;
 
@@ -442,17 +443,17 @@ body {
         box-shadow 0.2s ease;
 
     &:hover {
-        transform: translateY(-2px);
+        transform: translateY(-0.125rem); // -2px
 
-        box-shadow: 0 8px 20px rgba(16, 33, 61, 0.06);
+        box-shadow: 0 0.5rem 1.25rem rgba(16, 33, 61, 0.06);
     }
 
     .card-content {
         position: relative;
 
-        height: 150px;
+        height: 9.375rem; // 150px
 
-        padding: 25px 20px;
+        padding: 1.5625rem 1.25rem; // 25px 20px
     }
 }
 
@@ -461,15 +462,15 @@ body {
 
     color: $text-light;
 
-    font-size: 12px;
+    font-size: 0.75rem; // 12px
 
-    margin-bottom: 12px;
+    margin-bottom: 0.75rem; // 12px
 }
 
 .stat-number {
     display: block;
 
-    font-size: 30px;
+    font-size: 1.875rem; // 30px
 
     font-weight: 700;
 
@@ -479,15 +480,15 @@ body {
 .stat-icon {
     position: absolute;
 
-    top: 18px;
-    right: 18px;
+    top: 1.125rem; // 18px
+    right: 1.125rem; // 18px
 
-    width: 42px;
-    height: 42px;
+    width: 2.625rem; // 42px
+    height: 2.625rem; // 42px
 
-    padding: 9px;
+    padding: 0.5625rem; // 9px
 
-    border-radius: 11px;
+    border-radius: 0.6875rem; // 11px
 
     background: $primary-soft;
 
@@ -507,18 +508,18 @@ body {
 .stat-footer {
     position: absolute;
 
-    bottom: 14px;
+    bottom: 0.875rem; // 14px
 
-    left: 20px;
-    right: 20px;
+    left: 1.25rem; // 20px
+    right: 1.25rem; // 20px
 
-    padding-top: 10px;
+    padding-top: 0.625rem; // 10px
 
-    border-top: 1px solid $border;
+    border-top: 0.0625rem solid $border; // 1px
 
     color: $text-light;
 
-    font-size: 11px;
+    font-size: 0.6875rem; // 11px
 
     b {
         color: $success;
@@ -537,11 +538,11 @@ body {
 .fleet {
     @include card-base;
 
-    margin-top: 20px;
+    margin-top: 1.25rem; // 20px
 
-    padding: 24px;
+    padding: 1.5rem; // 24px
 
-    min-height: 210px;
+    min-height: 13.125rem; // 210px
 }
 
 .fleet-header {
@@ -551,12 +552,12 @@ body {
 
     align-items: flex-start;
 
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem; // 24px
 
     h2 {
-        margin: 0 0 5px;
+        margin: 0 0 0.3125rem; // 5px
 
-        font-size: 17px;
+        font-size: 1.0625rem; // 17px
 
         color: $text-dark;
     }
@@ -566,7 +567,7 @@ body {
 
         color: $text-light;
 
-        font-size: 11px;
+        font-size: 0.6875rem; // 11px
     }
 }
 
@@ -580,11 +581,11 @@ body {
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 20px;
+    gap: 1.25rem; // 20px
 
     width: 100%;
 
-    margin-top: 5px;
+    margin-top: 0.3125rem; // 5px
 }
 
 .summary-item {
@@ -592,21 +593,21 @@ body {
 
     align-items: center;
 
-    gap: 14px;
+    gap: 0.875rem; // 14px
 
-    min-height: 75px;
+    min-height: 4.6875rem; // 75px
 
-    padding: 17px;
+    padding: 1.0625rem; // 17px
 
     background: #f8fafc;
 
-    border: 1px solid $border;
+    border: 0.0625rem solid $border; // 1px
 
-    border-radius: 11px;
+    border-radius: 0.6875rem; // 11px
 
     color: $text-light;
 
-    font-size: 11px;
+    font-size: 0.6875rem; // 11px
 
     transition:
         border-color 0.2s ease,
@@ -620,12 +621,12 @@ body {
 }
 
 .summary-icon {
-    flex: 0 0 40px;
+    flex: 0 0 2.5rem; // 40px
 
-    width: 40px;
-    height: 40px;
+    width: 2.5rem; // 40px
+    height: 2.5rem; // 40px
 
-    border-radius: 10px;
+    border-radius: 0.625rem; // 10px
 
     display: grid;
 
@@ -639,11 +640,11 @@ body {
 .summary-item strong {
     display: block;
 
-    margin-bottom: 4px;
+    margin-bottom: 0.25rem; // 4px
 
     color: $text-dark;
 
-    font-size: 13px;
+    font-size: 0.8125rem; // 13px
 }
 
 .summary-item p {
@@ -651,7 +652,7 @@ body {
 
     color: $text-light;
 
-    font-size: 10px;
+    font-size: 0.625rem; // 10px
 
     line-height: 1.5;
 }
@@ -659,7 +660,7 @@ body {
 .filters-link {
     color: $primary;
 
-    font-size: 11px;
+    font-size: 0.6875rem; // 11px
 
     text-decoration: none;
 
@@ -671,6 +672,7 @@ body {
 }
 
 
+
 // ============================================================
 // CARROS
 // ============================================================
@@ -680,7 +682,7 @@ body {
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 20px;
+    gap: 1.25rem; // 20px
 }
 
 .vehicle-card {
@@ -690,7 +692,7 @@ body {
 }
 
 .vehicle-image {
-    height: 164px;
+    height: 10.25rem; // 164px
 
     position: relative;
 
@@ -700,11 +702,11 @@ body {
 }
 
 .corolla {
-    background-image: url("../imagens/corolla.jpg");
+    background-image: url("../imagens/corolla.webp");
 }
 
 .hilux {
-    background-image: url("../imagens/hilux.jpg");
+    background-image: url("../imagens/hilux.webp");
 }
 
 
@@ -715,14 +717,14 @@ body {
 .status {
     position: absolute;
 
-    top: 10px;
-    right: 10px;
+    top: 0.625rem; // 10px
+    right: 0.625rem; // 10px
 
-    padding: 5px 9px;
+    padding: 0.3125rem 0.5625rem; // 5px 9px
 
-    border-radius: 14px;
+    border-radius: 0.875rem; // 14px
 
-    font-size: 10px;
+    font-size: 0.625rem; // 10px
 
     font-weight: bold;
 }
@@ -747,16 +749,16 @@ body {
 .plate {
     position: absolute;
 
-    bottom: 10px;
-    left: 10px;
+    bottom: 0.625rem; // 10px
+    left: 0.625rem; // 10px
 
-    padding: 5px 8px;
+    padding: 0.3125rem 0.5rem; // 5px 8px
 
-    border-radius: 4px;
+    border-radius: 0.25rem; // 4px
 
     background: $white;
 
-    font-size: 10px;
+    font-size: 0.625rem; // 10px
 
     font-weight: bold;
 }
@@ -767,7 +769,7 @@ body {
 // ============================================================
 
 .vehicle-content {
-    padding: 13px 15px;
+    padding: 0.8125rem 0.9375rem; // 13px 15px
 }
 
 .vehicle-name {
@@ -776,22 +778,22 @@ body {
     justify-content: space-between;
 
     strong {
-        font-size: 14px;
+        font-size: 0.875rem; // 14px
     }
 
     span {
         color: #687a93;
 
-        font-size: 11px;
+        font-size: 0.6875rem; // 11px
     }
 }
 
 .vehicle-info {
-    margin: 5px 0 0;
+    margin: 0.3125rem 0 0; // 5px
 
     color: $text-light;
 
-    font-size: 11px;
+    font-size: 0.6875rem; // 11px
 }
 
 
@@ -802,13 +804,13 @@ body {
 .service {
     position: relative;
 
-    margin-top: 11px;
+    margin-top: 0.6875rem; // 11px
 
-    padding: 11px;
+    padding: 0.6875rem; // 11px
 
-    border-radius: 8px;
+    border-radius: 0.5rem; // 8px
 
-    border: 1px solid $success-border;
+    border: 0.0625rem solid $success-border; // 1px
 
     background: $success-soft;
 
@@ -817,19 +819,19 @@ body {
 
         color: $success;
 
-        font-size: 10px;
+        font-size: 0.625rem; // 10px
     }
 
     i {
-        font-size: 14px;
+        font-size: 0.875rem; // 14px
 
         vertical-align: middle;
     }
 
     p {
-        margin: 6px 0 0;
+        margin: 0.375rem 0 0; // 6px
 
-        font-size: 10px;
+        font-size: 0.625rem; // 10px
 
         line-height: 1.4;
     }
@@ -854,18 +856,18 @@ body {
 .price {
     position: absolute;
 
-    top: 10px;
-    right: 10px;
+    top: 0.625rem; // 10px
+    right: 0.625rem; // 10px
 
-    padding: 5px 8px;
+    padding: 0.3125rem 0.5rem; // 5px 8px
 
-    border-radius: 6px;
+    border-radius: 0.375rem; // 6px
 
     background: $success-bg;
 
     color: $success-dark;
 
-    font-size: 10px;
+    font-size: 0.625rem; // 10px
 
     font-weight: bold;
 }
@@ -876,9 +878,9 @@ body {
 // ============================================================
 
 .vehicle-footer {
-    padding: 10px 15px;
+    padding: 0.625rem 0.9375rem; // 10px 15px
 
-    border-top: 1px solid $border;
+    border-top: 0.0625rem solid $border; // 1px
 
     display: flex;
 
@@ -886,7 +888,7 @@ body {
 
     align-items: center;
 
-    font-size: 10px;
+    font-size: 0.625rem; // 10px
 }
 
 .green-text {
@@ -898,13 +900,13 @@ body {
 }
 
 .details {
-    height: 29px;
+    height: 1.8125rem; // 29px
 
-    line-height: 29px;
+    line-height: 1.8125rem; // 29px
 
-    padding: 0 12px;
+    padding: 0 0.75rem; // 12px
 
-    font-size: 10px;
+    font-size: 0.625rem; // 10px
 }
 
 
@@ -915,9 +917,9 @@ body {
 .vehicle-filters {
     display: flex;
 
-    gap: 8px;
+    gap: 0.5rem; // 8px
 
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem; // 20px
 }
 
 .vehicle-list {
@@ -925,19 +927,19 @@ body {
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 20px;
+    gap: 1.25rem; // 20px
 }
 
 .vehicle-details {
     display: flex;
 
-    gap: 40px;
+    gap: 2.5rem; // 40px
 
-    margin-top: 15px;
+    margin-top: 0.9375rem; // 15px
 
-    padding-top: 12px;
+    padding-top: 0.75rem; // 12px
 
-    border-top: 1px solid $border;
+    border-top: 0.0625rem solid $border; // 1px
 }
 
 .vehicle-details small {
@@ -945,13 +947,13 @@ body {
 
     color: $text-light;
 
-    font-size: 10px;
+    font-size: 0.625rem; // 10px
 
-    margin-bottom: 4px;
+    margin-bottom: 0.25rem; // 4px
 }
 
 .vehicle-details strong {
-    font-size: 11px;
+    font-size: 0.6875rem; // 11px
 }
 
 
@@ -964,7 +966,7 @@ body {
 
     align-items: center;
 
-    gap: 5px;
+    gap: 0.3125rem; // 5px
 
     border: 0;
 
@@ -972,7 +974,7 @@ body {
 
     color: $primary;
 
-    font-size: 12px;
+    font-size: 0.75rem; // 12px
 
     font-weight: bold;
 
@@ -980,10 +982,10 @@ body {
 
     padding: 0;
 
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem; // 20px
 
     i {
-        font-size: 18px;
+        font-size: 1.125rem; // 18px
     }
 }
 
@@ -994,12 +996,12 @@ body {
 
     align-items: center;
 
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem; // 20px
 
     h1 {
-        margin: 5px 0;
+        margin: 0.3125rem 0; // 5px
 
-        font-size: 24px;
+        font-size: 1.5rem; // 24px
     }
 
     p {
@@ -1007,7 +1009,7 @@ body {
 
         color: $text-light;
 
-        font-size: 12px;
+        font-size: 0.75rem; // 12px
     }
 }
 
@@ -1020,9 +1022,9 @@ body {
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 20px;
+    gap: 1.25rem; // 20px
 
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem; // 20px
 }
 
 .detail-image-card {
@@ -1034,18 +1036,18 @@ body {
 }
 
 .vehicle-detail-image {
-    min-height: 300px;
+    min-height: 18.75rem; // 300px
 
     background-size: cover;
 
     background-position: center;
 
     &.corolla {
-        background-image: url("../imagens/corolla.jpg");
+        background-image: url("../imagens/corolla.webp");
     }
 
     &.hilux {
-        background-image: url("../imagens/hilux.jpg");
+        background-image: url("../imagens/hilux.webp");
     }
 }
 
@@ -1055,13 +1057,13 @@ body {
     @include card-base;
 
     .card-content {
-        padding: 25px;
+        padding: 1.5625rem; // 25px
     }
 
     h2 {
-        margin: 5px 0 25px;
+        margin: 0.3125rem 0 1.5625rem; // 5px 0 25px
 
-        font-size: 18px;
+        font-size: 1.125rem; // 18px
     }
 }
 
@@ -1070,20 +1072,20 @@ body {
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 22px 30px;
+    gap: 1.375rem 1.875rem; // 22px 30px
 
     small {
         display: block;
 
         color: $text-light;
 
-        font-size: 10px;
+        font-size: 0.625rem; // 10px
 
-        margin-bottom: 5px;
+        margin-bottom: 0.3125rem; // 5px
     }
 
     strong {
-        font-size: 13px;
+        font-size: 0.8125rem; // 13px
     }
 }
 
@@ -1098,24 +1100,24 @@ body {
 
     align-items: center;
 
-    gap: 20px;
+    gap: 1.25rem; // 20px
 
-    padding: 15px;
+    padding: 0.9375rem; // 15px
 
-    border-radius: 9px;
+    border-radius: 0.5625rem; // 9px
 
     background: $detail-bg;
 
     strong {
-        font-size: 13px;
+        font-size: 0.8125rem; // 13px
     }
 
     p {
-        margin: 6px 0 0;
+        margin: 0.375rem 0 0; // 6px
 
         color: $text-light;
 
-        font-size: 11px;
+        font-size: 0.6875rem; // 11px
 
         line-height: 1.5;
     }
@@ -1125,445 +1127,6 @@ body {
     white-space: nowrap;
 
     color: $primary;
-}
-
-
-
-// ============================================================
-// RESPONSIVO
-// ============================================================
-
-@media (max-width: 900px) {
-
-    /* MENU LATERAL */
-    .sidebar {
-        width: $sidebar-width;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        z-index: 1002;
-        box-shadow: 8px 0 30px rgba(0, 0, 0, 0.18);
-    }
-
-    .sidebar.mobile-menu-open {
-        transform: translateX(0);
-    }
-
-    .logo div:last-child {
-        display: block;
-    }
-
-    .menu a,
-    .menu-bottom a {
-        font-size: inherit;
-    }
-
-    /* CONTEÚDO */
-    .topbar,
-    .content {
-        margin-left: 0;
-    }
-
-    .content {
-        padding: 22px;
-    }
-
-    .search {
-        width: 280px;
-    }
-
-    .vehicles,
-    .vehicle-list,
-    .detail-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .dashboard-summary {
-        grid-template-columns: 1fr;
-    }
-
-    .fleet-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    .filters {
-        flex-wrap: wrap;
-    }
-
-    .stats {
-        display: block;
-    }
-
-    .stat-card {
-        margin-bottom: 15px;
-    }
-
-    .vehicle-detail-header {
-        align-items: flex-start;
-        gap: 15px;
-    }
-}
-
-@media (max-width: 600px) {
-
-    .topbar {
-        padding: 8px 15px;
-    }
-
-    .search {
-        display: none;
-    }
-
-    .content {
-        padding: 18px 15px;
-    }
-
-    .page-header h1 {
-        font-size: 22px;
-    }
-
-    .fleet {
-        padding: 18px;
-    }
-
-    .dashboard-summary {
-        gap: 12px;
-    }
-
-    .summary-item {
-        min-height: 65px;
-        padding: 13px;
-    }
-
-    .summary-icon {
-        width: 35px;
-        height: 35px;
-    }
-}
-
-
-
-
-/* =========================================================
-   MANUTENÇÕES — AJUSTES VISUAIS
-========================================================= */
-
-/* Indicadores */
-.maintenance-stats {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
-    margin: 22px 0 28px;
-}
-
-.maintenance-stat {
-    min-width: 0;
-    min-height: 100px;
-    border: 1px solid $border;
-    border-radius: 13px;
-    box-shadow: 0 3px 12px rgba(16, 33, 61, 0.04);
-}
-
-.maintenance-stat .card-content {
-    padding: 19px 20px;
-}
-
-.maintenance-stat span {
-    color: $text-light;
-    font-size: 11px;
-}
-
-.maintenance-stat strong {
-    margin-top: 8px;
-    font-size: 25px;
-}
-
-/* Filtros */
-.maintenance-filters {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 9px;
-    margin-bottom: 20px;
-}
-
-.maintenance-filters .filter {
-    padding: 9px 16px;
-    border: 1px solid $border;
-    border-radius: 8px;
-    background: $white;
-    color: $text-secondary;
-    font-family: inherit;
-    font-size: 11px;
-    font-weight: 600;
-    box-shadow: none;
-    transition: 0.2s ease;
-}
-
-.maintenance-filters .filter:hover {
-    border-color: $primary;
-    color: $primary;
-    background: $primary-soft;
-}
-
-.maintenance-filters .filter.active {
-    border-color: $primary;
-    background: $primary;
-    color: $white;
-    box-shadow: 0 3px 8px rgba(40, 103, 232, 0.16);
-}
-
-/* Lista de manutenções */
-.maintenance-list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 14px;
-}
-
-/* Cards */
-.maintenance-card {
-    border: 1px solid $border;
-    border-radius: 13px;
-    background: $white;
-    box-shadow: 0 3px 12px rgba(16, 33, 61, 0.04);
-    overflow: hidden;
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.maintenance-card:hover {
-    border-color: #cbd7e8;
-    box-shadow: 0 7px 18px rgba(16, 33, 61, 0.07);
-    transform: none;
-}
-
-/* Cabeçalho */
-.maintenance-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 15px 20px;
-    border-bottom: 1px solid $border;
-    background: $white;
-}
-
-.maintenance-card-header h2,
-.maintenance-card-header h3 {
-    margin: 0 0 5px;
-    color: $text;
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.maintenance-card-header span {
-    color: $text-light;
-    font-size: 10px;
-}
-
-/* Etiquetas de status */
-.maintenance-card-header .status {
-    flex-shrink: 0;
-    padding: 6px 10px;
-    border-radius: 20px;
-    font-size: 10px;
-    font-weight: 700;
-    line-height: 1.2;
-}
-
-.maintenance-card-header .status.in-maintenance,
-.maintenance-card-header .status.progress {
-    background: $danger-bg;
-    border: 1px solid $danger-border;
-    color: $danger;
-}
-
-.maintenance-card-header .status.ready,
-.maintenance-card-header .status.completed {
-    background: $success-bg;
-    border: 1px solid $success-border;
-    color: $success-dark;
-}
-
-/* Informações */
-.maintenance-card-body {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 17px 25px;
-    padding: 17px 20px;
-}
-
-.maintenance-card-body p {
-    min-width: 0;
-    margin: 0;
-    color: $text-secondary;
-    font-size: 11px;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-}
-
-.maintenance-card-body p strong {
-    display: block;
-    margin-bottom: 5px;
-    color: $text-light;
-    font-size: 9px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.25px;
-}
-
-/* Rodapé */
-.maintenance-card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 11px 20px;
-    border-top: 1px solid $border;
-    background: #fbfcfe;
-}
-
-.maintenance-card-footer span {
-    color: $text-secondary;
-    font-size: 10px;
-}
-
-/* Botão de detalhes */
-.maintenance-card .details,
-.maintenance-card .blue-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 34px;
-    padding: 0 14px;
-    border-radius: 7px;
-    background: $primary;
-    color: $white;
-    font-size: 11px;
-    font-weight: 700;
-    line-height: 34px;
-    box-shadow: 0 3px 7px rgba(40, 103, 232, 0.16);
-}
-
-/* Responsividade */
-@media (max-width: 900px) {
-    .maintenance-stats {
-        gap: 12px;
-    }
-
-    .maintenance-card-body {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 600px) {
-    .maintenance-stats {
-        grid-template-columns: 1fr;
-    }
-
-    .maintenance-card-header {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 9px;
-    }
-
-    .maintenance-card-body {
-        grid-template-columns: 1fr;
-        gap: 13px;
-    }
-
-    .maintenance-card-footer {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .maintenance-card .details,
-    .maintenance-card .blue-btn {
-        width: 100%;
-    }
-}
-
-
-// ============================================================
-// NOVA MANUTENÇÃO
-// ============================================================
-
-.maintenance-form {
-    max-width: 950px;
-
-    margin: 0 auto;
-
-    @include card-base;
-
-    .card-content {
-        padding: 28px;
-    }
-
-    h2 {
-        margin: 6px 0 28px;
-
-        font-size: 19px;
-
-        color: $text;
-    }
-
-    .input-field {
-        margin-top: 8px;
-    }
-
-    select {
-        border-bottom: 1px solid #9e9e9e;
-    }
-
-    textarea {
-        min-height: 80px;
-    }
-}
-
-.form-section {
-    padding: 20px 0;
-
-    border-top: 1px solid $border;
-
-    h3 {
-        margin: 0 0 18px;
-
-        font-size: 14px;
-
-        color: $text;
-    }
-
-    .row {
-        margin-bottom: 0;
-    }
-}
-
-.form-actions {
-    display: flex;
-
-    justify-content: flex-end;
-
-    align-items: center;
-
-    gap: 10px;
-
-    padding-top: 20px;
-
-    border-top: 1px solid $border;
-}
-
-.cancel-btn {
-    background: $filter-bg !important;
-
-    color: $text-secondary !important;
-
-    border-radius: $small-radius;
-
-    text-transform: none;
-
-    font-weight: bold;
-
-    box-shadow: none;
 }
 
 
@@ -1586,21 +1149,21 @@ body {
 
     justify-content: center;
 
-    padding: 20px;
+    padding: 1.25rem; // 20px
 }
 
 .login-card {
     width: 100%;
 
-    max-width: 420px;
+    max-width: 26.25rem; // 420px
 
-    padding: 35px;
+    padding: 2.1875rem; // 35px
 
     background: $white;
 
-    border: 1px solid $border;
+    border: 0.0625rem solid $border; // 1px
 
-    border-radius: 14px;
+    border-radius: 0.875rem; // 14px
 
     box-shadow: $login-shadow;
 }
@@ -1612,16 +1175,16 @@ body {
 
     justify-content: center;
 
-    gap: 10px;
+    gap: 0.625rem; // 10px
 
-    margin-bottom: 30px;
+    margin-bottom: 1.875rem; // 30px
 
     strong {
         display: block;
 
         color: $text;
 
-        font-size: 20px;
+        font-size: 1.25rem; // 20px
     }
 
     small {
@@ -1629,43 +1192,44 @@ body {
 
         color: $primary;
 
-        font-size: 9px;
+        font-size: 0.5625rem; // 9px
 
         font-weight: bold;
 
-        margin-top: 3px;
+        margin-top: 0.1875rem; // 3px
     }
 }
 
 .login-card h1 {
-    margin: 0 0 8px;
+    margin: 0 0 0.5rem; // 8px
 
     color: $text;
 
-    font-size: 24px;
+    font-size: 1.5rem; // 24px
 
     text-align: center;
 }
 
 .login-description {
-    margin-bottom: 30px;
+    margin-bottom: 1.875rem; // 30px
 
     color: $text-light;
 
-    font-size: 12px;
+    font-size: 0.75rem; // 12px
 
     text-align: center;
 }
 
 .login-card .input-field {
-    margin-bottom: 25px;
+    margin-bottom: 1.5625rem; // 25px
 }
 
 .login-button {
     width: 100%;
 
-    margin-top: 10px;
+    margin-top: 0.625rem; // 10px
 }
+
 
 /* =========================================================
    MEUS VEÍCULOS — REFORMULAÇÃO VISUAL
@@ -1674,18 +1238,18 @@ body {
 .vehicle-filters {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin: 18px 0 24px;
+    gap: 0.625rem; // 10px
+    margin: 1.125rem 0 1.5rem; // 18px 0 24px
 }
 
 .vehicle-filters .filter {
-    border: 1px solid $border;
+    border: 0.0625rem solid $border;
     background: $white;
     color: $text-secondary;
-    border-radius: 8px;
-    padding: 9px 16px;
+    border-radius: 0.5rem; // 8px
+    padding: 0.5625rem 1rem; // 9px 16px
     font-family: inherit;
-    font-size: 12px;
+    font-size: 0.75rem; // 12px
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -1702,7 +1266,7 @@ body {
     background: $primary;
     border-color: $primary;
     color: $white;
-    box-shadow: 0 3px 8px rgba(40, 103, 232, 0.18);
+    box-shadow: 0 0.1875rem 0.5rem rgba(40, 103, 232, 0.18);
 }
 
 
@@ -1713,7 +1277,7 @@ body {
 .vehicle-list {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 22px;
+    gap: 1.375rem; // 22px
     align-items: start;
 }
 
@@ -1724,10 +1288,10 @@ body {
 
 .vehicle-card {
     background: $white;
-    border: 1px solid $border;
-    border-radius: 14px;
+    border: 0.0625rem solid $border;
+    border-radius: 0.875rem; // 14px
     overflow: hidden;
-    box-shadow: 0 3px 12px rgba(16, 33, 61, 0.05);
+    box-shadow: 0 0.1875rem 0.75rem rgba(16, 33, 61, 0.05);
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease,
@@ -1735,9 +1299,9 @@ body {
 }
 
 .vehicle-card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-0.125rem); // -2px
     border-color: #cbd7e8;
-    box-shadow: 0 8px 22px rgba(16, 33, 61, 0.09);
+    box-shadow: 0 0.5rem 1.375rem rgba(16, 33, 61, 0.09);
 }
 
 
@@ -1747,7 +1311,7 @@ body {
 
 .vehicle-image {
     position: relative;
-    height: 145px;
+    height: 9.0625rem; // 145px
 
     display: flex;
     align-items: center;
@@ -1768,7 +1332,7 @@ body {
     content: "directions_car";
 
     font-family: "Material Icons";
-    font-size: 68px;
+    font-size: 4.25rem; // 68px
     line-height: 1;
 
     color: #9aabc2;
@@ -1782,15 +1346,15 @@ body {
     content: "";
     position: absolute;
 
-    width: 170px;
-    height: 170px;
+    width: 10.625rem; // 170px
+    height: 10.625rem; // 170px
 
     border-radius: 50%;
 
     background: rgba(255, 255, 255, 0.45);
 
-    top: -80px;
-    right: -45px;
+    top: -5rem; // -80px
+    right: -2.8125rem; // -45px
 }
 
 
@@ -1802,14 +1366,14 @@ body {
     position: absolute;
     z-index: 2;
 
-    top: 12px;
-    right: 12px;
+    top: 0.75rem; // 12px
+    right: 0.75rem; // 12px
 
-    padding: 6px 10px;
+    padding: 0.375rem 0.625rem; // 6px 10px
 
-    border-radius: 20px;
+    border-radius: 1.25rem; // 20px
 
-    font-size: 10px;
+    font-size: 0.625rem; // 10px
     font-weight: 700;
 
     line-height: 1;
@@ -1818,13 +1382,13 @@ body {
 .vehicle-image .status.ready {
     background: $success-bg;
     color: $success-dark;
-    border: 1px solid $success-border;
+    border: 0.0625rem solid $success-border;
 }
 
 .vehicle-image .status.in-maintenance {
     background: $danger-bg;
     color: $danger;
-    border: 1px solid $danger-border;
+    border: 0.0625rem solid $danger-border;
 }
 
 
@@ -1836,22 +1400,22 @@ body {
     position: absolute;
     z-index: 3;
 
-    left: 14px;
-    bottom: 12px;
+    left: 0.875rem; // 14px
+    bottom: 0.75rem; // 12px
 
-    padding: 6px 9px;
+    padding: 0.375rem 0.5625rem; // 6px 9px
 
     background: $white;
     color: $text;
 
-    border: 1px solid $border;
-    border-radius: 5px;
+    border: 0.0625rem solid $border;
+    border-radius: 0.3125rem; // 5px
 
-    font-size: 10px;
+    font-size: 0.625rem; // 10px
     font-weight: 700;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.025rem; // 0.4px
 
-    box-shadow: 0 2px 5px rgba(16, 33, 61, 0.08);
+    box-shadow: 0 0.125rem 0.3125rem rgba(16, 33, 61, 0.08);
 }
 
 
@@ -1860,34 +1424,34 @@ body {
 ========================================================= */
 
 .vehicle-content {
-    padding: 18px 18px 16px;
+    padding: 1.125rem 1.125rem 1rem; // 18px 18px 16px
 }
 
 .vehicle-name {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
+    gap: 0.9375rem; // 15px
 }
 
 .vehicle-name strong {
     color: $text;
-    font-size: 15px;
+    font-size: 0.9375rem; // 15px
     font-weight: 700;
 }
 
 .vehicle-name span {
     color: $text-light;
-    font-size: 11px;
+    font-size: 0.6875rem; // 11px
     white-space: nowrap;
 }
 
 .vehicle-info {
-    margin: 6px 0 0;
+    margin: 0.375rem 0 0; // 6px
 
     color: $text-light;
 
-    font-size: 11px;
+    font-size: 0.6875rem; // 11px
 }
 
 
@@ -1898,11 +1462,11 @@ body {
 .service {
     position: relative;
 
-    margin-top: 15px;
-    padding: 12px 13px;
+    margin-top: 0.9375rem; // 15px
+    padding: 0.75rem 0.8125rem; // 12px 13px
 
-    border-radius: 9px;
-    border: 1px solid $success-border;
+    border-radius: 0.5625rem; // 9px
+    border: 0.0625rem solid $success-border;
 
     background: $success-soft;
 }
@@ -1915,11 +1479,11 @@ body {
 .service strong {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 0.3125rem; // 5px
 
     color: $success-dark;
 
-    font-size: 10px;
+    font-size: 0.625rem; // 10px
     font-weight: 700;
 }
 
@@ -1928,15 +1492,15 @@ body {
 }
 
 .service i {
-    font-size: 15px;
+    font-size: 0.9375rem; // 15px
 }
 
 .service p {
-    margin: 6px 0 0;
+    margin: 0.375rem 0 0; // 6px
 
     color: $text-secondary;
 
-    font-size: 10px;
+    font-size: 0.625rem; // 10px
     line-height: 1.45;
 }
 
@@ -1949,15 +1513,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
+    gap: 0.9375rem; // 15px
 
-    padding: 13px 18px;
+    padding: 0.8125rem 1.125rem; // 13px 18px
 
-    border-top: 1px solid $border;
+    border-top: 0.0625rem solid $border;
 
     background: #fbfcfe;
 
-    font-size: 10px;
+    font-size: 0.625rem; // 10px
 }
 
 .vehicle-footer .green-text {
@@ -1981,22 +1545,22 @@ body {
     align-items: center;
     justify-content: center;
 
-    height: 34px;
-    min-height: 34px;
+    height: 2.125rem; // 34px
+    min-height: 2.125rem; // 34px
 
-    padding: 0 14px;
+    padding: 0 0.875rem; // 14px
 
-    border-radius: 7px;
+    border-radius: 0.4375rem; // 7px
 
     background: $primary;
     color: $white;
 
-    font-size: 11px;
+    font-size: 0.6875rem; // 11px
     font-weight: 700;
 
-    line-height: 34px;
+    line-height: 2.125rem; // 34px
 
-    box-shadow: 0 3px 7px rgba(40, 103, 232, 0.2);
+    box-shadow: 0 0.1875rem 0.4375rem rgba(40, 103, 232, 0.2);
 
     transition:
         background 0.2s ease,
@@ -2006,12 +1570,12 @@ body {
 .vehicle-footer .details:hover,
 .vehicle-footer .blue-btn:hover {
     background: $primary-dark;
-    transform: translateY(-1px);
+    transform: translateY(-0.0625rem); // -1px
 }
 
 .vehicle-footer .details i,
 .vehicle-footer .blue-btn i {
-    font-size: 16px;
+    font-size: 1rem; // 16px
 }
 
 
@@ -2019,7 +1583,7 @@ body {
    RESPONSIVO
 ========================================================= */
 
-@media (max-width: 1000px) {
+@media (max-width: 62.5rem) { // 1000px
 
     .vehicle-list {
         grid-template-columns: 1fr;
@@ -2028,38 +1592,38 @@ body {
 }
 
 
-@media (max-width: 700px) {
+@media (max-width: 43.75rem) { // 700px
 
     .vehicle-filters {
         flex-wrap: wrap;
     }
 
     .vehicle-filters .filter {
-        padding: 8px 13px;
-        font-size: 11px;
+        padding: 0.5rem 0.8125rem; // 8px 13px
+        font-size: 0.6875rem; // 11px
     }
 
     .vehicle-image {
-        height: 130px;
+        height: 8.125rem; // 130px
     }
 
     .vehicle-content {
-        padding: 15px;
+        padding: 0.9375rem; // 15px
     }
 
     .vehicle-footer {
-        padding: 12px 15px;
+        padding: 0.75rem 0.9375rem; // 12px 15px
     }
 
 }
 
 
-@media (max-width: 480px) {
+@media (max-width: 30rem) { // 480px
 
     .vehicle-name {
         align-items: flex-start;
         flex-direction: column;
-        gap: 3px;
+        gap: 0.1875rem; // 3px
     }
 
     .vehicle-footer {
@@ -2074,6 +1638,7 @@ body {
 
 }
 
+
 /* =========================================================
    DETALHES DO VEÍCULO — REFORMULAÇÃO VISUAL
 ========================================================= */
@@ -2082,21 +1647,21 @@ body {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 25px;
+    gap: 1.5625rem; // 25px
 
-    margin-bottom: 22px;
+    margin-bottom: 1.375rem; // 22px
 }
 
 .vehicle-detail-header .subtitle {
     display: block;
 
-    margin-bottom: 7px;
+    margin-bottom: 0.4375rem; // 7px
 
     color: $primary;
 
-    font-size: 10px;
+    font-size: 0.625rem; // 10px
     font-weight: 700;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.01875rem; // 0.3px
 }
 
 .vehicle-detail-header h1 {
@@ -2104,27 +1669,27 @@ body {
 
     color: $text;
 
-    font-size: 25px;
+    font-size: 1.5625rem; // 25px
     font-weight: 500;
     line-height: 1.2;
 }
 
 .vehicle-detail-header p {
-    margin: 6px 0 0;
+    margin: 0.375rem 0 0; // 6px
 
     color: $text-light;
 
-    font-size: 11px;
+    font-size: 0.6875rem; // 11px
 }
 
 .detail-status {
     flex-shrink: 0;
 
-    padding: 7px 12px;
+    padding: 0.4375rem 0.75rem; // 7px 12px
 
-    border-radius: 20px;
+    border-radius: 1.25rem; // 20px
 
-    font-size: 10px;
+    font-size: 0.625rem; // 10px
     font-weight: 700;
 }
 
@@ -2136,13 +1701,13 @@ body {
 .back-link {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 0.3125rem; // 5px
 
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem; // 20px
 
     color: $primary;
 
-    font-size: 11px;
+    font-size: 0.6875rem; // 11px
     font-weight: 600;
 
     cursor: pointer;
@@ -2153,7 +1718,7 @@ body {
 }
 
 .back-link i {
-    font-size: 18px;
+    font-size: 1.125rem; // 18px
 }
 
 
@@ -2166,11 +1731,10 @@ body {
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 20px;
+    gap: 1.25rem; // 20px
 
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem; // 20px
 }
-
 
 /* =========================================================
    CARD DA IMAGEM
@@ -2179,7 +1743,7 @@ body {
 .detail-image-card {
     position: relative;
 
-    min-height: 285px;
+    min-height: 17.8125rem;
 
     margin: 0;
 
@@ -2187,10 +1751,10 @@ body {
 
     background: $white;
 
-    border: 1px solid $border;
+    border: 0.0625rem solid $border;
     border-radius: $card-radius;
 
-    box-shadow: 0 3px 12px rgba(16, 33, 61, 0.05);
+    box-shadow: 0 0.1875rem 0.75rem rgba(16, 33, 61, 0.05);
 }
 
 .vehicle-detail-image {
@@ -2198,7 +1762,7 @@ body {
 
     width: 100%;
     height: 100%;
-    min-height: 285px;
+    min-height: 17.8125rem;
 
     display: flex;
     align-items: center;
@@ -2221,15 +1785,15 @@ body {
 
     position: absolute;
 
-    width: 280px;
-    height: 280px;
+    width: 17.5rem;
+    height: 17.5rem;
 
     border-radius: 50%;
 
     background: rgba(255, 255, 255, 0.42);
 
-    top: -125px;
-    right: -85px;
+    top: -7.8125rem;
+    right: -5.3125rem;
 }
 
 
@@ -2244,7 +1808,7 @@ body {
 
     color: #91a3bd;
 
-    font-size: 105px;
+    font-size: 6.5625rem;
 
     opacity: 0.85;
 }
@@ -2259,34 +1823,34 @@ body {
 
     background: $white;
 
-    border: 1px solid $border;
+    border: 0.0625rem solid $border;
     border-radius: $card-radius;
 
-    box-shadow: 0 3px 12px rgba(16, 33, 61, 0.05);
+    box-shadow: 0 0.1875rem 0.75rem rgba(16, 33, 61, 0.05);
 }
 
 .detail-card .card-content {
-    padding: 25px;
+    padding: 1.5625rem;
 }
 
 .detail-card .subtitle {
     display: block;
 
-    margin-bottom: 6px;
+    margin-bottom: 0.375rem;
 
     color: $primary;
 
-    font-size: 10px;
+    font-size: 0.625rem;
     font-weight: 700;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.01875rem;
 }
 
 .detail-card h2 {
-    margin: 0 0 25px;
+    margin: 0 0 1.5625rem;
 
     color: $text;
 
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 500;
 }
 
@@ -2300,7 +1864,7 @@ body {
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 22px 35px;
+    gap: 1.375rem 2.1875rem;
 }
 
 .info-grid > div {
@@ -2310,11 +1874,11 @@ body {
 .info-grid small {
     display: block;
 
-    margin-bottom: 6px;
+    margin-bottom: 0.375rem;
 
     color: $text-light;
 
-    font-size: 10px;
+    font-size: 0.625rem;
     font-weight: 500;
 }
 
@@ -2323,7 +1887,7 @@ body {
 
     color: $text;
 
-    font-size: 12px;
+    font-size: 0.75rem;
     font-weight: 600;
 }
 
@@ -2346,26 +1910,26 @@ body {
 }
 
 .maintenance-detail .card-content {
-    padding: 25px;
+    padding: 1.5625rem;
 }
 
 .maintenance-detail .subtitle {
     display: block;
 
-    margin-bottom: 6px;
+    margin-bottom: 0.375rem;
 
     color: $primary;
 
-    font-size: 10px;
+    font-size: 0.625rem;
     font-weight: 700;
 }
 
 .maintenance-detail h2 {
-    margin: 0 0 18px;
+    margin: 0 0 1.125rem;
 
     color: $text;
 
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 500;
 }
 
@@ -2380,16 +1944,16 @@ body {
     align-items: center;
     justify-content: space-between;
 
-    gap: 25px;
+    gap: 1.5625rem;
 
-    min-height: 75px;
+    min-height: 4.6875rem;
 
-    padding: 15px 17px;
+    padding: 0.9375rem 1.0625rem;
 
     background: #f7f9fc;
 
-    border: 1px solid #e6ebf2;
-    border-radius: 9px;
+    border: 0.0625rem solid #e6ebf2;
+    border-radius: 0.5625rem;
 }
 
 .maintenance-box > div {
@@ -2401,16 +1965,16 @@ body {
 
     color: $text;
 
-    font-size: 12px;
+    font-size: 0.75rem;
     font-weight: 600;
 }
 
 .maintenance-box p {
-    margin: 6px 0 0;
+    margin: 0.375rem 0 0;
 
     color: $text-light;
 
-    font-size: 10px;
+    font-size: 0.625rem;
     line-height: 1.5;
 }
 
@@ -2419,7 +1983,7 @@ body {
 
     color: $primary !important;
 
-    font-size: 13px !important;
+    font-size: 0.8125rem !important;
     font-weight: 700 !important;
 }
 
@@ -2437,7 +2001,7 @@ body {
    RESPONSIVO
 ========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 56.25rem) {
 
     .detail-grid {
         grid-template-columns: 1fr;
@@ -2445,39 +2009,40 @@ body {
 
     .detail-image-card,
     .vehicle-detail-image {
-        min-height: 230px;
+        min-height: 14.375rem;
     }
 
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 37.5rem) {
 
+    
     .vehicle-detail-header {
         align-items: flex-start;
 
         flex-direction: column;
 
-        gap: 12px;
+        gap: 0.75rem;
     }
 
     .vehicle-detail-header h1 {
-        font-size: 21px;
-    }
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
+}
 
     .detail-grid {
-        gap: 15px;
+        gap: 0.9375rem;
     }
 
     .detail-card .card-content,
     .maintenance-detail .card-content {
-        padding: 18px;
+        padding: 1.125rem;
     }
 
     .info-grid {
         grid-template-columns: 1fr;
 
-        gap: 16px;
+        gap: 1rem;
     }
 
     .maintenance-box {
@@ -2485,220 +2050,222 @@ body {
 
         flex-direction: column;
 
-        gap: 12px;
+        gap: 0.75rem;
     }
 
 }
+
 
 // ========================================
 // MANUTENÇÕES
 // ========================================
 
 .maintenance-page {
-  padding: 32px;
-  background: #f5f7fb;
-  min-height: 100vh;
+    padding: 2rem;
+    background: #f5f7fb;
+    min-height: 100vh;
 
-  // Cabeçalho
-  .page-header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    margin-bottom: 28px;
-
-    .page-title {
-      margin: 0;
-      font-size: 30px;
-      font-weight: 600;
-      color: #0f172a;
-      letter-spacing: -0.5px;
-    }
-
-    .page-description {
-      margin: 6px 0 0;
-      font-size: 14px;
-      color: #64748b;
-    }
-
-    .btn-new-maintenance {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-
-      height: 44px;
-      padding: 0 20px;
-
-      border: 0;
-      border-radius: 9px;
-
-      background: #2563eb;
-      color: #fff;
-
-      font-size: 14px;
-      font-weight: 600;
-
-      box-shadow: 0 3px 8px rgba(37, 99, 235, 0.2);
-
-      transition: all 0.2s ease;
-
-      &:hover {
-        background: #1d4ed8;
-        transform: translateY(-1px);
-        box-shadow: 0 5px 12px rgba(37, 99, 235, 0.25);
-      }
-    }
-  }
-
-  // ========================================
-  // CARDS DE RESUMO
-  // ========================================
-
-  .maintenance-summary {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-    margin-bottom: 24px;
-
-    .summary-card {
-      position: relative;
-
-      padding: 22px;
-      background: #fff;
-
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-
-      transition: all 0.2s ease;
-
-      &:hover {
-        border-color: #cbd5e1;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
-      }
-
-      .summary-icon {
-        width: 42px;
-        height: 42px;
-
+    // Cabeçalho
+    .page-header {
         display: flex;
-        align-items: center;
-        justify-content: center;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-bottom: 1.75rem;
 
-        margin-bottom: 18px;
-
-        border-radius: 10px;
-        background: #eff6ff;
-
-        color: #2563eb;
-
-        i {
-          font-size: 21px;
+        .page-title {
+            margin: 0;
+            font-size: 1.875rem;
+            font-weight: 600;
+            color: #0f172a;
+            letter-spacing: -0.03125rem;
         }
-      }
 
-      .summary-label {
-        margin-bottom: 5px;
+        .page-description {
+            margin: 0.375rem 0 0;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
 
-        font-size: 13px;
-        font-weight: 500;
-        color: #64748b;
-      }
+        .btn-new-maintenance {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
 
-      .summary-number {
-        font-size: 28px;
-        font-weight: 600;
-        line-height: 1;
+            height: 2.75rem;
+            padding: 0 1.25rem;
 
-        color: #0f172a;
-      }
+            border: 0;
+            border-radius: 0.5625rem;
+
+            background: #2563eb;
+            color: #fff;
+
+            font-size: 0.875rem;
+            font-weight: 600;
+
+            box-shadow: 0 0.1875rem 0.5rem rgba(37, 99, 235, 0.2);
+
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: #1d4ed8;
+                transform: translateY(-0.0625rem);
+                box-shadow: 0 0.3125rem 0.75rem rgba(37, 99, 235, 0.25);
+            }
+        }
     }
-  }
 
-  // ========================================
-  // FILTROS
-  // ========================================
+    // ========================================
+    // CARDS DE RESUMO
+    // ========================================
 
-  .maintenance-filters {
-    display: inline-flex;
-    gap: 4px;
+    .maintenance-summary {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.125rem;
+        margin-bottom: 1.5rem;
 
-    padding: 4px;
+        .summary-card {
+            position: relative;
 
-    margin-bottom: 18px;
+            padding: 1.375rem;
+            background: #fff;
 
-    background: #e9eef5;
-    border-radius: 9px;
+            border: 0.0625rem solid #e2e8f0;
+            border-radius: 0.75rem;
 
-    .filter-button {
-      border: none;
-      background: transparent;
+            transition: all 0.2s ease;
 
-      padding: 8px 15px;
+            &:hover {
+                border-color: #cbd5e1;
+                transform: translateY(-0.125rem);
+                box-shadow: 0 0.375rem 1.125rem rgba(15, 23, 42, 0.06);
+            }
 
-      border-radius: 6px;
+            .summary-icon {
+                width: 2.625rem;
+                height: 2.625rem;
 
-      font-size: 13px;
-      font-weight: 500;
-      color: #64748b;
+                display: flex;
+                align-items: center;
+                justify-content: center;
 
-      cursor: pointer;
+                margin-bottom: 1.125rem;
 
-      transition: all 0.2s ease;
+                border-radius: 0.625rem;
+                background: #eff6ff;
 
-      &:hover {
-        color: #1e293b;
-      }
+                color: #2563eb;
 
-      &.active {
-        background: #fff;
-        color: #2563eb;
+                i {
+                    font-size: 1.3125rem;
+                }
+            }
 
-        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
-      }
+            .summary-label {
+                margin-bottom: 0.3125rem;
+
+                font-size: 0.8125rem;
+                font-weight: 500;
+                color: #64748b;
+            }
+
+            .summary-number {
+                font-size: 1.75rem;
+                font-weight: 600;
+                line-height: 1;
+
+                color: #0f172a;
+            }
+        }
     }
-  }
 
-  // ========================================
-  // CARD DA MANUTENÇÃO
-  // ========================================
+    // ========================================
+    // FILTROS
+    // ========================================
 
-  .maintenance-card {
+    .maintenance-filters {
+        display: inline-flex;
+        gap: 0.25rem;
+
+        padding: 0.25rem;
+
+        margin-bottom: 1.125rem;
+
+        background: #e9eef5;
+        border-radius: 0.5625rem;
+
+        .filter-button {
+            border: none;
+            background: transparent;
+
+            padding: 0.5rem 0.9375rem;
+
+            border-radius: 0.375rem;
+
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: #64748b;
+
+            cursor: pointer;
+
+            transition: all 0.2s ease;
+
+            &:hover {
+                color: #1e293b;
+            }
+
+            &.active {
+                background: #fff;
+                color: #2563eb;
+
+                box-shadow: 0 0.0625rem 0.1875rem rgba(15, 23, 42, 0.1);
+            }
+        }
+    }
+}
+
+// ========================================
+// CARD DA MANUTENÇÃO
+// ========================================
+
+.maintenance-card {
     background: #fff;
 
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
+    border: 0.0625rem solid #e2e8f0;
+    border-radius: 0.875rem;
 
-    margin-bottom: 18px;
+    margin-bottom: 1.125rem;
 
     overflow: hidden;
 
     transition: all 0.2s ease;
 
     &:hover {
-      border-color: #cbd5e1;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+        border-color: #cbd5e1;
+        box-shadow: 0 0.5rem 1.5rem rgba(15, 23, 42, 0.06);
     }
 
     .maintenance-header {
-      padding: 24px 24px 20px;
+        padding: 1.5rem 1.5rem 1.25rem;
 
-      border-bottom: 1px solid #eef2f7;
+        border-bottom: 0.0625rem solid #eef2f7;
 
-      .vehicle-name {
-        margin: 0 0 6px;
+        .vehicle-name {
+            margin: 0 0 0.375rem;
 
-        font-size: 23px;
-        font-weight: 600;
+            font-size: 1.4375rem;
+            font-weight: 600;
 
-        color: #0f172a;
-        letter-spacing: -0.3px;
-      }
+            color: #0f172a;
+            letter-spacing: -0.01875rem;
+        }
 
-      .vehicle-plate {
-        font-size: 13px;
-        font-weight: 500;
-        color: #2563eb;
-      }
+        .vehicle-plate {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: #2563eb;
+        }
     }
 
     // ========================================
@@ -2706,38 +2273,38 @@ body {
     // ========================================
 
     .maintenance-info {
-      display: grid;
-      grid-template-columns:
-        0.8fr
-        1fr
-        1.3fr
-        1fr;
+        display: grid;
+        grid-template-columns:
+            0.8fr
+            1fr
+            1.3fr
+            1fr;
 
-      gap: 20px;
+        gap: 1.25rem;
 
-      padding: 22px 24px;
+        padding: 1.375rem 1.5rem;
 
-      .info-item {
-        .info-label {
-          display: block;
+        .info-item {
+            .info-label {
+                display: block;
 
-          margin-bottom: 6px;
+                margin-bottom: 0.375rem;
 
-          font-size: 11px;
-          font-weight: 600;
+                font-size: 0.6875rem;
+                font-weight: 600;
 
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
+                text-transform: uppercase;
+                letter-spacing: 0.03125rem;
 
-          color: #94a3b8;
+                color: #94a3b8;
+            }
+
+            .info-value {
+                font-size: 0.875rem;
+                font-weight: 500;
+                color: #334155;
+            }
         }
-
-        .info-value {
-          font-size: 14px;
-          font-weight: 500;
-          color: #334155;
-        }
-      }
     }
 
     // ========================================
@@ -2745,30 +2312,30 @@ body {
     // ========================================
 
     .maintenance-observation {
-      margin: 0 24px 20px;
-      padding: 14px 16px;
+        margin: 0 1.5rem 1.25rem;
+        padding: 0.875rem 1rem;
 
-      background: #f8fafc;
-      border-radius: 8px;
+        background: #f8fafc;
+        border-radius: 0.5rem;
 
-      .observation-label {
-        display: block;
+        .observation-label {
+            display: block;
 
-        margin-bottom: 4px;
+            margin-bottom: 0.25rem;
 
-        font-size: 11px;
-        font-weight: 600;
+            font-size: 0.6875rem;
+            font-weight: 600;
 
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.03125rem;
 
-        color: #94a3b8;
-      }
+            color: #94a3b8;
+        }
 
-      .observation-text {
-        font-size: 14px;
-        color: #475569;
-      }
+        .observation-text {
+            font-size: 0.875rem;
+            color: #475569;
+        }
     }
 
     // ========================================
@@ -2776,40 +2343,40 @@ body {
     // ========================================
 
     .maintenance-footer {
-      display: flex;
-      justify-content: flex-end;
+        display: flex;
+        justify-content: flex-end;
 
-      padding: 14px 24px;
+        padding: 0.875rem 1.5rem;
 
-      border-top: 1px solid #eef2f7;
+        border-top: 0.0625rem solid #eef2f7;
 
-      .btn-details {
-        height: 38px;
+        .btn-details {
+            height: 2.375rem;
 
-        display: inline-flex;
-        align-items: center;
+            display: inline-flex;
+            align-items: center;
 
-        padding: 0 16px;
+            padding: 0 1rem;
 
-        border: 1px solid #dbe3ef;
-        border-radius: 8px;
+            border: 0.0625rem solid #dbe3ef;
+            border-radius: 0.5rem;
 
-        background: #fff;
-        color: #2563eb;
+            background: #fff;
+            color: #2563eb;
 
-        font-size: 13px;
-        font-weight: 600;
+            font-size: 0.8125rem;
+            font-weight: 600;
 
-        transition: all 0.2s ease;
+            transition: all 0.2s ease;
 
-        &:hover {
-          background: #eff6ff;
-          border-color: #bfdbfe;
+            &:hover {
+                background: #eff6ff;
+                border-color: #bfdbfe;
+            }
         }
-      }
     }
-  }
 }
+
 
 /* =========================================================
    MANUTENÇÕES — REFORMULAÇÃO VISUAL
@@ -2825,9 +2392,9 @@ body {
 
     grid-template-columns: repeat(3, 1fr);
 
-    gap: 18px;
+    gap: 1.125rem;
 
-    margin: 0 0 22px;
+    margin: 0 0 1.375rem;
 }
 
 .maintenance-stats .col {
@@ -2839,16 +2406,16 @@ body {
 .maintenance-stat {
     position: relative;
 
-    min-height: 105px;
+    min-height: 6.5625rem;
 
     margin: 0;
 
     background: $white;
 
-    border: 1px solid $border;
+    border: 0.0625rem solid $border;
     border-radius: $card-radius;
 
-    box-shadow: 0 3px 12px rgba(16, 33, 61, 0.05);
+    box-shadow: 0 0.1875rem 0.75rem rgba(16, 33, 61, 0.05);
 
     overflow: hidden;
 
@@ -2858,25 +2425,25 @@ body {
 }
 
 .maintenance-stat:hover {
-    transform: translateY(-2px);
+    transform: translateY(-0.125rem);
 
-    box-shadow: 0 8px 20px rgba(16, 33, 61, 0.08);
+    box-shadow: 0 0.5rem 1.25rem rgba(16, 33, 61, 0.08);
 }
 
 .maintenance-stat .card-content {
     position: relative;
 
-    padding: 20px;
+    padding: 1.25rem;
 }
 
 .maintenance-stat span {
     display: block;
 
-    margin-bottom: 9px;
+    margin-bottom: 0.5625rem;
 
     color: $text-light;
 
-    font-size: 11px;
+    font-size: 0.6875rem;
     font-weight: 500;
 }
 
@@ -2885,29 +2452,29 @@ body {
 
     color: $text;
 
-    font-size: 26px;
+    font-size: 1.625rem;
     font-weight: 700;
 }
 
 .maintenance-stat i {
     position: absolute;
 
-    top: 20px;
-    right: 20px;
+    top: 1.25rem;
+    right: 1.25rem;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    width: 38px;
-    height: 38px;
+    width: 2.375rem;
+    height: 2.375rem;
 
-    border-radius: 9px;
+    border-radius: 0.5625rem;
 
     background: $primary-soft;
     color: $primary;
 
-    font-size: 20px;
+    font-size: 1.25rem;
 }
 
 
@@ -2919,24 +2486,24 @@ body {
     display: flex;
     align-items: center;
 
-    gap: 10px;
+    gap: 0.625rem;
 
-    margin: 0 0 22px;
+    margin: 0 0 1.375rem;
 }
 
 .maintenance-filters .filter {
-    border: 1px solid $border;
+    border: 0.0625rem solid $border;
 
     background: $white;
     color: $text-secondary;
 
-    border-radius: 8px;
+    border-radius: 0.5rem;
 
-    padding: 9px 16px;
+    padding: 0.5625rem 1rem;
 
     font-family: inherit;
 
-    font-size: 12px;
+    font-size: 0.75rem;
     font-weight: 600;
 
     cursor: pointer;
@@ -2963,7 +2530,7 @@ body {
 
     color: $white;
 
-    box-shadow: 0 3px 8px rgba(40, 103, 232, 0.18);
+    box-shadow: 0 0.1875rem 0.5rem rgba(40, 103, 232, 0.18);
 }
 
 
@@ -2976,7 +2543,7 @@ body {
 
     grid-template-columns: 1fr;
 
-    gap: 16px;
+    gap: 1rem;
 }
 
 
@@ -2987,12 +2554,12 @@ body {
 .maintenance-card {
     background: $white;
 
-    border: 1px solid $border;
-    border-radius: 13px;
+    border: 0.0625rem solid $border;
+    border-radius: 0.8125rem;
 
     overflow: hidden;
 
-    box-shadow: 0 3px 12px rgba(16, 33, 61, 0.05);
+    box-shadow: 0 0.1875rem 0.75rem rgba(16, 33, 61, 0.05);
 
     transition:
         transform 0.2s ease,
@@ -3001,11 +2568,11 @@ body {
 }
 
 .maintenance-card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-0.125rem);
 
     border-color: #cbd7e8;
 
-    box-shadow: 0 8px 22px rgba(16, 33, 61, 0.08);
+    box-shadow: 0 0.5rem 1.375rem rgba(16, 33, 61, 0.08);
 }
 
 
@@ -3019,39 +2586,39 @@ body {
     align-items: center;
     justify-content: space-between;
 
-    gap: 20px;
+    gap: 1.25rem;
 
-    padding: 19px 20px;
+    padding: 1.1875rem 1.25rem;
 
-    border-bottom: 1px solid $border;
+    border-bottom: 0.0625rem solid $border;
 
     background: $white;
 }
 
 .maintenance-card-header h2,
 .maintenance-card-header h3 {
-    margin: 0 0 5px;
+    margin: 0 0 0.3125rem;
 
     color: $text;
 
-    font-size: 15px;
+    font-size: 0.9375rem;
     font-weight: 700;
 }
 
 .maintenance-card-header span {
     color: $text-light;
 
-    font-size: 10px;
+    font-size: 0.625rem;
 }
 
 .maintenance-card-header .status {
     flex-shrink: 0;
 
-    padding: 7px 11px;
+    padding: 0.4375rem 0.6875rem;
 
-    border-radius: 20px;
+    border-radius: 1.25rem;
 
-    font-size: 10px;
+    font-size: 0.625rem;
     font-weight: 700;
 
     line-height: 1;
@@ -3066,7 +2633,7 @@ body {
 .maintenance-card-header .status.progress {
     background: $danger-bg;
 
-    border: 1px solid $danger-border;
+    border: 0.0625rem solid $danger-border;
 
     color: $danger;
 }
@@ -3075,7 +2642,7 @@ body {
 .maintenance-card-header .status.completed {
     background: $success-bg;
 
-    border: 1px solid $success-border;
+    border: 0.0625rem solid $success-border;
 
     color: $success-dark;
 }
@@ -3090,9 +2657,9 @@ body {
 
     grid-template-columns: repeat(3, 1fr);
 
-    gap: 20px;
+    gap: 1.25rem;
 
-    padding: 18px 20px;
+    padding: 1.125rem 1.25rem;
 
     background: $white;
 }
@@ -3102,7 +2669,7 @@ body {
 
     color: $text-secondary;
 
-    font-size: 11px;
+    font-size: 0.6875rem;
 
     line-height: 1.6;
 }
@@ -3110,15 +2677,15 @@ body {
 .maintenance-card-body p strong {
     display: block;
 
-    margin-bottom: 4px;
+    margin-bottom: 0.25rem;
 
     color: $text-light;
 
-    font-size: 9px;
+    font-size: 0.5625rem;
     font-weight: 600;
 
     text-transform: uppercase;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.0125rem;
 }
 
 
@@ -3131,13 +2698,13 @@ body {
 
     flex-direction: column;
 
-    gap: 5px;
+    gap: 0.3125rem;
 }
 
 .maintenance-info span {
     color: $text-light;
 
-    font-size: 9px;
+    font-size: 0.5625rem;
 
     text-transform: uppercase;
 }
@@ -3145,7 +2712,7 @@ body {
 .maintenance-info strong {
     color: $text;
 
-    font-size: 11px;
+    font-size: 0.6875rem;
 }
 
 
@@ -3159,11 +2726,11 @@ body {
     align-items: center;
     justify-content: space-between;
 
-    gap: 20px;
+    gap: 1.25rem;
 
-    padding: 14px 20px;
+    padding: 0.875rem 1.25rem;
 
-    border-top: 1px solid $border;
+    border-top: 0.0625rem solid $border;
 
     background: #fbfcfe;
 }
@@ -3171,7 +2738,7 @@ body {
 .maintenance-card-footer span {
     color: $text-secondary;
 
-    font-size: 10px;
+    font-size: 0.625rem;
     line-height: 1.5;
 }
 
@@ -3200,7 +2767,7 @@ body {
 .maintenance-card .maintenance-price {
     color: $primary;
 
-    font-size: 13px;
+    font-size: 0.8125rem;
 
     font-weight: 700;
 }
@@ -3217,22 +2784,22 @@ body {
     align-items: center;
     justify-content: center;
 
-    min-height: 34px;
+    min-height: 2.125rem;
 
-    padding: 0 14px;
+    padding: 0 0.875rem;
 
-    border-radius: 7px;
+    border-radius: 0.4375rem;
 
     background: $primary;
 
     color: $white;
 
-    font-size: 11px;
+    font-size: 0.6875rem;
     font-weight: 700;
 
-    line-height: 34px;
+    line-height: 2.125rem;
 
-    box-shadow: 0 3px 7px rgba(40, 103, 232, 0.18);
+    box-shadow: 0 0.1875rem 0.4375rem rgba(40, 103, 232, 0.18);
 
     transition:
         background 0.2s ease,
@@ -3243,7 +2810,7 @@ body {
 .maintenance-card .blue-btn:hover {
     background: $primary-dark;
 
-    transform: translateY(-1px);
+    transform: translateY(-0.0625rem);
 }
 
 
@@ -3254,19 +2821,93 @@ body {
 .maintenance-list > p {
     margin: 0;
 
-    padding: 35px 20px;
+    padding: 2.1875rem 1.25rem;
 
     background: $white;
 
-    border: 1px solid $border;
+    border: 0.0625rem solid $border;
 
-    border-radius: 13px;
+    border-radius: 0.8125rem;
 
     color: $text-light;
 
-    font-size: 12px;
+    font-size: 0.75rem;
 
     text-align: center;
+}
+
+/* =========================================================
+   ID 09 — IMAGENS RESPONSIVAS
+========================================================= */
+
+// Imagens HTML
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+// Imagens de fundo dos veículos
+.vehicle-image,
+.vehicle-detail-image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* =========================================================
+   ID 08 — TIPOGRAFIA RESPONSIVA
+========================================================= */
+
+// Títulos principais
+h1 {
+    font-size: clamp(1.375rem, 3vw, 2rem);
+}
+
+.page-header h1 {
+    font-size: clamp(1.375rem, 3vw, 1.625rem);
+}
+
+.login-card h1 {
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+}
+
+.vehicle-detail-header h1 {
+    font-size: clamp(1.25rem, 2.5vw, 1.5625rem);
+}
+
+// Título da página de manutenções
+.maintenance-page .page-header .page-title {
+    font-size: clamp(1.5rem, 3vw, 1.875rem);
+}
+
+// Títulos secundários
+h2 {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+}
+
+.detail-card h2,
+.maintenance-detail h2 {
+    font-size: clamp(1rem, 1.5vw, 1.125rem);
+}
+
+// Títulos de cards
+h3 {
+    font-size: clamp(0.9375rem, 1.5vw, 1.25rem);
+}
+
+.maintenance-card-header h2,
+.maintenance-card-header h3 {
+    font-size: clamp(0.875rem, 1.2vw, 0.9375rem);
+}
+
+// Textos de apoio
+.page-header p {
+    font-size: clamp(0.75rem, 1.2vw, 0.9375rem);
+}
+
+.maintenance-page .page-header .page-description {
+    font-size: clamp(0.75rem, 1.2vw, 0.875rem);
 }
 
 
@@ -3274,7 +2915,7 @@ body {
    RESPONSIVO
 ========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 56.25rem) {
 
     .maintenance-stats {
         grid-template-columns: 1fr;
@@ -3287,16 +2928,16 @@ body {
 }
 
 
-@media (max-width: 650px) {
+@media (max-width: 40.625rem) {
 
     .maintenance-filters {
         flex-wrap: wrap;
     }
 
     .maintenance-filters .filter {
-        padding: 8px 13px;
+        padding: 0.5rem 0.8125rem;
 
-        font-size: 11px;
+        font-size: 0.6875rem;
     }
 
     .maintenance-card-header {
@@ -3304,13 +2945,13 @@ body {
 
         flex-direction: column;
 
-        gap: 10px;
+        gap: 0.625rem;
     }
 
     .maintenance-card-body {
         grid-template-columns: 1fr;
 
-        gap: 14px;
+        gap: 0.875rem;
     }
 
     .maintenance-card-footer {
@@ -3318,7 +2959,7 @@ body {
 
         flex-direction: column;
 
-        gap: 12px;
+        gap: 0.75rem;
     }
 
     .maintenance-card .details,
@@ -3340,7 +2981,7 @@ body {
     display: none;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 56.25rem) {
 
     /* Esconde a lateral por padrão */
     body .sidebar {
@@ -3351,7 +2992,7 @@ body {
         left: 0 !important;
         bottom: 0 !important;
 
-        width: 243px !important;
+        width: 15.1875rem !important;
         height: 100vh !important;
 
         transform: translateX(-110%) !important;
@@ -3381,8 +3022,8 @@ body {
         align-items: center;
         justify-content: center;
 
-        width: 42px;
-        height: 42px;
+        width: 2.625rem;
+        height: 2.625rem;
 
         border: none;
         background: transparent;
@@ -3411,5 +3052,488 @@ body {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
+    }
+}
+
+
+
+/* =========================================================
+   PÁGINA DE DETALHES
+========================================================= */
+
+// Espaçamento das seções
+.content:has(.detail-section) {
+    padding: 1.875rem;
+}
+
+.detail-section {
+    margin-bottom: 1.75rem;
+
+    > .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+
+        margin-bottom: 1rem;
+
+        h2 {
+            margin: 0;
+            color: $text-dark;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+    }
+}
+
+// Botão voltar
+.page-actions {
+    margin-bottom: 1rem;
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+
+    padding: 0.55rem 0.9rem;
+
+    background: $white;
+    color: $text;
+
+    border: 1px solid $border;
+    border-radius: $small-radius;
+
+    font-size: 0.8125rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+
+    i {
+        font-size: 1.125rem;
+    }
+
+    &:hover {
+        background: $primary-soft;
+        color: $primary;
+    }
+}
+
+// Cabeçalho da página
+.content:has(.detail-section) > .page-header {
+    margin-bottom: 1.75rem;
+
+    h1 {
+        color: $text-dark;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .subtitle {
+        margin: 0.4rem 0 0;
+        color: $text-light;
+        font-size: 0.75rem;
+        letter-spacing: 0.04rem;
+    }
+}
+
+// Cartões
+.detail-section .detail-card {
+    min-width: 0;
+    margin: 0;
+
+    padding: 1.25rem;
+
+    background: $white;
+    border: 1px solid $border;
+    border-radius: $card-radius;
+
+    box-shadow: 0 0.1875rem 0.75rem rgba(16, 33, 61, 0.05);
+}
+
+// Grade dos dados do veículo
+.detail-section:first-of-type .detail-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+    gap: 1.25rem;
+}
+
+// Imagem do veículo
+.vehicle-image-card {
+    min-height: 15rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    background: $detail-bg;
+
+    img {
+        width: 100%;
+        height: 15rem;
+
+        object-fit: contain;
+        object-position: center;
+
+        padding: 1rem;
+    }
+}
+
+// Informações individuais
+.detail-section .detail-item {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+
+    padding: 0.75rem;
+
+    background: $detail-bg;
+    border-radius: $small-radius;
+
+    span {
+        color: $text-light;
+        font-size: 0.6875rem;
+        font-weight: 600;
+    }
+
+    strong {
+        color: $text-dark;
+        font-size: 0.875rem;
+        font-weight: 700;
+        overflow-wrap: anywhere;
+    }
+}
+
+// Grade das informações da manutenção
+.detail-section + .detail-section > .detail-card > .detail-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.875rem;
+}
+
+// Status
+.detail-section .status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+    padding: 0.4rem 0.75rem;
+
+    border-radius: 2rem;
+    background: $primary-soft;
+    color: $primary;
+
+    font-size: 0.6875rem;
+    font-weight: 700;
+}
+
+// Descrição do serviço
+.detail-section .maintenance-observation {
+    margin-top: 1rem;
+    padding: 1.5rem;
+
+    border-left: 0.25rem solid $primary;
+
+    h3 {
+        margin: 0 0 0.75rem;
+        color: $text-dark;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    p {
+        margin: 0;
+        color: $text-secondary;
+        font-size: 0.875rem;
+        line-height: 1.7;
+        overflow-wrap: anywhere;
+    }
+}
+
+// Responsividade
+@media (max-width: 56.25rem) {
+
+    .content:has(.detail-section) {
+        padding: 1.5rem;
+    }
+
+    .detail-section + .detail-section > .detail-card > .detail-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 40.625rem) {
+
+    .content:has(.detail-section) {
+        padding: 1rem;
+    }
+
+    .content:has(.detail-section) > .page-header {
+        align-items: flex-start;
+        gap: 0.75rem;
+
+        h1 {
+            font-size: 1.375rem;
+        }
+    }
+
+    .detail-section:first-of-type .detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .vehicle-image-card {
+        min-height: 12rem;
+
+        img {
+            height: 12rem;
+        }
+    }
+
+    .detail-section + .detail-section > .detail-card > .detail-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .detail-section .detail-card {
+        padding: 1rem;
+    }
+
+    .detail-section > .section-header h2 {
+        font-size: 1.0625rem;
+    }
+}
+
+@media (max-width: 23.4375rem) {
+
+    .detail-section + .detail-section > .detail-card > .detail-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   ID 06 — PADRONIZAÇÃO DO DESIGN SYSTEM
+========================================================= */
+
+// Componentes visuais compartilhados
+.stat-card,
+.fleet.card,
+.vehicle-card,
+.maintenance-form {
+    @include card-base;
+}
+
+// Botões principais
+.btn.blue-btn {
+    background-color: $primary;
+    color: $white;
+
+    border-radius: $small-radius;
+
+    text-transform: none;
+    font-weight: 600;
+
+    &:hover,
+    &:focus {
+        background-color: $primary-dark;
+    }
+}
+
+// Botões secundários
+.btn.cancel-btn {
+    background-color: $white;
+    color: $text-secondary;
+
+    border: px-to-rem(1) solid $border;
+    border-radius: $small-radius;
+
+    text-transform: none;
+
+    box-shadow: none;
+
+    &:hover {
+        background-color: $primary-soft;
+        color: $primary;
+    }
+}
+
+// Títulos das páginas
+.page-header h1 {
+    color: $text-dark;
+    font-weight: 700;
+}
+
+// Textos de apoio
+.page-header p {
+    color: $text-light;
+    line-height: 1.5;
+}
+
+// Campos de formulário
+.maintenance-form {
+
+    .input-field label {
+        color: $text-light;
+    }
+
+    .input-field input,
+    .input-field textarea {
+        color: $text-dark;
+    }
+}
+
+// Foco para navegação por teclado
+button:focus-visible,
+a:focus-visible {
+    outline: px-to-rem(2) solid $primary;
+    outline-offset: px-to-rem(3);
+}
+
+/* =========================================================
+   ID 08 — TIPOGRAFIA RESPONSIVA
+========================================================= */
+
+.page-header h1,
+.content:has(.detail-section) > .page-header h1 {
+    font-size: clamp(1.375rem, 3vw, 1.75rem);
+    line-height: 1.3;
+}
+
+.section-header h2,
+.detail-section > .section-header h2,
+.maintenance-form h2 {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.4;
+}
+
+.form-section h3 {
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    line-height: 1.4;
+}
+
+.page-header p {
+    font-size: clamp(0.75rem, 1.2vw, 0.9375rem);
+}
+
+/* =========================================================
+   ID 09 E ID 10 — IMAGENS RESPONSIVAS E OTIMIZADAS
+========================================================= */
+
+.vehicle-image-card {
+
+    picture {
+        display: block;
+        width: 100%;
+        min-width: 0;
+    }
+
+    img {
+        display: block;
+
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+
+        max-height: 15rem;
+
+        object-fit: contain;
+        object-position: center;
+
+        padding: 1rem;
+    }
+}
+
+.vehicle-image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media (max-width: 40.625rem) {
+
+    .vehicle-image-card img {
+        max-height: 12rem;
+        padding: 0.75rem;
+    }
+}
+
+/* =========================================================
+   ENTREGA 2 — AJUSTES FINAIS DE RESPONSIVIDADE
+========================================================= */
+
+// Evita que elementos ultrapassem seus containers
+.main-content,
+.content,
+.vehicle-card,
+.detail-card,
+.maintenance-form {
+    min-width: 0;
+}
+
+// Espaçamento dos indicadores do Dashboard
+.stats > .col {
+    margin-bottom: 1rem;
+}
+
+// Permite reorganizar cabeçalhos
+.page-header,
+.section-header {
+    flex-wrap: wrap;
+}
+
+// Responsividade dos formulários e cabeçalhos
+@media (max-width: 40.625rem) {
+
+    .content,
+    .maintenance-page {
+        padding: 1rem;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .vehicle-list {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .vehicle-card {
+        width: 100%;
+    }
+
+    .vehicle-filters,
+    .vehicle-search {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .maintenance-form .card-content {
+        padding: 1rem;
+    }
+
+    .form-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+
+        .btn {
+            width: 100%;
+        }
+    }
+
+    .detail-section > .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .detail-section:first-of-type .detail-grid {
+        grid-template-columns: minmax(0, 1fr);
     }
 }

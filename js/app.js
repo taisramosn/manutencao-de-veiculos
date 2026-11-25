@@ -6,19 +6,6 @@ const CARCARE_API_URL = "http://localhost:3000";
 const FIPE_API_URL = "https://fipe.parallelum.com.br/api/v2";
 
 
-/* =====================================================
-   PROTEÇÃO DAS PÁGINAS
-===================================================== */
-
-const paginaAtual = window.location.pathname;
-
-if (
-    !paginaAtual.includes("login.html") &&
-    !localStorage.getItem("carcareLogado")
-) {
-    window.location.href = "login.html";
-}
-
 
 /* =====================================================
    MENSAGENS
@@ -39,109 +26,30 @@ function mostrarMensagem(mensagem) {
 }
 
 
+
 /* =====================================================
    NAVEGAÇÃO
 ===================================================== */
 
 function irPara(pagina) {
-
     window.location.href = pagina;
 }
 
-
 function novaManutencao() {
-
     window.location.href = "nova-manutencao.html";
 }
 
-
+// Detalhes de um veículo
 function verDetalhes(id) {
+    window.location.href = `detalhes.html?veiculo=${id}`;
+}
 
-    window.location.href =
-        `detalhes.html?veiculo=${id}`;
+// Detalhes de uma manutenção
+function verDetalhesManutencao(id) {
+    window.location.href = `detalhes.html?manutencao=${id}`;
 }
 
 
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-function sair() {
-
-    localStorage.removeItem("carcareLogado");
-
-    window.location.href = "login.html";
-}
-
-
-/* =====================================================
-   LOGIN
-===================================================== */
-
-function iniciarLogin() {
-
-    const loginForm =
-        document.getElementById("loginForm");
-
-    if (!loginForm) {
-        return;
-    }
-
-
-    loginForm.addEventListener(
-        "submit",
-        function (event) {
-
-            event.preventDefault();
-
-
-            const emailInput =
-                document.getElementById("loginEmail");
-
-            const senhaInput =
-                document.getElementById("loginSenha");
-
-
-            if (!emailInput || !senhaInput) {
-                return;
-            }
-
-
-            const email =
-                emailInput.value.trim();
-
-            const senha =
-                senhaInput.value;
-
-
-            /*
-               Login administrativo definido
-               para o projeto.
-            */
-
-            if (
-                email === "admin@carcare.com" &&
-                senha === "123456"
-            ) {
-
-                localStorage.setItem(
-                    "carcareLogado",
-                    "true"
-                );
-
-                window.location.href =
-                    "index.html";
-
-                return;
-            }
-
-
-            mostrarMensagem(
-                "E-mail ou senha incorretos."
-            );
-        }
-    );
-}
 
 
 /* =====================================================
@@ -1737,8 +1645,7 @@ async function carregarListaManutencoes(
 
     <button
         class="btn blue-btn"
-        onclick="verDetalhes('${manutencao.veiculoId}')"
-    >
+        onclick="verDetalhesManutencao('${manutencao.id}')"    >
         Detalhes
     </button>
 
@@ -2222,12 +2129,6 @@ document.addEventListener(
 
         iniciarMenuMobile();
 
-        /* =============================================
-           LOGIN
-        ============================================= */
-
-        iniciarLogin();
-
 
         /* =============================================
            NOVO VEÍCULO
@@ -2269,32 +2170,11 @@ document.addEventListener(
         }
 
 
-        /* =============================================
-           DETALHES
-        ============================================= */
-
-        const detailsPage =
-            document.getElementById(
-                "vehicle-details"
-            );
-
-
-        if (detailsPage) {
-
-            carregarDetalhes();
-
-        }
-
-
-        if (
-            window.location.pathname.includes(
-                "detalhes.html"
-            )
-        ) {
-
-            carregarDetalhes();
-
-        }
+ if (
+    window.location.pathname.includes("detalhes.html")
+) {
+    carregarDetalhes();
+}
 
 
         /* =============================================
@@ -2380,165 +2260,9 @@ document.addEventListener(
    FUNÇÕES USADAS PELO HTML
 ===================================================== */
 
-window.irPara =
-    irPara;
-
-window.novaManutencao =
-    novaManutencao;
-
-window.verDetalhes =
-    verDetalhes;
-
-window.excluirManutencao =
-    excluirManutencao;
-
-window.sair =
-    sair;
-
-        /* =============================================
-           LOGIN
-        ============================================= */
-
-        iniciarLogin();
-
-
-        /* =============================================
-           NOVO VEÍCULO
-        ============================================= */
-
-        const vehicleForm =
-            document.getElementById(
-                "vehicleForm"
-            );
-
-
-        if (vehicleForm) {
-
-            iniciarCadastroVeiculo();
-
-
-            vehicleForm.addEventListener(
-                "submit",
-                salvarVeiculo
-            );
-        }
-
-
-        /* =============================================
-           MEUS VEÍCULOS
-        ============================================= */
-
-        const vehiclesContainer =
-            document.getElementById(
-                "vehicles-cards-container"
-            );
-
-
-        if (vehiclesContainer) {
-
-            carregarListaVeiculos();
-        }
-
-
-        /* =============================================
-           DETALHES
-        ============================================= */
-
-        const detailsPage =
-            document.getElementById(
-                "vehicle-details"
-            );
-
-
-        if (detailsPage) {
-
-            carregarDetalhes();
-        }
-
-
-        /*
-           Caso a página de detalhes não tenha
-           exatamente esse ID, tenta pelos elementos.
-        */
-
-        if (
-            window.location.pathname.includes(
-                "detalhes.html"
-            )
-        ) {
-
-            carregarDetalhes();
-        }
-
-
-        /* =============================================
-           NOVA MANUTENÇÃO
-        ============================================= */
-
-        const maintenanceForm =
-            document.getElementById(
-                "maintenanceForm"
-            );
-
-
-        if (maintenanceForm) {
-
-            if (
-                typeof M !== "undefined"
-            ) {
-
-                M.FormSelect.init(
-                    document.querySelectorAll(
-                        "select"
-                    )
-                );
-            }
-
-
-            carregarVeiculosManutencao();
-
-
-            maintenanceForm.addEventListener(
-                "submit",
-                function (event) {
-
-                    event.preventDefault();
-
-                    salvarManutencao();
-                }
-            );
-        }
-
-
-        /* =============================================
-           LISTA DE MANUTENÇÕES
-        ============================================= */
-
-        const maintenanceList =
-            document.querySelector(
-                ".maintenance-list"
-            );
-
-
-        if (maintenanceList) {
-
-            carregarListaManutencoes();
-
-            iniciarFiltrosManutencoes();
-        }
-
-
-/* =============================================
-   DASHBOARD
-============================================= */
-
-if (
-    document.getElementById(
-        "dashboard-total-veiculos"
-    )
-) {
-
-    carregarDashboard();
-
-}
+window.irPara = irPara;
+window.novaManutencao = novaManutencao;
+window.verDetalhes = verDetalhes;
+window.verDetalhesManutencao = verDetalhesManutencao;
+window.excluirManutencao = excluirManutencao;
 
