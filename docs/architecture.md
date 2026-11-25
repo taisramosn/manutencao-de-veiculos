@@ -1,426 +1,882 @@
-# 🛠️ Especificação Técnica (Tech Spec) - CarCare
+
+# 🛠️ Especificação Técnica (Tech Spec) — CarCare
 
 Este documento detalha a arquitetura técnica, o modelo de dados, a estrutura de armazenamento e as tecnologias utilizadas pelo sistema CarCare.
 
-O CarCare é uma aplicação web desenvolvida para auxiliar o proprietário no cadastro e acompanhamento das informações de seus veículos e dos registros relacionados às suas manutenções.
+O CarCare é uma aplicação web responsiva desenvolvida para auxiliar no cadastro, controle e acompanhamento dos veículos de uma frota e dos registros relacionados às suas manutenções.
 
-A aplicação utiliza uma API local simulada pelo **JSON Server**, responsável pela persistência e consulta dos dados dos veículos.
+A aplicação utiliza uma API local simulada pelo **JSON Server** e uma API pública da Tabela FIPE para auxiliar no cadastro dos veículos.
 
 ---
 
 ## 1. Arquitetura da Aplicação
 
-O CarCare utiliza uma arquitetura simples composta por uma aplicação web no lado do cliente e uma API local simulada.
+O CarCare utiliza uma arquitetura cliente-servidor composta por uma aplicação web no lado do cliente, uma API local simulada e uma API pública externa.
 
 ```text
-┌─────────────────────────────────────────────┐
-│                  CarCare                    │
-│              Aplicação Web                 │
-├─────────────────────────────────────────────┤
-│                                             │
-│  HTML + CSS + JavaScript                    │
-│                                             │
-│  ├── Dashboard                              │
-│  ├── Veículos                               │
-│  ├── Cadastro de Veículo                    │
-│  ├── Detalhes do Veículo                    │
-│  └── Manutenções                            │
-│                                             │
-└──────────────────────┬──────────────────────┘
-                       │
-                       │ HTTP / Fetch
-                       ▼
-┌─────────────────────────────────────────────┐
-│              JSON Server                    │
-│                API REST                     │
-├─────────────────────────────────────────────┤
-│                                             │
-│  /veiculos                                  │
-│                                             │
-└──────────────────────┬──────────────────────┘
-                       │
-                       ▼
-                ┌──────────┐
-                │ db.json   │
-                └──────────┘
+                     Administrador
+                           |
+                           v
++----------------------------------------------+
+|             Front-end CarCare                |
+|                                              |
+| HTML5 + CSS3 + SCSS + JavaScript              |
+| Materialize CSS + Material Icons             |
+|                                              |
+| - Dashboard                                  |
+| - Meus Veículos                              |
+| - Novo Veículo                               |
+| - Detalhes do Veículo                         |
+| - Nova Manutenção                            |
++----------------------+-----------------------+
+                       |
+                  HTTP / Fetch
+                       |
+          +------------+------------+
+          |                         |
+          v                         v
++----------------------+  +--------------------+
+|     JSON Server      |  |    FIPE API v2     |
+|       API REST       |  |    API Pública     |
+|                      |  |                    |
+| /veiculos            |  | Marcas             |
+| /manutencoes         |  | Modelos            |
+|                      |  | Anos               |
++----------+-----------+  +--------------------+
+           |
+           v
+     +-----------+
+     |  db.json  |
+     +-----------+
 ```
 
-### Responsabilidades do Front-end
+### 1.1 Responsabilidades do Front-end
 
 O front-end é responsável por:
 
 - Apresentar a interface do sistema.
 - Permitir o cadastro de veículos.
-- Permitir a visualização dos veículos cadastrados.
-- Permitir a visualização dos detalhes de um veículo.
-- Apresentar informações relacionadas às manutenções.
-- Apresentar o histórico de manutenção.
-- Apresentar informações resumidas no Dashboard.
-- Realizar requisições para a API.
+- Apresentar os veículos cadastrados.
+- Exibir os detalhes dos veículos.
+- Apresentar os indicadores do Dashboard.
+- Permitir o registro de manutenções.
+- Disponibilizar uma área para o histórico de manutenções.
+- Realizar requisições HTTP.
 - Validar dados antes do envio.
 - Apresentar mensagens de sucesso ou erro.
-- Utilizar a API pública para auxiliar na consulta dos dados dos veículos.
+- Consultar a API pública da Tabela FIPE.
+- Adaptar a interface para diferentes tamanhos de tela.
 
-### Responsabilidades do JSON Server
+### 1.2 Responsabilidades do JSON Server
 
-O JSON Server é utilizado para:
+O JSON Server é responsável por:
 
 - Simular uma API REST.
 - Receber requisições HTTP.
-- Armazenar os veículos no arquivo `db.json`.
+- Armazenar dados no arquivo `db.json`.
 - Permitir consultas aos veículos cadastrados.
-- Permitir cadastro de novos veículos.
+- Permitir o cadastro de novos veículos.
+- Permitir o registro de manutenções.
+- Permitir a atualização do status dos veículos.
 
-### Responsabilidade do `db.json`
+### 1.3 Responsabilidades da API FIPE
 
-O arquivo `db.json` representa o armazenamento de dados utilizado pelo JSON Server durante o desenvolvimento do projeto.
+A API FIPE é utilizada como fonte externa de informações para auxiliar no cadastro dos veículos.
+
+A integração permite consultar:
+
+- Marcas.
+- Modelos.
+- Anos disponíveis.
+
+### 1.4 Responsabilidades do db.json
+
+O arquivo `db.json` representa o armazenamento local de dados utilizado pelo JSON Server durante o desenvolvimento da aplicação.
+
+---
 
 ## 2. Modelo de Dados
 
-O modelo de dados principal do CarCare é baseado na entidade:
+O modelo de dados do CarCare é composto por duas entidades principais:
 
-- **Veículos**
+- Veículos.
+- Manutenções.
 
-Os registros de manutenção estão relacionados aos veículos cadastrados.
+Cada veículo pode possuir vários registros de manutenção.
 
-As informações de manutenção são simples e têm como objetivo registrar uma observação sobre o serviço realizado e o valor gasto.
+### 2.1 Relacionamento entre entidades
 
-### 2.1 Veículos
+```text
++------------------+
+|     VEÍCULOS     |
++------------------+
+| id               |
+| marca            |
+| modelo           |
+| ano              |
+| placa            |
+| quilometragem    |
+| combustivel      |
+| status           |
++------------------+
+         |
+         | 1:N
+         |
++------------------+
+|   MANUTENÇÕES    |
++------------------+
+| id               |
+| veiculoId        |
+| observacao       |
+| valor            |
+| data             |
+| status           |
++------------------+
+```
 
-A entidade `veiculos` armazena as informações dos veículos cadastrados pelo proprietário.
+O relacionamento entre as entidades é estabelecido por meio do campo `veiculoId`, que identifica o veículo associado à manutenção.
 
-Cada veículo pode possuir informações como:
-
-- Identificador.
-- Marca.
-- Modelo.
-- Ano.
-- Placa.
-- Quilometragem.
-- Combustível.
-- Informações relacionadas às manutenções, quando houver.
-
-### 2.2 Manutenções
-
-As informações de manutenção estão relacionadas ao veículo correspondente.
-
-Um registro de manutenção pode conter:
-
-- Observação
-- Valor
-
-A manutenção não possui uma estrutura complexa de acompanhamento.
-
-O sistema não utiliza, nesta versão:
-
-- Data de próxima revisão.
-- Quilometragem de próxima revisão.
-- Status de manutenção.
-
-Uma observação também pode ser utilizada para registrar uma informação sobre algo que precisa ser realizado no veículo, sem criar um registro de manutenção futura.
+---
 
 ## 3. Dicionário de Dados
 
 ### 3.1 Entidade `veiculos`
 
-| Campo           | Tipo   | Descrição                      |
-| --------------- | ------ | ------------------------------ |
-| `id`            | string | Identificador único do veículo |
-| `marca`         | string | Marca do veículo               |
-| `modelo`        | string | Modelo do veículo              |
-| `ano`           | number | Ano do veículo                 |
-| `placa`         | string | Placa do veículo               |
-| `quilometragem` | number | Quilometragem atual do veículo |
-| `combustivel`   | string | Tipo de combustível utilizado  |
+| Campo | Tipo | Descrição |
+| --- | --- | --- |
+| `id` | string | Identificador único do veículo |
+| `marca` | string | Marca do veículo |
+| `modelo` | string | Modelo do veículo |
+| `ano` | string | Ano ou identificação de ano retornada pela FIPE |
+| `placa` | string | Placa do veículo |
+| `quilometragem` | number | Quilometragem atual |
+| `combustivel` | string | Tipo de combustível |
+| `status` | string | Situação operacional do veículo |
 
-### 3.2 Informações de manutenção
+### 3.2 Entidade `manutencoes`
 
-| Campo        | Tipo   | Descrição                                  |
-| ------------ | ------ | ------------------------------------------ |
-| `observacao` | string | Descrição ou observação sobre a manutenção |
-| `valor`      | number | Valor gasto na manutenção                  |
+| Campo | Tipo | Descrição |
+| --- | --- | --- |
+| `id` | string | Identificador único da manutenção |
+| `veiculoId` | string | Identificador do veículo relacionado |
+| `observacao` | string | Descrição do serviço ou manutenção |
+| `valor` | number | Valor relacionado à manutenção |
+| `data` | string | Data de registro da manutenção |
+| `status` | string | Situação da manutenção |
 
+### 3.3 Status dos veículos
+
+| Valor | Descrição |
+| --- | --- |
+| `operacional` | Veículo disponível para utilização |
+| `manutencao` | Veículo em manutenção |
+
+### 3.4 Status das manutenções
+
+| Valor | Descrição |
+| --- | --- |
+| Em andamento | Manutenção registrada e ativa |
+| Concluída | Manutenção finalizada |
+| Cancelada | Manutenção cancelada |
+
+O cadastro de uma manutenção utiliza inicialmente o status `Em andamento`.
+
+A atualização dos demais status e sua integração completa com a interface serão revisadas nas próximas etapas.
+
+---
 
 ## 4. Estrutura das Informações de Manutenção
 
-As informações de manutenção fazem parte da experiência do sistema e são utilizadas para apresentar os serviços relacionados aos veículos.
+O registro de manutenção possui uma estrutura simplificada.
 
-Nesta versão do projeto, o registro de manutenção é simplificado.
+Cada registro está relacionado a um veículo e contém principalmente:
 
-Cada registro possui principalmente:
-
-- Observação sobre o serviço realizado.
-- Valor gasto.
-
-As informações podem ser apresentadas nas seguintes áreas:
-
-Dashboard.
-- Detalhes do veículo.
-- Área de Manutenções.
-
-O objetivo é permitir que o proprietário consulte o que foi realizado no veículo e o valor relacionado ao serviço.
-
-Não fazem parte desta versão informações como:
-
-- Tipo de manutenção.
-- Data da manutenção.
-- Quilometragem da manutenção.
-- Peças utilizadas.
-- Oficina.
+- Observação sobre o serviço.
+- Valor da manutenção.
+- Data de registro.
 - Status.
-- Agendamento de manutenção futura.
 
-## 5. Rotas da API
+O cadastro é realizado na página `nova-manutencao.html`.
+
+A interface destinada à consulta do histórico está localizada na página `detalhes.html`.
+
+Não fazem parte do escopo atual:
+
+- Agendamento de manutenções futuras.
+- Cálculo de próximas revisões.
+- Controle de peças utilizadas.
+- Cadastro de oficinas.
+- Controle de fornecedores.
+- Cálculo de quilometragem para futuras revisões.
+
+O objetivo é manter um sistema simples, adequado ao escopo acadêmico definido para o projeto.
+
+---
+
+## 5. Rotas da API Local
 
 A aplicação utiliza uma API local simulada pelo JSON Server.
 
-Durante o desenvolvimento, a API poderá ser executada em:
+### Endereço base
 
 ```text
 http://localhost:3000
 ```
 
-A principal coleção disponibilizada pela API é:
+### 5.1 Rotas de veículos
 
-```text
-/veiculos
-```
+| Método HTTP | Endpoint | Finalidade |
+| --- | --- | --- |
+| GET | `/veiculos` | Listar veículos |
+| GET | `/veiculos/:id` | Consultar um veículo |
+| POST | `/veiculos` | Cadastrar um veículo |
+| PATCH | `/veiculos/:id` | Atualizar o status do veículo |
 
-### 5.1 Listar veículos
+### 5.2 Rotas de manutenções
 
-```http
-GET /veiculos
-```
+| Método HTTP | Endpoint | Finalidade |
+| --- | --- | --- |
+| GET | `/manutencoes` | Consultar manutenções |
+| POST | `/manutencoes` | Registrar uma manutenção |
 
-Retorna todos os veículos cadastrados.
+O projeto não contempla a exclusão de registros de manutenção no escopo atual.
 
-### 5.2 Consultar um veículo
-
-```http
-GET /veiculos/:id
-```
-
-Retorna um veículo específico.
-
-Exemplo:
+### 5.3 Exemplo de consulta
 
 ```http
 GET /veiculos/1
 ```
+
+A requisição retorna os dados do veículo correspondente ao identificador informado.
+
+---
+
 ## 6. Estrutura do Banco de Dados
 
-O armazenamento utilizado pelo JSON Server é representado pelo arquivo:
+O armazenamento local da aplicação é representado pelo arquivo:
 
 ```text
 db.json
 ```
 
-A estrutura principal será:
+A estrutura principal é composta pelas coleções `veiculos` e `manutencoes`.
 
-```json
-{
-  "veiculos": []
-}
-```
-
-### Exemplo
+### Exemplo de estrutura
 
 ```json
 {
   "veiculos": [
     {
       "id": "1",
-      "marca": "Chevrolet",
-      "modelo": "Onix",
-      "ano": 2015,
+      "marca": "Toyota",
+      "modelo": "Corolla",
+      "ano": "2020 Gasolina",
       "placa": "ABC1D23",
-      "quilometragem": 87420,
-      "combustivel": "Flex"
+      "quilometragem": 45000,
+      "combustivel": "Gasolina",
+      "status": "manutencao"
+    }
+  ],
+  "manutencoes": [
+    {
+      "id": "1",
+      "veiculoId": "1",
+      "observacao": "Troca de óleo e filtros",
+      "valor": 350,
+      "data": "2026-11-25",
+      "status": "Em andamento"
     }
   ]
 }
 ```
 
+Os dados apresentados são exemplos ilustrativos do modelo utilizado pela aplicação.
+
+---
+
 ## 7. Contrato de Dados da API
 
 ### 7.1 Cadastro de veículo
 
-Exemplo de dados enviados para a API:
+Requisição:
+
+```http
+POST /veiculos
+Content-Type: application/json
+```
+
+Exemplo do corpo da requisição:
 
 ```json
 {
-  "marca": "Chevrolet",
-  "modelo": "Onix",
-  "ano": 2015,
+  "marca": "Toyota",
+  "modelo": "Corolla",
+  "ano": "2020 Gasolina",
   "placa": "ABC1D23",
-  "quilometragem": 87420,
-  "combustivel": "Flex"
+  "quilometragem": 45000,
+  "combustivel": "Gasolina",
+  "status": "operacional"
 }
 ```
 
-O `id` do veículo será utilizado para identificar o registro posteriormente.
+O identificador do veículo é utilizado posteriormente para consultar suas informações e relacionar registros de manutenção.
 
+### 7.2 Cadastro de manutenção
+
+Requisição:
+
+```http
+POST /manutencoes
+Content-Type: application/json
 ```
 
-## 8. Fluxo de Dados
+Exemplo do corpo da requisição:
 
-O fluxo básico da aplicação ocorre da seguinte forma:
-
-```text
-┌───────────────┐
-│ Proprietário  │
-└───────┬───────┘
-        │
-        │ Interage com a interface
-        ▼
-┌─────────────────────┐
-│ Front-end CarCare   │
-│ HTML/CSS/JavaScript │
-└─────────┬───────────┘
-          │
-          │ Requisição HTTP
-          ▼
-┌─────────────────────┐
-│    JSON Server      │
-│       API           │
-└─────────┬───────────┘
-          │
-          │ Leitura / escrita
-          ▼
-┌─────────────────────┐
-│       db.json       │
-│      veiculos       │
-└─────────────────────┘
+```json
+{
+  "veiculoId": "1",
+  "observacao": "Revisão de óleo e filtros",
+  "valor": 350,
+  "data": "2026-11-25",
+  "status": "Em andamento"
+}
 ```
 
-### Exemplo: cadastro de veículo
+### 7.3 Atualização do status do veículo
 
-1. O proprietário acessa o formulário de cadastro.
-2. O proprietário preenche os dados do veículo.
-3. O JavaScript valida os dados.
-4. O front-end consulta a API pública quando necessário.
-5. O front-end envia uma requisição `POST /veiculos`. 
-6. O JSON Server recebe a requisição.
-7. O veículo é armazenado no `db.json`.
-8. A aplicação atualiza a interface.
-9. O proprietário recebe o retorno da operação.
+Requisição:
 
-### Exemplo: consulta de veículos
-
-1. O proprietário acessa a área de Veículos.
-2. O JavaScript realiza uma requisição `GET /veiculos`.
-3. O JSON Server retorna os veículos cadastrados.
-4. O JavaScript processa a resposta.
-5. A aplicação apresenta os veículos na interface.
-
-### Exemplo: detalhes de um veículo
-
-1. O proprietário seleciona um veículo.
-2. A aplicação identifica o `id` do veículo.
-3. O sistema consulta o veículo através da API.
-4. A interface apresenta os dados do veículo.
-5. As informações de manutenção relacionadas ao veículo são apresentadas na interface.
-6. A próxima revisão é apresentada quando houver informação cadastrada.
-
-## 9. Validação de Dados
-
-Os dados dos veículos devem ser validados antes de serem enviados para a API.
-
-### Veículo
-
-Devem ser verificadas informações como:
-
-- Campos obrigatórios preenchidos.
-- Marca preenchida.
-- Modelo preenchido.
-- Ano válido.
-- Placa em formato válido.
-- Quilometragem numérica.
-- Quilometragem maior ou igual a zero.
-- Combustível informado.
-
-### Manutenção
-
-Quando uma manutenção for registrada, devem ser verificadas:
-
-- Veículo relacionado informado.
-- Observação preenchida.
-- Valor válido, quando informado.
-- Valor maior ou igual a zero.
-
-A validação deve ocorrer no front-end antes da realização da requisição ou do armazenamento dos dados.
-
-## 10. Tratamento de Erros
-
-As requisições realizadas pelo front-end devem possuir tratamento de erros.
-
-Exemplos de situações que podem ocorrer:
-
-- API indisponível.
-- Erro durante uma requisição.
-- Falha no cadastro do veículo.
-- Falha na atualização.
-- Falha na exclusão.
-- Dados inválidos.
-- Veículo não encontrado.
-
-Quando ocorrer um erro, a interface deve apresentar uma mensagem clara ao proprietário.
+```http
+PATCH /veiculos/1
+Content-Type: application/json
+```
 
 Exemplo:
 
-```text
-Não foi possível carregar os veículos.
-Tente novamente.
+```json
+{
+  "status": "manutencao"
+}
 ```
 
-Outro exemplo:
+O status do veículo pode ser alterado conforme a existência de manutenções ativas.
+
+---
+
+## 8. Fluxo de Dados
+
+### 8.1 Cadastro de veículo
+
+1. O administrador acessa o formulário de cadastro.
+2. A aplicação consulta as marcas disponíveis na API FIPE.
+3. O administrador seleciona a marca.
+4. A aplicação consulta os modelos disponíveis.
+5. O administrador seleciona o modelo e o ano.
+6. Os demais campos são preenchidos.
+7. Os dados são validados.
+8. O front-end envia uma requisição `POST /veiculos`.
+9. O JSON Server armazena os dados no arquivo `db.json`.
+10. A aplicação apresenta o retorno da operação.
+
+### 8.2 Consulta de veículos
+
+1. O administrador acessa a página Meus Veículos.
+2. O JavaScript realiza uma requisição `GET /veiculos`.
+3. O JSON Server retorna os registros cadastrados.
+4. O JavaScript processa os dados.
+5. A interface apresenta os veículos em cartões.
+
+### 8.3 Detalhes de um veículo
+
+1. O administrador seleciona um veículo.
+2. A aplicação identifica o veículo pelo parâmetro da URL.
+3. O JavaScript consulta o registro na API.
+4. A interface apresenta os dados disponíveis.
+5. A página disponibiliza uma área para o histórico de manutenções.
+
+Exemplo de navegação:
 
 ```text
-Não foi possível cadastrar o veículo.
-Verifique os dados e tente novamente.
+detalhes.html?veiculo=1
 ```
+
+### 8.4 Registro de manutenção
+
+1. O administrador acessa o formulário de manutenção.
+2. Seleciona um veículo.
+3. Informa a observação sobre o serviço.
+4. Informa o valor da manutenção.
+5. Os dados são validados.
+6. A aplicação envia uma requisição `POST /manutencoes`.
+7. O JSON Server armazena o registro.
+8. A aplicação solicita a atualização do status do veículo.
+9. A interface apresenta o retorno da operação.
+
+A conclusão dos fluxos dinâmicos e a apresentação do histórico serão revisadas nas próximas entregas.
+
+---
+
+## 9. Validação de Dados
+
+Os dados devem ser validados antes do envio para a API.
+
+### 9.1 Veículo
+
+Regras de validação:
+
+- Marca obrigatória.
+- Modelo obrigatório.
+- Ano obrigatório.
+- Placa obrigatória.
+- Placa com formato válido.
+- Quilometragem obrigatória.
+- Quilometragem maior ou igual a zero.
+- Combustível obrigatório.
+
+### 9.2 Manutenção
+
+Regras de validação:
+
+- Veículo obrigatório.
+- Observação obrigatória.
+- Valor obrigatório.
+- Valor numérico.
+- Valor maior ou igual a zero.
+
+### 9.3 Validação HTML
+
+Os formulários utilizam recursos nativos do HTML5, como:
+
+- `required`.
+- `min`.
+- `maxlength`.
+- `step`.
+- `type="number"`.
+
+As validações personalizadas, incluindo expressões regulares, serão complementadas nas próximas etapas.
+
+---
+
+## 10. Tratamento de Erros
+
+As requisições realizadas pelo front-end utilizam tratamento de erros para apresentar mensagens ao administrador.
+
+Situações previstas:
+
+- API local indisponível.
+- API FIPE indisponível.
+- Falha durante uma requisição.
+- Falha no cadastro de veículo.
+- Falha no registro de manutenção.
+- Falha na atualização do status.
+- Dados inválidos.
+- Veículo não encontrado.
+
+O JavaScript utiliza estruturas `try...catch` e verifica o resultado das requisições HTTP.
+
+As mensagens podem ser apresentadas por meio do componente Toast do Materialize CSS.
+
+Exemplo:
+
+```javascript
+M.toast({
+    html: "Veículo cadastrado com sucesso!"
+});
+```
+
+---
 
 ## 11. Tecnologias e Bibliotecas
 
-### Front-end
+### 11.1 Front-end
 
-- HTML5
-- CSS3
-- JavaScript
+- HTML5.
+- CSS3.
+- Sass (SCSS).
+- JavaScript.
+- jQuery.
 
-### Interface
+### 11.2 Interface
 
-- Materialize CSS 1.0.0
-- Material Icons
-- Google Fonts - Inter
+- Materialize CSS 1.0.0.
+- Material Icons.
+- Google Fonts — Inter.
 
-### API e persistência
+### 11.3 API e persistência
 
-- Node.js
-- NPM
-- JSON Server
-- FIPE API v2
-- `db.json`
+- Node.js.
+- NPM.
+- JSON Server.
+- FIPE API v2.
+- Arquivo `db.json`.
 
-### Controle de versão
+### 11.4 Ferramentas de desenvolvimento
 
-- Git
-- GitHub
+- Visual Studio Code.
+- Live Server.
+- Sharp CLI.
+- Google Stitch.
 
-## 11.1 API Pública - FIPE API
+### 11.5 Controle de versão
 
-O CarCare utiliza a **FIPE API v2** como API pública para consulta de informações relacionadas a veículos.
+- Git.
+- GitHub.
 
-A API disponibiliza dados de veículos por meio de requisições REST e respostas em JSON, permitindo consultar informações como:
+---
 
-- Marcas.
-- Modelos.
-- Anos.
-- Tipo de combustível.
-- Código FIPE.
-- Preço de referência.
+## 12. Integração com a API Pública FIPE
 
-A consulta segue o fluxo:
+O CarCare utiliza a FIPE API v2 para auxiliar no cadastro dos veículos.
+
+### Endereço base
 
 ```text
-Marca → Modelo → Ano → Dados do veículo
+https://fipe.parallelum.com.br/api/v2
+```
+
+### Endpoints utilizados
+
+| Método | Endpoint | Finalidade |
+| --- | --- | --- |
+| GET | `/cars/brands` | Consultar marcas |
+| GET | `/cars/brands/{code}/models` | Consultar modelos |
+| GET | `/cars/brands/{code}/models/{code}/years` | Consultar anos |
+
+### Fluxo de consulta
+
+```text
+Marca
+  |
+  v
+Modelo
+  |
+  v
+Ano
+  |
+  v
+Cadastro do veículo
+```
+
+A API FIPE é utilizada como fonte de consulta externa.
+
+Os registros cadastrados pelo administrador são armazenados no JSON Server, e não na API FIPE.
+
+---
+
+## 13. Arquitetura da Interface
+
+A interface foi desenvolvida com base no protótipo criado no Google Stitch.
+
+O Materialize CSS é utilizado em conjunto com estilos personalizados desenvolvidos em Sass.
+
+### 13.1 Organização das páginas
+
+| Página | Responsabilidade |
+| --- | --- |
+| `index.html` | Dashboard e indicadores |
+| `veiculos.html` | Listagem de veículos |
+| `novo-veiculo.html` | Formulário de cadastro |
+| `detalhes.html` | Informações e histórico do veículo |
+| `nova-manutencao.html` | Formulário de manutenção |
+
+### 13.2 Componentes do Materialize
+
+São utilizados componentes e classes como:
+
+- `row`.
+- `col`.
+- `s12`.
+- `m4`.
+- `m6`.
+- `l4`.
+- `card`.
+- `card-content`.
+- `btn`.
+- `input-field`.
+- `responsive-img`.
+- `materialize-textarea`.
+
+Exemplo de estrutura responsiva:
+
+```html
+<div class="row stats">
+    <div class="col s12 m6 l4">
+        <div class="card stat-card">
+            <div class="card-content">
+                Conteúdo
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+---
+
+## 14. Organização dos Estilos com Sass
+
+Os estilos personalizados estão centralizados no arquivo:
+
+```text
+css/style.scss
+```
+
+O arquivo utiliza recursos do Sass para facilitar a organização e reutilização do código.
+
+### 14.1 Variáveis
+
+As variáveis centralizam as definições do Design System.
+
+Exemplo:
+
+```scss
+$primary: #2867e8;
+$background: #f5f7fa;
+$sidebar-bg: #0d172b;
+$white: #ffffff;
+```
+
+### 14.2 Mixins
+
+Os mixins permitem reutilizar padrões de estilização.
+
+Exemplo simplificado:
+
+```scss
+@mixin card-base {
+    background: $white;
+    border-radius: $card-radius;
+}
+```
+
+### 14.3 Funções
+
+O projeto utiliza uma função para converter valores em pixels para unidades relativas.
+
+```scss
+@use "sass:math";
+
+@function px-to-rem($value, $base: 16) {
+    @return math.div($value, $base) * 1rem;
+}
+```
+
+### 14.4 Compilação
+
+O Sass gera o arquivo CSS utilizado pelas páginas HTML.
+
+```text
+style.scss
+     |
+     v
+Compilador Sass
+     |
+     v
+style.css
+```
+
+Comando de compilação:
+
+```bash
+npx sass css/style.scss css/style.css
+```
+
+---
+
+## 15. Responsividade
+
+O layout utiliza técnicas de responsividade para adaptar a aplicação aos diferentes tamanhos de tela.
+
+### Técnicas utilizadas
+
+- Sistema de Grid do Materialize CSS.
+- CSS Grid Layout.
+- Flexbox.
+- Media queries.
+- Unidades relativas.
+- Tipografia fluida.
+- Imagens responsivas.
+- Menu lateral adaptado para dispositivos móveis.
+
+### 15.1 Tipografia responsiva
+
+Exemplo:
+
+```scss
+.page-header h1 {
+    font-size: clamp(1.375rem, 3vw, 1.75rem);
+    line-height: 1.3;
+}
+```
+
+### 15.2 Organização dos elementos
+
+Exemplo de CSS Grid:
+
+```scss
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+```
+
+Em telas menores, a estrutura é reorganizada em uma coluna por meio de media queries.
+
+---
+
+## 16. Otimização de Imagens
+
+As imagens utilizadas na aplicação foram convertidas do formato PNG para WebP utilizando o Sharp CLI.
+
+### 16.1 Resultados da otimização
+
+| Imagem | PNG original | WebP otimizado | Redução |
+| --- | ---: | ---: | ---: |
+| Toyota Corolla | 161,32 KB | 16,76 KB | 89,6% |
+| Toyota Hilux | 570,82 KB | 27,76 KB | 95,1% |
+
+A redução total foi de aproximadamente 93,9%.
+
+### 16.2 Carregamento de imagens
+
+A página de detalhes utiliza o elemento `picture` para oferecer o formato WebP e uma imagem PNG alternativa.
+
+```html
+<picture>
+    <source
+        id="vehicleImageWebp"
+        srcset="imagens/corolla.webp"
+        type="image/webp"
+    >
+
+    <img
+        id="vehicleImage"
+        class="responsive-img"
+        src="imagens/corolla.png"
+        alt="Imagem ilustrativa do veículo"
+        loading="lazy"
+        decoding="async"
+    >
+</picture>
+```
+
+### 16.3 Responsividade das imagens
+
+As imagens são adaptadas aos seus respectivos containers utilizando propriedades como:
+
+- `width`.
+- `max-width`.
+- `height: auto`.
+- `object-fit`.
+- `object-position`.
+
+Exemplo:
+
+```scss
+.vehicle-image-card img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+}
+```
+
+As imagens são ilustrativas nesta etapa. A associação dinâmica das imagens aos modelos dos veículos será revisada posteriormente.
+
+---
+
+## 17. Estrutura de Arquivos
+
+```text
+manutencao-de-veiculos/
+|
++-- css/
+|   +-- style.scss
+|   +-- style.css
+|
++-- docs/
+|   +-- architecture.md
+|   +-- design-system.md
+|   +-- prd.md
+|   +-- script-example.js
+|
++-- imagens/
+|   +-- corolla.png
+|   +-- corolla.webp
+|   +-- hilux.png
+|   +-- hilux.webp
+|
++-- js/
+|   +-- app.js
+|
++-- db.json
++-- index.html
++-- veiculos.html
++-- novo-veiculo.html
++-- detalhes.html
++-- nova-manutencao.html
++-- package.json
++-- package-lock.json
++-- README.md
++-- .gitignore
+```
+
+---
+
+## 18. Limitações do Escopo
+
+O CarCare é desenvolvido para fins acadêmicos e utiliza uma arquitetura simplificada.
+
+Não fazem parte do escopo atual:
+
+- Sistema de múltiplos usuários.
+- Controle avançado de permissões.
+- Agendamento de manutenções futuras.
+- Exclusão de registros de manutenção.
+- Cadastro de oficinas e fornecedores.
+- Controle de estoque de peças.
+- Relatórios financeiros avançados.
+- Banco de dados de produção.
+
+O JSON Server é utilizado como uma API simulada para fins de desenvolvimento e aprendizado, não como um servidor de produção.
+
+---
+
+## 19. Situação do Desenvolvimento
+
+### Entrega 1 — A Fundação
+
+- Definição do escopo.
+- Levantamento de requisitos.
+- Documentação técnica.
+- Criação do Design System.
+- Prototipação das interfaces.
+
+### Entrega 2 — A Casca
+
+- Implementação das páginas HTML.
+- Integração do Materialize CSS.
+- Desenvolvimento dos estilos com Sass.
+- Padronização dos componentes.
+- Implementação de responsividade.
+- Otimização de imagens.
+- Aplicação do Design System.
+
+### Próximas etapas
+
+- Revisão da lógica JavaScript.
+- Validações personalizadas.
+- Revisão das integrações com APIs.
+- Correção dos fluxos de navegação.
+- Apresentação dinâmica do histórico.
+- Revisão das regras de negócio.
+
+---
+
+## Autora
+
+**Taís Ramos Nascoski**
+
+Tecnologia em Sistemas para Internet — UTFPR.
+
+Projeto acadêmico desenvolvido na disciplina de Desenvolvimento de Aplicações Web.
